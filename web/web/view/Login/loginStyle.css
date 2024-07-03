@@ -1,0 +1,200 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Jun 20, 2024, 7:29:59 AM
+    Author     : Thinkpad
+*/
+
+
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f5f5f5;
+    
+}
+
+.container {
+    display: flex;
+    width: 80%;
+    max-width: 1200px;
+    background: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.left-section, .right-section {
+    padding: 20px;
+    flex: 1;
+}
+
+.left-section {
+    background-color:whitesmoke;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.left-section .image img {
+    width: 300px;
+    height: 200px;
+    top: 269px;
+    left: 149px;
+    gap: 49px;
+    opacity: 0px;
+    backface-visibility: hidden;
+    
+
+}
+
+.left-section p {
+    
+    font-family: Gordita;
+    font-size: 18px;
+    font-weight: bolder;
+    line-height: 26px;
+    text-align: center;
+    color: #1A162E;
+    font-style: initial;
+    width: 65%;
+    
+}
+
+.right-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 460px;
+    height: 798px;
+    top: 50px;
+    left: 850px;
+    gap: 108px;
+    opacity: 0px;
+    
+
+}
+
+.form-container {
+    width: 80%;
+    max-width: 400px;
+    margin: 0 auto;
+}
+.form-container label{
+    position: relative;
+    top: 34px;
+}
+
+#defaultCard{
+    position: relative;
+    top: 34px;
+}
+h2 {
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+p {
+    margin-bottom: 20px;
+    color: #666;
+    text-align: center;
+    margin-bottom: 10%;
+    
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+input[type="email"], input[type="password"] {
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.checkbox-container input {
+    margin-right: 10px;
+}
+
+.recovery-password {
+    color: #007bff;
+    text-decoration: none;
+    margin-bottom: 20px;
+    align-self: flex-end;
+   
+       
+}
+
+.recovery-password:hover {
+    text-decoration: underline;
+}
+
+button[type="submit"], .google-signin {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button[type="submit"] {
+    background-color: #ffc107;
+    color: #fff;
+    margin-bottom: 10px;
+}
+
+.google-signin {
+    background-color: #4285f4;
+    color: #fff;
+}
+
+button[type="submit"]:hover, .google-signin:hover {
+    opacity: 0.9;
+}
+
+form p {
+    color: #333;
+}
+
+form a {
+    color: #007bff;
+    text-decoration: none;
+    
+}
+
+form a:hover {
+    text-decoration: underline;
+}
+.mart{
+    display: flex;
+    justify-content: center;
+    text-align: end;
+    left: 30px;
+}
+.mart b{
+    padding-top: 13px;
+    padding-right: 15px;
+}
+.mart img{
+    position: relative;
+    right: 12px;
+}

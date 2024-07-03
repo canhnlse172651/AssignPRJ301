@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+login with user name and password
+-->
+<html>
+    <head>
+        <title>Login</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+         <link rel="stylesheet" href="web/view/Login/loginStyle.css">
+    </head>
+    <body>
+        
+         <div class="container">
+        <div class="left-section">
+            <div class="image">
+                <img src="web/view/Login/image/banner_Login.png" alt="Illustration"> <br/>
+            </div>
+            <p>The best of luxury brand values, high quality products, and innovative services</p><br/>
+        </div>
+        <div class="right-section">
+            <div class="form-container">
+                <div class="mart"> 
+                    
+                    <img src="web/view/Login/image/logo_login.jpg" alt="Illustration">
+                    <b>grocerymart</b>
+                </div>
+                <h2>Sign Up</h2>
+                <p>Let's create your account and Shop like a pro and save money.</p>
+                <form action="MainServlet" method="post" >
+                    <input type = "text" placeholder = "User Name"  name = "txtUsername"  value = "">
+                    <input type = "password" placeholder = "Password"  name = "txtPassword" value = "" >
+                    <div class="checkbox-container">
+                        <input type="checkbox" id="defaultCard">
+                        <label for="defaultCard">Set as default card</label>
+                    </div>
+                    <a href="#" class="recovery-password">Recovery Password</a>
+                    <button type="submit"  name="btn" value="Login" >Sign Up</button  >
+                    <button type="button" class="google-signin">Sign in with Gmail</button>
+                </form>
+                <p>Have an account yet? <a href="#">Sign In</a></p>
+            </div>
+        </div>
+    </div>
+    </body>
+</html>
