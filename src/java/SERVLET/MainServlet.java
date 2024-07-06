@@ -31,6 +31,7 @@ public class MainServlet extends HttpServlet {
      private final String ADMIN_ADD_ACCOUNT_PAGE = "web/view/admin/account/addAccount.jsp";
      private final String ADMIN_GET_UPDATE_ACCOUNT_SERVLET = "/AdminGetUpdateAccount";
      private final String ADMIN_UPDATE_ACCOUNT_PAGE = "web/view/admin/account/updateAccount.jsp";
+     private final String ADMIN_GET_DELETE_ACCOUNT_SERVLET = "/AdminGetDeleteAccount";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -50,8 +51,6 @@ public class MainServlet extends HttpServlet {
           //NULL default
          String url = LOGIN_PAGE;
         
-         String action = request.getParameter("action");
-        
         try  {
            if (button == null) {  // frist time and app start up
                 // transfer Home page 
@@ -65,12 +64,12 @@ public class MainServlet extends HttpServlet {
                 url = ADMIN_ADD_ACCOUNT_SERVLET;
             }else if(button.equals("AdminUpdateAccount")){
                 url = ADMIN_UPADTE_ACCOUNT_SERVLET;
-            }
-           
-           if(action!=null && action.equals("adminAddAccount")){
+            }else if(button.equals("adminAddAccount")){
                url = ADMIN_ADD_ACCOUNT_PAGE;
-           }else if(action!=null && action.equals("adminGetUpdateAccount")){
+           }else if(button.equals("adminGetUpdateAccount")){
                url = ADMIN_GET_UPDATE_ACCOUNT_SERVLET;
+           }else if(button.equals("adminGetDeleteAccount")){
+               url = ADMIN_GET_DELETE_ACCOUNT_SERVLET;
            }
            
         }finally {

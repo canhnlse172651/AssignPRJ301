@@ -133,7 +133,8 @@
                                 </div>         
 
                             </div>    
-                                        <input type="hidden" value="${userUpdate.user_id}" name="userId"/>
+                                        <input type="hidden" value="${userUpdate.userId}" name="userId"/>
+                                        <input type="hidden" value="${userUpdate.numberOrdered}" name="numberOrdered"/>
                             <div class="row mx-5">
                                 <button type="submit" 
                                         class="btn btn-primary mt-3 col-1"

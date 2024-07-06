@@ -146,7 +146,7 @@
                             </div>
                         </div>
                         <div class="my-3">
-                            <a href="<c:url value='/MainServlet?action=adminAddAccount'/>">
+                            <a href="<c:url value='/MainServlet?btn=adminAddAccount'/>">
                             <button type="button" class="btn btn-primary">Add new account</button>
                             </a>
                         </div>
@@ -189,12 +189,12 @@
                                                 <td >${user.role ? "admin":"customer"}</td>
                                                 <td>
                                                     <div class="hidden-sm hidden-xs btn-group">
-                                                        <a href="<c:url value='/MainServlet?action=adminGetUpdateAccount&userId=${user.userId}'/>">
+                                                        <a href="<c:url value='/MainServlet?btn=adminGetUpdateAccount&userId=${user.userId}'/>">
                                                             <button class="btn btn-xs btn-sm">
                                                                 <i class="fa-solid fa-pen-to-square fa-beat fa-lg" style="color: #24f59a;"></i>
                                                             </button>
                                                         </a>
-                                                        <a href="<c:url value='/adminGetDeleteAccount?userId=${user.userId}'/>">
+                                                        <a href="<c:url value='/MainServlet?btn=adminGetDeleteAccount&userId=${user.userId}'/>">
                                                             <button class="btn btn-xs btn-sm">
                                                                 <i class="fa-solid fa-trash fa-beat fa-lg" style="color: #fb2109;"></i>
                                                             </button>
