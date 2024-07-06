@@ -1,10 +1,11 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package SERVLET;
+package SERVLET.ADMIN.ACCOUNT;
 
+import DAO.ADMIN.Account_DAO;
+import MODEL.User_Model;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
@@ -16,19 +17,14 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Thinkpad
+ * @author LA DAT
  */
-@WebServlet(name = "MainServlet", urlPatterns = {"/MainServlet"})
-public class MainServlet extends HttpServlet {
-   
-    
-     private final String LOGIN_SERVLET = "LoginServlet";    
-     private final String LOGIN_PAGE = "web/view/Login/login.html";
-     private final String ADMIN_ADD_ACCOUNT_SERVLET = "/AddAccountServlet";
-     private final String ADMIN_UPADTE_ACCOUNT_SERVLET = "/AdminUpdateAccountServlet";
-     private final String ADMIN_ADD_ACCOUNT_PAGE = "web/view/admin/account/addAccount.jsp";
-     private final String ADMIN_GET_UPDATE_ACCOUNT_SERVLET = "/AdminGetUpdateAccount";
-     private final String ADMIN_UPDATE_ACCOUNT_PAGE = "web/view/admin/account/updateAccount.jsp";
+@WebServlet(name = "AddAccountServlet", urlPatterns = {"/AddAccountServlet"})
+public class AddAccountServlet extends HttpServlet {
+    private static String ADMIN_ADD_ACCOUNT_PAGE = "/MainServlet?action=adminAddAccount";
+    private static String ADMIN_ACCOUNT_MANAGE_SERVLET = "/AccountServlet";
+    String url ="";
+    Account_DAO accountDao = new Account_DAO();
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -40,36 +36,28 @@ public class MainServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
 	response.setCharacterEncoding("UTF-8");
-          
-         //1. which button did user click
-        String button = request.getParameter("btn");
-          //NULL default
-         String url = LOGIN_PAGE;
-        
-         String action = request.getParameter("action");
-        
-        try  {
-           if (button == null) {  // frist time and app start up
-                // transfer Login page 
-            }else if(button.equals("Login")){
-                url = LOGIN_SERVLET;
-            }else if(button.equals("AddNewAccount")){
-                url = ADMIN_ADD_ACCOUNT_SERVLET;
-            }else if(button.equals("AdminUpdateAccount")){
-                url = ADMIN_UPADTE_ACCOUNT_SERVLET;
-            }
-           
-           if(action!=null && action.equals("adminAddAccount")){
-               url = ADMIN_ADD_ACCOUNT_PAGE;
-           }else if(action!=null && action.equals("adminGetUpdateAccount")){
-               url = ADMIN_GET_UPDATE_ACCOUNT_SERVLET;
-           }
-           
-        }finally {
-            RequestDispatcher rd = request.getRequestDispatcher(url);
-            rd.forward(request, response);
+        try {
+            String username = request.getParameter("username");
+        String fullName = request.getParameter("fullName");
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
+        String address = request.getParameter("address");
+        String phone = request.getParameter("phone") ;
+        int role = Integer.parseInt(request.getParameter("role"));
+        User_Model user = new User_Model(-1,username,password,fullName,email,0,phone,true,address,role==1 ? true : false);
+           System.out.println("SERVLET.ADMIN.ACCOUNT.AddAccountServlet.processRequest()"+ user.getFullName());
+        if(accountDao.insertUser(user)){
+            url = ADMIN_ACCOUNT_MANAGE_SERVLET;
+        }else{
+            url = ADMIN_ADD_ACCOUNT_PAGE;
+        }
+        }catch(Exception e){
+            System.out.println("SERVLET.ADMIN.ACCOUNT.AddAccountServlet.processRequest()"+ e);
+        }finally{
+           response.sendRedirect(request.getContextPath() +url);
         }
     }
 
@@ -100,7 +88,6 @@ public class MainServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-        
     }
 
     /**

@@ -55,7 +55,7 @@ public class User_DAO implements Serializable {
                 String fullName = resultSet.getString("full_name");
                 String email = resultSet.getString("email");
                 int numberOrdered = resultSet.getInt("number_ordered");
-                int phone = resultSet.getInt("phone");
+                String phone = resultSet.getString("phone");
                 boolean status = resultSet.getBoolean("status");
                 String address = resultSet.getString("address");
                 boolean role = resultSet.getBoolean("role");

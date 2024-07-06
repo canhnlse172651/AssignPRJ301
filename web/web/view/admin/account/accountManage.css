@@ -1,0 +1,16 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : Jul 3, 2024, 4:12:02 PM
+    Author     : LA DAT
+*/
+
+.active-text{
+    color: green;
+}
+.delete-text{
+    color: red;
+}
+

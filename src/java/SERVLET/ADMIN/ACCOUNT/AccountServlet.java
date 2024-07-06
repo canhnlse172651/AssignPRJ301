@@ -1,34 +1,37 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package SERVLET;
+package SERVLET.ADMIN;
 
+import DAO.ADMIN.Account_DAO;
+import DAO.User_DAO;
+import MODEL.User_Model;
 import java.io.IOException;
 import java.io.PrintWriter;
+import static java.lang.System.out;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.jasper.tagplugins.jstl.core.ForEach;
 
 /**
  *
- * @author Thinkpad
+ * @author LA DAT
  */
-@WebServlet(name = "MainServlet", urlPatterns = {"/MainServlet"})
-public class MainServlet extends HttpServlet {
-   
-    
-     private final String LOGIN_SERVLET = "LoginServlet";    
-     private final String LOGIN_PAGE = "web/view/Login/login.html";
-     private final String ADMIN_ADD_ACCOUNT_SERVLET = "/AddAccountServlet";
-     private final String ADMIN_UPADTE_ACCOUNT_SERVLET = "/AdminUpdateAccountServlet";
-     private final String ADMIN_ADD_ACCOUNT_PAGE = "web/view/admin/account/addAccount.jsp";
-     private final String ADMIN_GET_UPDATE_ACCOUNT_SERVLET = "/AdminGetUpdateAccount";
-     private final String ADMIN_UPDATE_ACCOUNT_PAGE = "web/view/admin/account/updateAccount.jsp";
+@WebServlet(name = "AccountServlet", urlPatterns = {"/AccountServlet"})
+public class AccountServlet extends HttpServlet {
+
+    Account_DAO accountDao = new Account_DAO();
+    private static String ADMIN_ACCOUNT_MANAGE_PAGE = "web/view/admin/account/accountManage.jsp";
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -39,37 +42,18 @@ public class MainServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, ClassNotFoundException, SQLException {
+        response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
 	response.setCharacterEncoding("UTF-8");
-          
-         //1. which button did user click
-        String button = request.getParameter("btn");
-          //NULL default
-         String url = LOGIN_PAGE;
-        
-         String action = request.getParameter("action");
-        
-        try  {
-           if (button == null) {  // frist time and app start up
-                // transfer Login page 
-            }else if(button.equals("Login")){
-                url = LOGIN_SERVLET;
-            }else if(button.equals("AddNewAccount")){
-                url = ADMIN_ADD_ACCOUNT_SERVLET;
-            }else if(button.equals("AdminUpdateAccount")){
-                url = ADMIN_UPADTE_ACCOUNT_SERVLET;
-            }
-           
-           if(action!=null && action.equals("adminAddAccount")){
-               url = ADMIN_ADD_ACCOUNT_PAGE;
-           }else if(action!=null && action.equals("adminGetUpdateAccount")){
-               url = ADMIN_GET_UPDATE_ACCOUNT_SERVLET;
-           }
-           
-        }finally {
-            RequestDispatcher rd = request.getRequestDispatcher(url);
+        try {
+            List<User_Model> listUser = accountDao.findAll();
+            request.setAttribute("listUser", listUser);
+
+        } finally {
+            RequestDispatcher rd = request.getRequestDispatcher(ADMIN_ACCOUNT_MANAGE_PAGE);
             rd.forward(request, response);
+            out.close();
         }
     }
 
@@ -85,7 +69,13 @@ public class MainServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(AccountServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -99,8 +89,13 @@ public class MainServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
-        
+        try {
+            processRequest(request, response);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(AccountServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

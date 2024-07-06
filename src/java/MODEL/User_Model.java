@@ -17,7 +17,7 @@ public class User_Model {
     private String fullName;
     private String email;
     private int numberOrdered;
-    private int phone;
+    private String phone;
     private boolean status;
     private String address;
     private boolean role;
@@ -26,7 +26,7 @@ public class User_Model {
         
     }
 
-    public User_Model(int userId, String userName, String password, String fullName, String email, int numberOrdered, int phone, boolean status, String address, boolean role) {
+    public User_Model(int userId, String userName, String password, String fullName, String email, int numberOrdered, String phone, boolean status, String address, boolean role) {
         this.userId = userId;
         this.userName = userName;
         this.password = password;
@@ -87,11 +87,11 @@ public class User_Model {
         this.numberOrdered = numberOrdered;
     }
 
-    public int getPhone() {
+    public String getPhone() {
         return phone;
     }
 
-    public void setPhone(int phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 
