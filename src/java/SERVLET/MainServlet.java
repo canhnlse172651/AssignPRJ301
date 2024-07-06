@@ -22,7 +22,9 @@ import javax.servlet.http.HttpServletResponse;
 public class MainServlet extends HttpServlet {
    
     
-     private final String LOGIN_SERVLET = "LoginServlet";    
+     private final String LOGIN_SERVLET = "LoginServlet";
+      private final String HOME_SERVLET = "HomeServlet";
+      private final String PRODUCT_DETAIL_SERVLET = "ProductDetailServlet";
      private final String LOGIN_PAGE = "web/view/Login/login.html";
      private final String ADMIN_ADD_ACCOUNT_SERVLET = "/AddAccountServlet";
      private final String ADMIN_UPADTE_ACCOUNT_SERVLET = "/AdminUpdateAccountServlet";
@@ -52,9 +54,13 @@ public class MainServlet extends HttpServlet {
         
         try  {
            if (button == null) {  // frist time and app start up
-                // transfer Login page 
+                // transfer Home page 
+                 url = HOME_SERVLET;
+               
             }else if(button.equals("Login")){
                 url = LOGIN_SERVLET;
+            }else if(button.equals("productDetail")){
+                url = PRODUCT_DETAIL_SERVLET;
             }else if(button.equals("AddNewAccount")){
                 url = ADMIN_ADD_ACCOUNT_SERVLET;
             }else if(button.equals("AdminUpdateAccount")){
