@@ -2,12 +2,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package SERVLET.ADMIN.ACCOUNT;
+package SERVLET.ADMIN.CATEGORY;
 
-import DAO.ADMIN.Account_DAO;
+import DAO.ADMIN.Category_DAO;
+import MODEL.Cate_Model;
 import MODEL.User_Model;
 import java.io.IOException;
 import java.io.PrintWriter;
+import static java.lang.System.out;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -18,12 +21,13 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author LA DAT
  */
-@WebServlet(name = "AdminUpdateAccountServlet", urlPatterns = {"/AdminUpdateAccountServlet"})
-public class AdminUpdateAccountServlet extends HttpServlet {
+@WebServlet(name = "AdminGetUpdateCategory", urlPatterns = {"/AdminGetUpdateCategory"})
+public class AdminGetUpdateCategory extends HttpServlet {
 
-    private static String ADMIN_ACCOUNT_MANAGE_SERVLET = "/AccountServlet";
-    String url = "";
-    Account_DAO accountDao = new Account_DAO();
+    private static String ADMIN_CATEGORY_MANAGE_SERVLET = "/CategoryServlet";
+    private static String ADMIN_UPDATE_CATEGORY_PAGE = "web/view/admin/category/updateCategory.jsp";
+    String url = ADMIN_CATEGORY_MANAGE_SERVLET;
+    Category_DAO cateDAO = new Category_DAO();
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,25 +44,20 @@ public class AdminUpdateAccountServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
         try {
-            int userId = Integer.parseInt(request.getParameter("userId"));
-            int numberOrdered = Integer.parseInt(request.getParameter("numberOrdered"));
-            String username = request.getParameter("username");
-            String fullName = request.getParameter("fullName");
-            String email = request.getParameter("email");
-            String password = request.getParameter("password");
-            String address = request.getParameter("address");
-            String phone = request.getParameter("phone");
-            boolean role = Integer.parseInt(request.getParameter("role"))==1;
-            boolean status = Integer.parseInt(request.getParameter("status")) == 1;
-            url = "/MainServlet?btn=adminGetUpdateAccount&userId="+userId;
-            User_Model user = new User_Model(userId, username, password, fullName, email, numberOrdered, phone, status, address, role);
-            if(accountDao.updateUser(user)){
-               url = ADMIN_ACCOUNT_MANAGE_SERVLET;
+            if (request.getParameter("categoryId") != null) {
+                int userId = Integer.parseInt(request.getParameter("categoryId"));
+                Cate_Model cate = cateDAO.findOneById(userId);
+                if (cate != null) {
+                    request.setAttribute("CateUpdate", cate);
+                    url = ADMIN_UPDATE_CATEGORY_PAGE;
+                }
             }
         } catch (Exception e) {
-            System.out.println("SERVLET.ADMIN.ACCOUNT.AddAccountServlet.processRequest()" + e);
+            System.out.println("SERVLET.ADMIN.ACCOUNT.AdminGetUpdateAccount.processRequest()" + e);
         } finally {
-            response.sendRedirect(request.getContextPath() + url);
+            RequestDispatcher rd = request.getRequestDispatcher(url);
+            rd.forward(request, response);
+            out.close();
         }
     }
 
