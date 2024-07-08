@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -20,18 +21,24 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "MainServlet", urlPatterns = {"/MainServlet"})
 public class MainServlet extends HttpServlet {
-   
-    
-     private final String LOGIN_SERVLET = "LoginServlet";
-      private final String HOME_SERVLET = "HomeServlet";
-      private final String PRODUCT_DETAIL_SERVLET = "ProductDetailServlet";
-     private final String LOGIN_PAGE = "web/view/Login/login.html";
-     private final String ADMIN_ADD_ACCOUNT_SERVLET = "/AddAccountServlet";
-     private final String ADMIN_UPADTE_ACCOUNT_SERVLET = "/AdminUpdateAccountServlet";
-     private final String ADMIN_ADD_ACCOUNT_PAGE = "web/view/admin/account/addAccount.jsp";
-     private final String ADMIN_GET_UPDATE_ACCOUNT_SERVLET = "/AdminGetUpdateAccount";
-     private final String ADMIN_UPDATE_ACCOUNT_PAGE = "web/view/admin/account/updateAccount.jsp";
-     private final String ADMIN_GET_DELETE_ACCOUNT_SERVLET = "/AdminGetDeleteAccount";
+
+    private final String LOGIN_SERVLET = "LoginServlet";
+    private final String HOME_SERVLET = "HomeServlet";
+    private final String PRODUCT_DETAIL_SERVLET = "ProductDetailServlet";
+    private final String LOGIN_PAGE = "web/view/Login/login.html";
+    private final String ADMIN_ADD_ACCOUNT_SERVLET = "/AddAccountServlet";
+    private final String ADMIN_ADD_CATEGORY_SERVLET = "/AdminAddCategoryServlet";
+    private final String ADMIN_UPADTE_ACCOUNT_SERVLET = "/AdminUpdateAccountServlet";
+     private final String ADMIN_UPADTE_CATEGORY_SERVLET = "/AdminUpdateCategoryServlet";
+    private final String ADMIN_ADD_ACCOUNT_PAGE = "web/view/admin/account/addAccount.jsp";
+    private final String ADMIN_ADD_CATEGORY_PAGE = "web/view/admin/category/addCategory.jsp";
+    private final String ADMIN_GET_UPDATE_ACCOUNT_SERVLET = "/AdminGetUpdateAccount";
+    private final String ADMIN_GET_UPDATE_CATEGORY_SERVLET = "/AdminGetUpdateCategory";
+    private final String ADMIN_UPDATE_ACCOUNT_PAGE = "web/view/admin/account/updateAccount.jsp";
+    private final String ADMIN_GET_DELETE_ACCOUNT_SERVLET = "/AdminGetDeleteAccount";
+    private final String ADMIN_GET_DELETE_CATEGORY_SERVLET = "/AdminGetDeleteCategory";
+    private final String ADMIN_ACCOUNT_SERVLET = "/AccountServlet";
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -44,35 +51,44 @@ public class MainServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
-	response.setCharacterEncoding("UTF-8");
-          
-         //1. which button did user click
-        String button = request.getParameter("btn");
-          //NULL default
-         String url = LOGIN_PAGE;
-        
-        try  {
-           if (button == null) {  // frist time and app start up
-                // transfer Home page 
-                 url = HOME_SERVLET;
+        response.setCharacterEncoding("UTF-8");
+
+        String url = LOGIN_PAGE;
+        try {
+            if (request.getParameter("btn") != null) {
+                String button = request.getParameter("btn");
+                System.out.println("SERVLET.MainServlet.processRequest()" + button);
                
-            }else if(button.equals("Login")){
-                url = LOGIN_SERVLET;
-            }else if(button.equals("productDetail")){
-                url = PRODUCT_DETAIL_SERVLET;
-            }else if(button.equals("AddNewAccount")){
-                url = ADMIN_ADD_ACCOUNT_SERVLET;
-            }else if(button.equals("AdminUpdateAccount")){
-                url = ADMIN_UPADTE_ACCOUNT_SERVLET;
-            }else if(button.equals("adminAddAccount")){
-               url = ADMIN_ADD_ACCOUNT_PAGE;
-           }else if(button.equals("adminGetUpdateAccount")){
-               url = ADMIN_GET_UPDATE_ACCOUNT_SERVLET;
-           }else if(button.equals("adminGetDeleteAccount")){
-               url = ADMIN_GET_DELETE_ACCOUNT_SERVLET;
-           }
-           
-        }finally {
+                if (button.equals("Login")) {
+                    url = LOGIN_SERVLET;
+                } else if (button.equals("productDetail")) {
+                    url = PRODUCT_DETAIL_SERVLET;
+                } else if (button.equals("AddNewAccount")) {
+                    url = ADMIN_ADD_ACCOUNT_SERVLET;
+                } else if (button.equals("AdminUpdateAccount")) {
+                    url = ADMIN_UPADTE_ACCOUNT_SERVLET;
+                } else if (button.equals("adminAddAccount")) {
+                    url = ADMIN_ADD_ACCOUNT_PAGE;
+                } else if (button.equals("adminGetUpdateAccount")) {
+                    url = ADMIN_GET_UPDATE_ACCOUNT_SERVLET;
+                } else if (button.equals("adminGetDeleteAccount")) {
+                    url = ADMIN_GET_DELETE_ACCOUNT_SERVLET;
+                } else if (button.equals("adminAddCategory")) {
+                    url = ADMIN_ADD_CATEGORY_PAGE;
+                } else if (button.equals("adminAddNewCategory")) {
+                    url = ADMIN_ADD_CATEGORY_SERVLET;
+                }else if (button.equals("adminGetUpdateCategory")) {
+                    url = ADMIN_GET_UPDATE_CATEGORY_SERVLET;
+                }else if (button.equals("AdminUpdateCategory")) {
+                    url = ADMIN_UPADTE_CATEGORY_SERVLET;
+                }else if (button.equals("adminGetDeleteCategory")) {
+                    url = ADMIN_GET_DELETE_CATEGORY_SERVLET;
+                }
+            }else{
+                url = ADMIN_ACCOUNT_SERVLET; 
+            }
+
+        } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
         }
@@ -105,7 +121,7 @@ public class MainServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-        
+
     }
 
     /**

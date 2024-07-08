@@ -4,8 +4,16 @@
  */
 package SERVLET.ADMIN.CATEGORY;
 
+import DAO.ADMIN.Category_DAO;
+import MODEL.Cate_Model;
 import java.io.IOException;
 import java.io.PrintWriter;
+import static java.lang.System.out;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -19,6 +27,8 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "AdminCategoryServlet", urlPatterns = {"/AdminCategoryServlet"})
 public class AdminCategoryServlet extends HttpServlet {
 
+    private static String ADMIN_CATEGORY_MANAGE_PAGE = "web/view/admin/category/categoryManage.jsp";
+    Category_DAO cateDAO = new Category_DAO();
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -29,19 +39,17 @@ public class AdminCategoryServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, ClassNotFoundException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet AdminCategoryServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet AdminCategoryServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+         request.setCharacterEncoding("UTF-8");
+	response.setCharacterEncoding("UTF-8");
+        try {
+            List<Cate_Model> listCate = cateDAO.findAll();
+            request.setAttribute("listCate", listCate);
+        }finally {
+            RequestDispatcher rd = request.getRequestDispatcher(ADMIN_CATEGORY_MANAGE_PAGE);
+            rd.forward(request, response);
+            out.close();
         }
     }
 
@@ -57,7 +65,13 @@ public class AdminCategoryServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(AdminCategoryServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(AdminCategoryServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -71,7 +85,13 @@ public class AdminCategoryServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(AdminCategoryServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(AdminCategoryServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

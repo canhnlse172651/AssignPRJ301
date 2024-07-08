@@ -182,11 +182,11 @@ public class Account_DAO implements Serializable {
         try {
             con = DB_Connection.getConnection();
             if (con != null) {
-                String sql = "DELETE FROM [User] WHERE user_id = ?";
-                stm = con.prepareStatement(sql);
-                stm.setInt(1, userId);
-                int rowsDeleted = stm.executeUpdate();
-                return rowsDeleted > 0;
+                User_Model user = findOneById(userId);
+                if(user!=null){
+                    user.setStatus(false);
+                    return updateUser(user);
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();

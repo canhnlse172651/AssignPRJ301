@@ -49,7 +49,7 @@
             </ul>
         </nav>
         <div id="layoutSidenav">
-            <div id="layoutSidenav_nav">
+              <div id="layoutSidenav_nav">
                 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                     <div class="sb-sidenav-menu">
                         <div class="nav">
@@ -59,16 +59,16 @@
                                 Account
                             </a>
                             <div class="sb-sidenav-menu-heading">STORE MANAGE</div>
-                            <a class="nav-link collapsed" href="/Grocery/AdminCategoryServlet" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                            <a class="nav-link" href="/Grocery/AdminCategoryServlet">
                                 <div class="sb-nav-link-icon"><i class="fas fa-columns fa-bounce"></i></div>
                                 Category
                             </a>
 
-                            <a class="nav-link collapsed" href="/Grocery/AdminProductServlet" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
+                            <a class="nav-link" href="/Grocery/AdminProductServlet">
                                 <div class="sb-nav-link-icon"><i class="fa-solid fa-mug-saucer fa-bounce"></i></div>
                                 Product
                             </a>
-                            <a class="nav-link collapsed" href="/Grocery/AdminOrderServlet" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
+                            <a class="nav-link" href="/Grocery/AdminOrderServlet">
                                 <div class="sb-nav-link-icon"><i class="fa-solid fa-truck fa-bounce"></i></div>
                                 Order
                             </a>
