@@ -85,7 +85,7 @@ public class MainServlet extends HttpServlet {
                     url = ADMIN_GET_DELETE_CATEGORY_SERVLET;
                 }
             }else{
-                url = ADMIN_ACCOUNT_SERVLET; 
+                url = LOGIN_PAGE; 
             }
 
         } finally {
