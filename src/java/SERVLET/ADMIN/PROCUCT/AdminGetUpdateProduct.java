@@ -2,11 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package SERVLET.ADMIN.CATEGORY;
+package SERVLET.ADMIN.PROCUCT;
 
 import DAO.ADMIN.Category_DAO;
+import DAO.ADMIN.Product_DAO;
 import MODEL.Cate_Model;
-import MODEL.User_Model;
+import MODEL.Product_Model;
 import java.io.IOException;
 import java.io.PrintWriter;
 import static java.lang.System.out;
@@ -22,14 +23,13 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author LA DAT
  */
-@WebServlet(name = "AdminGetUpdateCategory", urlPatterns = {"/AdminGetUpdateCategory"})
-public class AdminGetUpdateCategory extends HttpServlet {
-
-    private static String ADMIN_CATEGORY_MANAGE_SERVLET = "/AdminCategoryServlet";
-    private static String ADMIN_UPDATE_CATEGORY_PAGE = "web/view/admin/category/updateCategory.jsp";
-    String url = ADMIN_CATEGORY_MANAGE_SERVLET;
+@WebServlet(name = "AdminGetUpdateProduct", urlPatterns = {"/AdminGetUpdateProduct"})
+public class AdminGetUpdateProduct extends HttpServlet {
+    private static String ADMIN_PRODUCT_MANAGE_SERVLET = "/AdminProductServlet";
+    private static String ADMIN_UPDATE_PRODUCT_PAGE = "web/view/admin/product/updateProduct.jsp";
+    String url = ADMIN_PRODUCT_MANAGE_SERVLET;
     Category_DAO cateDAO = new Category_DAO();
-
+    Product_DAO product_DAO = new Product_DAO();
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -44,16 +44,19 @@ public class AdminGetUpdateCategory extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
-        try {
-            if (request.getParameter("categoryId") != null) {
-                int categoryId = Integer.parseInt(request.getParameter("categoryId"));
-                Cate_Model cate = cateDAO.findOneById(categoryId);
-                if (cate != null) {
-                    request.setAttribute("CateUpdate", cate);
-                    url = ADMIN_UPDATE_CATEGORY_PAGE;
+        try  {
+           if (request.getParameter("productId") != null) {
+                int productId = Integer.parseInt(request.getParameter("productId"));
+                Product_Model product = product_DAO.findOneById(productId);
+               
+                List<Cate_Model> listCate = cateDAO.findAll();  
+                if (product != null && listCate.size()>0) {
+                    request.setAttribute("ProUpdate", product);
+                    request.setAttribute("listCate", listCate);
+                    url = ADMIN_UPDATE_PRODUCT_PAGE;
                 }
             }
-        } catch (Exception e) {
+        }catch (Exception e) {
             System.out.println("SERVLET.ADMIN.ACCOUNT.AdminGetUpdateAccount.processRequest()" + e);
         } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);
