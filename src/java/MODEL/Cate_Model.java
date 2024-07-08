@@ -9,7 +9,6 @@ package MODEL;
  * @author Thinkpad
  */
 public class Cate_Model {
-
     private int categoryId;
     private String name;
     private String image;

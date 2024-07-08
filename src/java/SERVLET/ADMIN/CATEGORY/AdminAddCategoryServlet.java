@@ -3,7 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 package SERVLET.ADMIN.CATEGORY;
-import org.apache.commons.io.IOUtils;
 import DAO.ADMIN.Category_DAO;
 import MODEL.Cate_Model;
 import java.io.IOException;
@@ -48,8 +47,6 @@ public class AdminAddCategoryServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
-      
-        
         try {
              String name = request.getParameter("name");
           String image = request.getParameter("image");  

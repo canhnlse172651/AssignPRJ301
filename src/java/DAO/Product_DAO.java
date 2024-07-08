@@ -48,7 +48,7 @@ public class Product_DAO {
 
                 String name = rs.getString("name");
 
-                int status = rs.getInt("status");
+                boolean status = rs.getBoolean("status");
 
                 String size = rs.getString("size");
 
@@ -106,7 +106,7 @@ public class Product_DAO {
                 int id = rs.getInt("product_id");
                 int categoryId = rs.getInt("category_id");
                 String name = rs.getString("name");
-                int status = rs.getInt("status");
+                boolean status = rs.getBoolean("status");
                 String size = rs.getString("size");
                 double price = rs.getDouble("price");
                 int stockQuantity = rs.getInt("stock_quantity");

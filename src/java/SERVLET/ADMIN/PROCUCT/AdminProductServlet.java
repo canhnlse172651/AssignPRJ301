@@ -2,15 +2,18 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package SERVLET.ADMIN.CATEGORY;
+package SERVLET.ADMIN.PROCUCT;
 
-import DAO.ADMIN.Category_DAO;
+import DAO.ADMIN.Product_DAO;
 import MODEL.Cate_Model;
-import MODEL.User_Model;
+import MODEL.Product_Model;
 import java.io.IOException;
 import java.io.PrintWriter;
 import static java.lang.System.out;
+import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,13 +25,11 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author LA DAT
  */
-@WebServlet(name = "AdminGetUpdateCategory", urlPatterns = {"/AdminGetUpdateCategory"})
-public class AdminGetUpdateCategory extends HttpServlet {
+@WebServlet(name = "AdminProductServlet", urlPatterns = {"/AdminProductServlet"})
+public class AdminProductServlet extends HttpServlet {
 
-    private static String ADMIN_CATEGORY_MANAGE_SERVLET = "/AdminCategoryServlet";
-    private static String ADMIN_UPDATE_CATEGORY_PAGE = "web/view/admin/category/updateCategory.jsp";
-    String url = ADMIN_CATEGORY_MANAGE_SERVLET;
-    Category_DAO cateDAO = new Category_DAO();
+    private static String ADMIN_PRODUCT_MANAGE_PAGE = "web/view/admin/product/productManage.jsp";
+    Product_DAO product_DAO = new Product_DAO();
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -45,18 +46,18 @@ public class AdminGetUpdateCategory extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
         try {
-            if (request.getParameter("categoryId") != null) {
-                int categoryId = Integer.parseInt(request.getParameter("categoryId"));
-                Cate_Model cate = cateDAO.findOneById(categoryId);
-                if (cate != null) {
-                    request.setAttribute("CateUpdate", cate);
-                    url = ADMIN_UPDATE_CATEGORY_PAGE;
-                }
+            List<Product_Model> listProduct = product_DAO.findAll(0);
+            System.out.println("---------------------------------------------------------------------------------------------------------------------------------------SERVLET.ADMIN.PROCUCT.AdminProductServlet.processRequest()");
+            for(Product_Model pro: listProduct){
+                System.out.println("Name: "+pro.getName()+" Cate: "+pro.getCateModel().getName() );
             }
-        } catch (Exception e) {
-            System.out.println("SERVLET.ADMIN.ACCOUNT.AdminGetUpdateAccount.processRequest()" + e);
+            request.setAttribute("listProduct", listProduct);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(AdminProductServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(AdminProductServlet.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
-            RequestDispatcher rd = request.getRequestDispatcher(url);
+            RequestDispatcher rd = request.getRequestDispatcher(ADMIN_PRODUCT_MANAGE_PAGE);
             rd.forward(request, response);
             out.close();
         }
