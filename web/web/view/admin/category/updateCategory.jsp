@@ -15,12 +15,26 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Dashboard - SB Admin</title>
+        <title>Update Category - SB Admin</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrQd2mkvkXj9O0MWkHi5D0qS6WldFf3djoXKXYrGV4rOvvf6hM4MZ4gJ8HlRBET5+t2x1hX0+3qI6rb+g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
         <link href="web/view/admin/styleAdmin/css/styles.css" rel="stylesheet" />
         <link href="web/view/admin/account/accountManage.css" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+        <style>
+            #imagePreview {
+                padding: 10px;
+                max-width: 100%;
+                max-height: 200px;
+                background-size: contain;
+                background-repeat: no-repeat;
+                background-position: center;
+            }
+            #image {
+                height: auto; /* Adjust the height as needed */
+                resize: none; /* Prevent resizing */
+            }
+        </style>
     </head>
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
@@ -49,7 +63,7 @@
             </ul>
         </nav>
         <div id="layoutSidenav">
-           <div id="layoutSidenav_nav">
+            <div id="layoutSidenav_nav">
                 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                     <div class="sb-sidenav-menu">
                         <div class="nav">
@@ -83,50 +97,43 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid ">
-                        <h1 class="mt-4 px-5">Create new account</h1>
+                        <h1 class="mt-4 px-5">Update category</h1>
                         <form id="registrationForm" action="MainServlet" method="post">
-                            <div class="row px-5 mb-3">
+                            <input type="hidden" name="categoryId" value="${CateUpdate.categoryId}"/>
+                            <div class="row px-5 mb-3 mt-5">
                                 <div class="col-6">
-                                    <label for="username" class="form-label">Username</label>
-                                    <input type="text" class="form-control" id="username" name="username" required>
-                                </div>
-                                <div class="col-6">
-                                    <label for="fullName" class="form-label">Full Name</label>
-                                    <input type="text" class="form-control" id="fullName" name="fullName" required>
-                                </div>
-                            </div>
-                            <div class="row px-5 mb-3">
-                                <div class="col-6">
-                                    <label for="email" class="form-label">Email Address</label>
-                                    <input type="email" class="form-control" id="email" name="email" required>
+                                    <label for="name" class="form-label">Category name</label>
+                                    <input type="text" class="form-control" id="name" name="name" value="${CateUpdate.name}" required>
                                 </div>
                                 <div class="col-6">
-                                    <label for="password" class="form-label">Password</label>
-                                    <input type="password" class="form-control" id="password" name="password" required>
-                                </div>
-                            </div>
-                            <div class="row px-5 mb-3">
-                                <div class="col-6">
-                                    <label for="address" class="form-label">Address</label>
-                                    <input type="text" class="form-control" id="address" name="address" required>
-                                </div>
-                                <div class="col-3">
-                                    <label for="phone" class="form-label">Phone</label>
-                                    <input type="number" class="form-control" id="phone" name="phone" required>
-                                </div>
-                                <div class="col-3">
-                                    <label for="role" class="form-label">Role</label>
-                                    <select class="form-control" id="role" name="role" required>
-                                        <option value="1">Admin</option>
-                                        <option value="0">Customer</option>
+                                    <label for="status" class="form-label">Status</label>
+                                    <select class="form-control" id="status" name="status" required>
+                                        <option value="0" ${!CateUpdate.status ? "selected" : ""}>Deleted</option>
+                                        <option value="1" ${CateUpdate.status ? "selected" : ""}>Active</option>
                                     </select>
-                                </div>                             
-                            </div>                           
-                            <div class="row mx-5">
-                                <button type="submit" 
-                                        class="btn btn-primary mt-3 col-1"
-                                        name="btn" value="AddNewAccount" >Create</button>
+                                </div>        
+                            </div>  
+                            <div class="row px-5 mb-3">
+                                <div class="col-6">
+                                    <label for="image" class="form-label">Category Image</label>
+                                    <textarea class="form-control" id="exampleFormControlTextarea1" name="image" rows="6"
+                                              onchange="previewImage(event)" required>${CateUpdate.image}</textarea> 
+                                    <div class="row mx-1">
+                                        <button type="submit" 
+                                                class="btn btn-primary mt-3 col-2"
+                                                name="btn" value="AdminUpdateCategory">SAVE</button>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <label class="form-label">Image Preview</label>
+                                    <div id="imagePreview" style="padding: 10px; width: 100%; max-height: 200px;display: flex;
+                                         align-items: center;
+                                         justify-content: center;">
+                                        <img id="preview" src="${CateUpdate.image}" alt="Image Preview" style="width:auto ; max-height: 200px;object-fit: contain">
+                                    </div>
+                                </div>
                             </div>
+
                         </form>
 
 
@@ -153,51 +160,11 @@
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
         <script src="web/view/admin/styleAdmin/js/datatables-simple-demo.js"></script>
         <script>
-            document.getElementById('registrationForm').addEventListener('submit', function (event) {
-                // Predefined list of existing usernames
-
-
-                // Get form values
-                const password = document.getElementById('password').value;
-                const email = document.getElementById('email').value;
-                const phone = document.getElementById('phone').value;
-                const userName = document.getElementById('username').value;
-
-                // Validation flags
-                let isValid = true;
-
-                const regex = /^[A-Za-z0-9]+$/;
-                if (!regex.test(userName)) {
-                    alert('User name does not contain special characters');
-                    isValid = false;
-                }
-
-                // Email validation
-                const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                if (!emailPattern.test(email)) {
-                    alert('Invalid email address');
-                    isValid = false;
-                }
-
-                // Phone number validation
-                const phonePattern = /^\d{10}$/;
-                if (!phonePattern.test(phone)) {
-                    alert('Phone number must be exactly 10 digits');
-                    isValid = false;
-                }
-
-                // Username validation
-                if (password.length < 6) {
-                    alert('Password must more than 6 char');
-                    isValid = false;
-                }
-
-                // If any validation fails, prevent form submission
-                if (!isValid) {
-                    event.preventDefault();
-                }
-            });
+                                                  function previewImage(event) {
+                                                      const imageUrl = event.target.value;
+                                                      const imgPreview = document.getElementById('preview');
+                                                      imgPreview.src = imageUrl;
+                                                  }
         </script>
-
     </body>
 </html>

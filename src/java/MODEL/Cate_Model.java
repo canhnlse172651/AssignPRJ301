@@ -13,14 +13,17 @@ public class Cate_Model {
     private int categoryId;
     private String name;
     private String image;
-    private String status;
+    private boolean status;
 
     // Constructors
-    public Cate_Model(int categoryId, String name, String image, String status) {
+    public Cate_Model(int categoryId, String name, String image, boolean status) {
         this.categoryId = categoryId;
         this.name = name;
         this.image = image;
         this.status = status;
+    }
+    public Cate_Model() {
+       
     }
 
     // Getters and setters
@@ -48,11 +51,11 @@ public class Cate_Model {
         this.image = image;
     }
 
-    public String getStatus() {
+    public boolean getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(boolean status) {
         this.status = status;
     }
 

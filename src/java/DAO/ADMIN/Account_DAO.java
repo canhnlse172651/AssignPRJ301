@@ -101,8 +101,9 @@ public class Account_DAO implements Serializable {
             }
         }
     }
-     public User_Model findOneById(int id) throws ClassNotFoundException, SQLException {
-         User_Model user = new User_Model();
+
+    public User_Model findOneById(int id) throws ClassNotFoundException, SQLException {
+        User_Model user = new User_Model();
         try {
             con = DB_Connection.getConnection();
             if (con != null) {
@@ -142,6 +143,63 @@ public class Account_DAO implements Serializable {
 
         }
         return user;
+    }
+
+    public boolean updateUser(User_Model user) throws SQLException, ClassNotFoundException {
+        try {
+            con = DB_Connection.getConnection();
+            if (con != null) {
+                String sql = "UPDATE [User] SET  password = ?, full_name = ?, email = ?, number_ordered = ?, phone = ?, status = ?, address = ?, role = ?, username = ? WHERE user_id = ?";
+                stm = con.prepareStatement(sql);
+                stm.setString(1, user.getPassword());
+                stm.setString(2, user.getFullName());
+                stm.setString(3, user.getEmail());
+                stm.setInt(4, user.getNumberOrdered());
+                stm.setString(5, user.getPhone());
+                stm.setBoolean(6, user.isStatus());
+                stm.setString(7, user.getAddress());
+                stm.setBoolean(8, user.isRole());
+                stm.setString(9, user.getUserName());
+                stm.setInt(10, user.getUserId());
+                int rowsUpdated = stm.executeUpdate();
+                return rowsUpdated > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return false;
+    }
+
+    public boolean deleteUser(int userId) throws SQLException, ClassNotFoundException {
+        try {
+            con = DB_Connection.getConnection();
+            if (con != null) {
+                User_Model user = findOneById(userId);
+                if(user!=null){
+                    user.setStatus(false);
+                    return updateUser(user);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return false;
     }
 
 }

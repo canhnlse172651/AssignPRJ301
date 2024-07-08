@@ -21,14 +21,12 @@ public class Cate_DAO {
     public List<Cate_Model> getAllCate() throws Exception {
 
         List<Cate_Model> cateList = new ArrayList<>();
-
         Connection con = null;
         PreparedStatement stm = null;
         String sql = null;
         ResultSet rs = null;
 
         try {
-
             con = DB_Connection.getConnection();
             if (con != null) {
                 //2 create SQL String
@@ -45,9 +43,9 @@ public class Cate_DAO {
                 int cateId = rs.getInt("category_id");
                 String name = rs.getString("name");
                 String image = rs.getString("image");
-                int status = rs.getInt("status");
+                boolean status = rs.getBoolean("status");
 
-                Cate_Model dto = new Cate_Model(cateId, name, image, image);
+                Cate_Model dto = new Cate_Model(cateId, name, image, status);
 
                 cateList.add(dto);
 
@@ -60,7 +58,7 @@ public class Cate_DAO {
                 rs.close();
             }
             if (stm != null) {
-                stm.close();;
+                stm.close();
             }
             if (con != null) {
                 con.close();

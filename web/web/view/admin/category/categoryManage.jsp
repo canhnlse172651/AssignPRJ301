@@ -15,11 +15,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Dashboard - SB Admin</title>
+        <title>Category - SB Admin</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrQd2mkvkXj9O0MWkHi5D0qS6WldFf3djoXKXYrGV4rOvvf6hM4MZ4gJ8HlRBET5+t2x1hX0+3qI6rb+g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
         <link href="web/view/admin/styleAdmin/css/styles.css" rel="stylesheet" />
-        <link href="web/view/admin/account/accountManage.css" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     </head>
     <body class="sb-nav-fixed">
@@ -49,7 +48,7 @@
             </ul>
         </nav>
          <div id="layoutSidenav">
-            <div id="layoutSidenav_nav">
+              <div id="layoutSidenav_nav">
                 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                     <div class="sb-sidenav-menu">
                         <div class="nav">
@@ -83,9 +82,9 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4">ACCOUNT MANAGE</h1>
+                        <h1 class="mt-4">CATEGORY MANAGE</h1>
                         <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item active">ACCOUNT MANAGE</li>
+                            <li class="breadcrumb-item active">CATEGORY MANAGE</li>
                         </ol>
                         <div class="row">
                             <div class="col-xl-3 col-md-6">
@@ -146,55 +145,41 @@
                             </div>
                         </div>
                         <div class="my-3">
-                            <a href="<c:url value='/MainServlet?btn=adminAddAccount'/>">
-                            <button type="button" class="btn btn-primary">Add new account</button>
+                            <a href="<c:url value='/MainServlet?btn=adminAddCategory'/>">
+                            <button type="button" class="btn btn-primary">Add new category</button>
                             </a>
                         </div>
                         
                         <div class="card mb-4">
                             <div class="card-header">
                                 <i class="fas fa-table me-1"></i>
-                                Account Manage
+                                Category Manage
                             </div>
                             <div class="card-body">
                                 <table id="datatablesSimple">
                                     <thead>
                                         <tr>
-                                            <th>User ID</th>
-                                            <th>Username</th>
-                                            <th>Password</th>
-                                            <th>Full Name</th>
-                                            <th>Email</th>
-                                            <th>Number Ordered</th>
-                                            <th>Phone</th>
+                                            <th>Category ID</th>
+                                            <th>Name</th>
                                             <th>Status</th>
-                                            <th>Address</th>
-                                            <th>Role</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
 
                                     <tbody>
-                                        <c:forEach var="user" items="${listUser}">
+                                        <c:forEach var="category" items="${listCate}">
                                             <tr>
-                                                <td>${user.userId}</td>
-                                                <td>${user.userName}</td>
-                                                <td>${user.password}</td>
-                                                <td>${user.fullName}</td>
-                                                <td>${user.email}</td>
-                                                <td>${user.numberOrdered}</td>
-                                                <td>${user.phone}</td>
-                                                <td>${user.status ? "active": "deleted" }</td>
-                                                <td>${user.address}</td>
-                                                <td >${user.role ? "admin":"customer"}</td>
+                                                <td>${category.categoryId}</td>
+                                                <td>${category.name}</td>
+                                                <td>${category.status ? "Active": "Deleted"}</td>
                                                 <td>
                                                     <div class="hidden-sm hidden-xs btn-group">
-                                                        <a href="<c:url value='/MainServlet?btn=adminGetUpdateAccount&userId=${user.userId}'/>">
+                                                        <a href="<c:url value='/MainServlet?btn=adminGetUpdateCategory&categoryId=${category.categoryId}'/>">
                                                             <button class="btn btn-xs btn-sm">
                                                                 <i class="fa-solid fa-pen-to-square fa-beat fa-lg" style="color: #24f59a;"></i>
                                                             </button>
                                                         </a>
-                                                        <a href="<c:url value='/MainServlet?btn=adminGetDeleteAccount&userId=${user.userId}'/>">
+                                                        <a href="<c:url value='/MainServlet?btn=adminGetDeleteCategory&categoryId=${category.categoryId}'/>">
                                                             <button class="btn btn-xs btn-sm">
                                                                 <i class="fa-solid fa-trash fa-beat fa-lg" style="color: #fb2109;"></i>
                                                             </button>

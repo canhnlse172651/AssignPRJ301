@@ -8,6 +8,8 @@ import DAO.ADMIN.Account_DAO;
 import MODEL.User_Model;
 import java.io.IOException;
 import java.io.PrintWriter;
+import static java.lang.System.out;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -18,11 +20,11 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author LA DAT
  */
-@WebServlet(name = "AdminUpdateAccountServlet", urlPatterns = {"/AdminUpdateAccountServlet"})
-public class AdminUpdateAccountServlet extends HttpServlet {
+@WebServlet(name = "AdminGetDeleteAccount", urlPatterns = {"/AdminGetDeleteAccount"})
+public class AdminGetDeleteAccount extends HttpServlet {
 
     private static String ADMIN_ACCOUNT_MANAGE_SERVLET = "/AccountServlet";
-    String url = "";
+    String url = ADMIN_ACCOUNT_MANAGE_SERVLET;
     Account_DAO accountDao = new Account_DAO();
 
     /**
@@ -40,25 +42,19 @@ public class AdminUpdateAccountServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
         try {
-            int userId = Integer.parseInt(request.getParameter("userId"));
-            int numberOrdered = Integer.parseInt(request.getParameter("numberOrdered"));
-            String username = request.getParameter("username");
-            String fullName = request.getParameter("fullName");
-            String email = request.getParameter("email");
-            String password = request.getParameter("password");
-            String address = request.getParameter("address");
-            String phone = request.getParameter("phone");
-            boolean role = Integer.parseInt(request.getParameter("role"))==1;
-            boolean status = Integer.parseInt(request.getParameter("status")) == 1;
-            url = "/MainServlet?btn=adminGetUpdateAccount&userId="+userId;
-            User_Model user = new User_Model(userId, username, password, fullName, email, numberOrdered, phone, status, address, role);
-            if(accountDao.updateUser(user)){
-               url = ADMIN_ACCOUNT_MANAGE_SERVLET;
+            if (request.getParameter("userId") != null) {
+                int userId = Integer.parseInt(request.getParameter("userId"));
+
+                if (accountDao.deleteUser(userId)) {
+                    url = ADMIN_ACCOUNT_MANAGE_SERVLET;
+                }
             }
         } catch (Exception e) {
-            System.out.println("SERVLET.ADMIN.ACCOUNT.AddAccountServlet.processRequest()" + e);
+            System.out.println("SERVLET.ADMIN.ACCOUNT.AdminGetUpdateAccount.processRequest()" + e);
         } finally {
-            response.sendRedirect(request.getContextPath() + url);
+            RequestDispatcher rd = request.getRequestDispatcher(url);
+            rd.forward(request, response);
+            out.close();
         }
     }
 
