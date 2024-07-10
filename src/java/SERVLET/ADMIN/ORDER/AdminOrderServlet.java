@@ -4,8 +4,15 @@
  */
 package SERVLET.ADMIN.ORDER;
 
+import DAO.ADMIN.Category_DAO;
+import DAO.ADMIN.Order_DAO;
+import MODEL.Cate_Model;
+import MODEL.Orders_Model;
 import java.io.IOException;
 import java.io.PrintWriter;
+import static java.lang.System.out;
+import java.util.List;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -19,6 +26,9 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "AdminOrderServlet", urlPatterns = {"/AdminOrderServlet"})
 public class AdminOrderServlet extends HttpServlet {
 
+    private static String ADMIN_CATEGORY_MANAGE_PAGE = "web/view/admin/order/orderManage.jsp";
+    Order_DAO orderDAO = new Order_DAO();
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -31,17 +41,17 @@ public class AdminOrderServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet AdminOrderServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet AdminOrderServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        try {
+            List<Orders_Model> listOrder = orderDAO.findAll();
+            request.setAttribute("listOrder", listOrder);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            RequestDispatcher rd = request.getRequestDispatcher(ADMIN_CATEGORY_MANAGE_PAGE);
+            rd.forward(request, response);
+            out.close();
         }
     }
 
