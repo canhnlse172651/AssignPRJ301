@@ -12,18 +12,21 @@ public class Product_Model {
     private int id;
     private int categoryId;
     private String name;
-    private int status;
+    private boolean status;
     private String size;
     private double price;
     private int stockQuantity;
     private String description;
     private String image;
+    private Cate_Model categoryModel;
+    private String categoryname;
+    private int count;
 
     // Constructors
     public Product_Model() {
     }
 
-    public Product_Model(int id, int categoryId, String name, int status, String size, double price, int stockQuantity, String description, String image) {
+    public Product_Model(int id, int categoryId, String name, boolean status, String size, double price, int stockQuantity, String description, String image) {
         this.id = id;
         this.categoryId = categoryId;
         this.name = name;
@@ -60,11 +63,11 @@ public class Product_Model {
         this.name = name;
     }
 
-    public int getStatus() {
+    public boolean getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(boolean status) {
         this.status = status;
     }
 
@@ -106,6 +109,26 @@ public class Product_Model {
 
     public void setImage(String image) {
         this.image = image;
+    }
+    public Cate_Model getCateModel() {
+        return categoryModel;
+    }
+    public String getCategoryName() {
+        return categoryname;
+    }
+
+    public void setCategoryName(String categoryname) {
+        this.categoryname = categoryname;
+    }
+    public void setCateModel(Cate_Model categoryModel) {
+        this.categoryModel = categoryModel;
+    }
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
     }
 
     // toString method for debugging

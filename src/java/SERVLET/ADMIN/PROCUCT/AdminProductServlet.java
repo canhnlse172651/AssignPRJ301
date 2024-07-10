@@ -2,15 +2,16 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package SERVLET.ADMIN;
+package SERVLET.ADMIN.PROCUCT;
 
-import DAO.ADMIN.Account_DAO;
-import DAO.User_DAO;
-import MODEL.User_Model;
+import DAO.ADMIN.Product_DAO;
+import MODEL.Cate_Model;
+import MODEL.Product_Model;
 import java.io.IOException;
 import java.io.PrintWriter;
 import static java.lang.System.out;
 import java.sql.SQLException;
+import java.util.Comparator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,17 +21,16 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.apache.jasper.tagplugins.jstl.core.ForEach;
 
 /**
  *
  * @author LA DAT
  */
-@WebServlet(name = "AccountServlet", urlPatterns = {"/AccountServlet"})
-public class AccountServlet extends HttpServlet {
+@WebServlet(name = "AdminProductServlet", urlPatterns = {"/AdminProductServlet"})
+public class AdminProductServlet extends HttpServlet {
 
-    Account_DAO accountDao = new Account_DAO();
-    private static String ADMIN_ACCOUNT_MANAGE_PAGE = "web/view/admin/account/accountManage.jsp";
+    private static String ADMIN_PRODUCT_MANAGE_PAGE = "web/view/admin/product/productManage.jsp";
+    Product_DAO product_DAO = new Product_DAO();
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,22 +42,22 @@ public class AccountServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, ClassNotFoundException, SQLException {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
-	response.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
         try {
-            List<User_Model> top = accountDao.findTopUser();
-            List<User_Model> listUser = accountDao.findAll();
-            System.out.println("SERVLET.ADMIN.AccountServlet.processRequest()===============================================================");
-            for(User_Model user : top){
-                System.out.println(user.getFullName()+"  ");
-            }
-            request.setAttribute("listUser", listUser);
+            List<Product_Model> listProduct = product_DAO.findAll(0);
+            List<Product_Model> top = product_DAO.findTopProduct();
+            top.sort(Comparator.comparing(Product_Model::getCount).reversed());
+            request.setAttribute("listProduct", listProduct);
             request.setAttribute("top", top);
-
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(AdminProductServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(AdminProductServlet.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
-            RequestDispatcher rd = request.getRequestDispatcher(ADMIN_ACCOUNT_MANAGE_PAGE);
+            RequestDispatcher rd = request.getRequestDispatcher(ADMIN_PRODUCT_MANAGE_PAGE);
             rd.forward(request, response);
             out.close();
         }
@@ -75,13 +75,7 @@ public class AccountServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(AccountServlet.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(AccountServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -95,13 +89,7 @@ public class AccountServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(AccountServlet.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(AccountServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**

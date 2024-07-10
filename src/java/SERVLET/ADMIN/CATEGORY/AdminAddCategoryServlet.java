@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 package SERVLET.ADMIN.CATEGORY;
-import org.apache.commons.io.IOUtils;
+
 import DAO.ADMIN.Category_DAO;
 import MODEL.Cate_Model;
 import java.io.IOException;
@@ -48,30 +48,32 @@ public class AdminAddCategoryServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
-      
-        
         try {
-             String name = request.getParameter("name");
-          String image = request.getParameter("image");  
-            if (name != null && image != null) {             
-                Cate_Model category = new Cate_Model();
-                category.setName(name);
-                category.setImage(image);
-                category.setStatus(true);
-                if (cateDAO.insertCategory(category)) {
-                    url = ADMIN_CATEGORY_MANAGE_SERVLET;
-                }else{
+            String name = request.getParameter("name");
+            String image = request.getParameter("image");
+            if (name != null && image != null) {
+                Cate_Model category = cateDAO.findOneByName(name);
+                System.out.println("SERVLET.ADMIN.CATEGORY.AdminAddCategoryServlet.processRequest()"+ category.getName());
+                if (category.getName() != null) {
                     url = ADMIN_ADD_CATEGORY_PAGE;
+                } else {                    
+                    category.setName(name);
+                    category.setImage(image);
+                    category.setStatus(true);
+                    if (cateDAO.insertCategory(category)) {
+                        url = ADMIN_CATEGORY_MANAGE_SERVLET;
+                    } else {
+                        url = ADMIN_ADD_CATEGORY_PAGE;
+                    }
                 }
             }
-        } catch (Exception e) {            
+        } catch (Exception e) {
             System.out.println("SERVLET.ADMIN.ACCOUNT.AddAccountServlet.processRequest()" + e.getMessage());
-        }  finally {
-            
+        } finally {
+
             response.sendRedirect(request.getContextPath() + url);
         }
     }
-    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

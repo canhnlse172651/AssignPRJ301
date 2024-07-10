@@ -27,16 +27,23 @@ public class MainServlet extends HttpServlet {
     private final String PRODUCT_DETAIL_SERVLET = "ProductDetailServlet";
     private final String LOGIN_PAGE = "web/view/Login/login.html";
     private final String ADMIN_ADD_ACCOUNT_SERVLET = "/AddAccountServlet";
-    private final String ADMIN_ADD_CATEGORY_SERVLET = "/AdminAddCategoryServlet";
+    private final String ADMIN_ADD_CATEGORY_SERVLET = "/AdminAddCategoryServlet";   
+    private final String ADMIN_ADD_PRODUCT_SERVLET = "/AdminAddProductServlet";   
     private final String ADMIN_UPADTE_ACCOUNT_SERVLET = "/AdminUpdateAccountServlet";
-     private final String ADMIN_UPADTE_CATEGORY_SERVLET = "/AdminUpdateCategoryServlet";
+    private final String ADMIN_UPADTE_CATEGORY_SERVLET = "/AdminUpdateCategoryServlet";
+    private final String ADMIN_UPADTE_PRODUCT_SERVLET = "/AdminUpdateProductServlet";
+    private final String ADMIN_UPADTE_ORDER_SERVLET = "/AdminUpdateOrderServlet";
     private final String ADMIN_ADD_ACCOUNT_PAGE = "web/view/admin/account/addAccount.jsp";
     private final String ADMIN_ADD_CATEGORY_PAGE = "web/view/admin/category/addCategory.jsp";
+    private final String ADMIN_ADD_PRODUCT_PAGE = "web/view/admin/product/addProduct.jsp";
+    private final String ADMIN_GET_ADD_PRODUCT_SERVLET = "/AdminGetAddProductServlet";
     private final String ADMIN_GET_UPDATE_ACCOUNT_SERVLET = "/AdminGetUpdateAccount";
     private final String ADMIN_GET_UPDATE_CATEGORY_SERVLET = "/AdminGetUpdateCategory";
+    private final String ADMIN_GET_UPDATE_PRODUCT_SERVLET = "/AdminGetUpdateProduct";
     private final String ADMIN_UPDATE_ACCOUNT_PAGE = "web/view/admin/account/updateAccount.jsp";
     private final String ADMIN_GET_DELETE_ACCOUNT_SERVLET = "/AdminGetDeleteAccount";
     private final String ADMIN_GET_DELETE_CATEGORY_SERVLET = "/AdminGetDeleteCategory";
+    private final String ADMIN_GET_DELETE_PRODUCT_SERVLET = "/AdminGetDeleteProduct";
     private final String ADMIN_ACCOUNT_SERVLET = "/AccountServlet";
 
     /**
@@ -83,6 +90,18 @@ public class MainServlet extends HttpServlet {
                     url = ADMIN_UPADTE_CATEGORY_SERVLET;
                 }else if (button.equals("adminGetDeleteCategory")) {
                     url = ADMIN_GET_DELETE_CATEGORY_SERVLET;
+                }else if (button.equals("adminAddProduct")) {
+                    url = ADMIN_GET_ADD_PRODUCT_SERVLET;
+                }else if (button.equals("adminAddNewProduct")) {
+                    url = ADMIN_ADD_PRODUCT_SERVLET;
+                }else if (button.equals("adminGetUpdateProduct")) {
+                    url = ADMIN_GET_UPDATE_PRODUCT_SERVLET;
+                }else if (button.equals("adminUpdateProduct")) {
+                    url = ADMIN_UPADTE_PRODUCT_SERVLET;
+                }else if (button.equals("adminGetDeleteProduct")) {
+                    url = ADMIN_GET_DELETE_PRODUCT_SERVLET;
+                }else if (button.equals("AdminUpdateOrder")) {
+                    url = ADMIN_UPADTE_ORDER_SERVLET;
                 }
             }else{
                 url = LOGIN_PAGE; 

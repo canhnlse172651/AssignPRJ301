@@ -201,5 +201,44 @@ public class Account_DAO implements Serializable {
         }
         return false;
     }
+ public List<User_Model> findTopUser() throws ClassNotFoundException, SQLException {
+        List<User_Model> listUser = new ArrayList<>();
+        try {
+            con = DB_Connection.getConnection();
+            if (con != null) {
+                sql ="select top 3 * from [User] order by number_ordered desc";
+            }
 
+            stm = con.prepareStatement(sql);
+            resultSet = stm.executeQuery();
+            while (resultSet.next()) {
+                int userId = resultSet.getInt("user_id");
+                String user_Name = resultSet.getString("username");
+                String user_password = resultSet.getString("password");
+                String fullName = resultSet.getString("full_name");
+                String email = resultSet.getString("email");
+                int numberOrdered = resultSet.getInt("number_ordered");
+                String phone = resultSet.getString("phone");
+                boolean status = resultSet.getBoolean("status");
+                String address = resultSet.getString("address");
+                boolean role = resultSet.getBoolean("role");
+                User_Model user = new User_Model(userId, user_Name, user_password, fullName, email, numberOrdered, phone, status, address, role);
+                listUser.add(user);
+            }
+        } catch (SQLException e) {
+            System.out.println("DAO.ADMIN.Account_DAO.findAll()" + e);
+        } finally {
+            if (resultSet != null) {
+                resultSet.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+
+        }
+        return listUser;
+    }
 }

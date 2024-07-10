@@ -2,11 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package SERVLET.ADMIN;
+package SERVLET.ADMIN.PROCUCT;
 
-import DAO.ADMIN.Account_DAO;
-import DAO.User_DAO;
-import MODEL.User_Model;
+import DAO.ADMIN.Category_DAO;
+import MODEL.Cate_Model;
 import java.io.IOException;
 import java.io.PrintWriter;
 import static java.lang.System.out;
@@ -20,18 +19,15 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.apache.jasper.tagplugins.jstl.core.ForEach;
 
 /**
  *
  * @author LA DAT
  */
-@WebServlet(name = "AccountServlet", urlPatterns = {"/AccountServlet"})
-public class AccountServlet extends HttpServlet {
-
-    Account_DAO accountDao = new Account_DAO();
-    private static String ADMIN_ACCOUNT_MANAGE_PAGE = "web/view/admin/account/accountManage.jsp";
-
+@WebServlet(name = "AdminGetAddProductServlet", urlPatterns = {"/AdminGetAddProductServlet"})
+public class AdminGetAddProductServlet extends HttpServlet {
+    private final String ADMIN_ADD_PRODUCT_PAGE = "web/view/admin/product/addProduct.jsp";
+    Category_DAO cateDAO = new Category_DAO();
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -42,22 +38,15 @@ public class AccountServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, ClassNotFoundException, SQLException {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        request.setCharacterEncoding("UTF-8");
-	response.setCharacterEncoding("UTF-8");
         try {
-            List<User_Model> top = accountDao.findTopUser();
-            List<User_Model> listUser = accountDao.findAll();
-            System.out.println("SERVLET.ADMIN.AccountServlet.processRequest()===============================================================");
-            for(User_Model user : top){
-                System.out.println(user.getFullName()+"  ");
-            }
-            request.setAttribute("listUser", listUser);
-            request.setAttribute("top", top);
-
-        } finally {
-            RequestDispatcher rd = request.getRequestDispatcher(ADMIN_ACCOUNT_MANAGE_PAGE);
+            List<Cate_Model> listCate = cateDAO.findAll();
+            request.setAttribute("listCate", listCate);
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(AdminGetAddProductServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }finally {
+            RequestDispatcher rd = request.getRequestDispatcher(ADMIN_ADD_PRODUCT_PAGE);
             rd.forward(request, response);
             out.close();
         }
@@ -75,13 +64,7 @@ public class AccountServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(AccountServlet.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(AccountServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -95,13 +78,7 @@ public class AccountServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(AccountServlet.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(AccountServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**

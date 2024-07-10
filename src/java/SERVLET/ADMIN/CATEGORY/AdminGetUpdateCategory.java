@@ -10,6 +10,7 @@ import MODEL.User_Model;
 import java.io.IOException;
 import java.io.PrintWriter;
 import static java.lang.System.out;
+import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -24,7 +25,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "AdminGetUpdateCategory", urlPatterns = {"/AdminGetUpdateCategory"})
 public class AdminGetUpdateCategory extends HttpServlet {
 
-    private static String ADMIN_CATEGORY_MANAGE_SERVLET = "/CategoryServlet";
+    private static String ADMIN_CATEGORY_MANAGE_SERVLET = "/AdminCategoryServlet";
     private static String ADMIN_UPDATE_CATEGORY_PAGE = "web/view/admin/category/updateCategory.jsp";
     String url = ADMIN_CATEGORY_MANAGE_SERVLET;
     Category_DAO cateDAO = new Category_DAO();
@@ -45,8 +46,8 @@ public class AdminGetUpdateCategory extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         try {
             if (request.getParameter("categoryId") != null) {
-                int userId = Integer.parseInt(request.getParameter("categoryId"));
-                Cate_Model cate = cateDAO.findOneById(userId);
+                int categoryId = Integer.parseInt(request.getParameter("categoryId"));
+                Cate_Model cate = cateDAO.findOneById(categoryId);
                 if (cate != null) {
                     request.setAttribute("CateUpdate", cate);
                     url = ADMIN_UPDATE_CATEGORY_PAGE;

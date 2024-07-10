@@ -9,11 +9,11 @@ package MODEL;
  * @author Thinkpad
  */
 public class Cate_Model {
-
     private int categoryId;
     private String name;
     private String image;
     private boolean status;
+    private int productNumber;
 
     // Constructors
     public Cate_Model(int categoryId, String name, String image, boolean status) {
@@ -57,6 +57,13 @@ public class Cate_Model {
 
     public void setStatus(boolean status) {
         this.status = status;
+    }
+    public int getProductNumber() {
+        return productNumber;
+    }
+
+    public void setProductNumber(int productNumber) {
+        this.productNumber = productNumber;
     }
 
     // toString method (optional for debugging purposes)
