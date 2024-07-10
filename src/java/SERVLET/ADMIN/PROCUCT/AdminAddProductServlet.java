@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "AdminAddProductServlet", urlPatterns = {"/AdminAddProductServlet"})
 public class AdminAddProductServlet extends HttpServlet {
+
     private static String ADMIN_ADD_PRODUCT_PAGE = "/MainServlet?btn=adminAddProduct";
     private static String ADMIN_PRODUCT_MANAGE_SERVLET = "/AdminProductServlet";
     String url = ADMIN_ADD_PRODUCT_PAGE;
@@ -47,17 +48,20 @@ public class AdminAddProductServlet extends HttpServlet {
             String size = request.getParameter("size");
             String description = request.getParameter("description");
             String image = request.getParameter("image");
-            Product_Model product = new Product_Model(0, categoryId, name, true, size, price, quantity, description, image);
-            if (product_DAO.insertProduct(product)) {
-                url = ADMIN_PRODUCT_MANAGE_SERVLET;
+            Product_Model product = product_DAO.findOneByName(name, size);
+            if (product.getName() == null) {
+                product = new Product_Model(0, categoryId, name, true, size, price, quantity, description, image);
+                if (product_DAO.insertProduct(product)) {
+                    url = ADMIN_PRODUCT_MANAGE_SERVLET;
+                } else {                    
+                    url = ADMIN_ADD_PRODUCT_PAGE;
+                }
             } else {
                 url = ADMIN_ADD_PRODUCT_PAGE;
             }
-
         } catch (Exception e) {
             System.out.println("SERVLET.ADMIN.ACCOUNT.AddAccountServlet.processRequest()" + e.getMessage());
         } finally {
-
             response.sendRedirect(request.getContextPath() + url);
         }
     }

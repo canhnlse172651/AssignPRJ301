@@ -20,14 +20,14 @@ import java.util.List;
  * @author LA DAT
  */
 public class Product_DAO implements Serializable {
-    
+
     Connection con = null;
     PreparedStatement stm = null;
     ResultSet resultSet = null;
     String sql = null;
-    
+
     public List<Product_Model> findAll(int categoryId) throws ClassNotFoundException, SQLException {
-        
+
         List<Product_Model> productList = new ArrayList<>();
         try {
             con = DB_Connection.getConnection();
@@ -38,7 +38,7 @@ public class Product_DAO implements Serializable {
                     sql = "  SELECT p.*c.name as cateName FROM Product as p JOIN Categories as c ON p.category_id = c.category_id"
                             + "WHERE p.category_id = " + categoryId;
                 }
-                
+
                 stm = con.prepareStatement(sql);
                 resultSet = stm.executeQuery();
                 while (resultSet.next()) {
@@ -60,10 +60,7 @@ public class Product_DAO implements Serializable {
                     dto.setCateModel(cate);
                     dto.setCategoryName(cateName);
                     productList.add(dto);
-                    System.out.println("---------------------------------------------------------------------------------------------------------------------------------------SERVLET.ADMIN.PROCUCT.AdminProductServlet.processRequest()");
-                    for (Product_Model pro : productList) {
-                        System.out.println("Name: " + pro.getName() + " Cate: " + pro.getCateModel().getName());
-                    }
+
                 }
             }
         } catch (Exception e) {
@@ -81,7 +78,7 @@ public class Product_DAO implements Serializable {
         }
         return productList;
     }
-    
+
     public boolean insertProduct(Product_Model product) throws SQLException, ClassNotFoundException {
         try {
             con = DB_Connection.getConnection();
@@ -115,17 +112,17 @@ public class Product_DAO implements Serializable {
         }
         return false;
     }
-    
+
     public Product_Model findOneById(int id) throws ClassNotFoundException, SQLException {
         Product_Model product = new Product_Model();
         try {
             con = DB_Connection.getConnection();
             if (con != null) {
-                
+
                 sql = "select * "
                         + "from [Product] where product_id = ?";
             }
-            
+
             stm = con.prepareStatement(sql);
             stm.setInt(1, id);
             resultSet = stm.executeQuery();
@@ -156,7 +153,7 @@ public class Product_DAO implements Serializable {
         }
         return product;
     }
-    
+
     public boolean updateProduct(Product_Model product) throws SQLException, ClassNotFoundException {
         try {
             con = DB_Connection.getConnection();
@@ -188,7 +185,7 @@ public class Product_DAO implements Serializable {
         }
         return false;
     }
-    
+
     public boolean deleteProduct(int categoryId) throws SQLException, ClassNotFoundException {
         try {
             con = DB_Connection.getConnection();
@@ -210,4 +207,93 @@ public class Product_DAO implements Serializable {
         }
         return false;
     }
+
+    public Product_Model findOneByName(String productName, String productSize) throws ClassNotFoundException, SQLException {
+        Product_Model product = new Product_Model();
+        try {
+            con = DB_Connection.getConnection();
+            if (con != null) {
+
+                sql = "select * "
+                        + "from [Product] where name = ? AND size = ?";
+            }
+
+            stm = con.prepareStatement(sql);
+            stm.setString(1, productName);
+            stm.setString(2, productSize);
+            resultSet = stm.executeQuery();
+            while (resultSet.next()) {
+                int productId = resultSet.getInt("product_id");
+                int cateId = resultSet.getInt("category_id");
+                String name = resultSet.getString("name");
+                String size = resultSet.getString("size");
+                String description = resultSet.getString("description");
+                double price = resultSet.getDouble("price");
+                int quantity = resultSet.getInt("stock_quantity");
+                boolean status = resultSet.getBoolean("status");
+                String image = resultSet.getString("image");
+                product = new Product_Model(productId, cateId, name, status, size, price, quantity, description, image);
+            }
+        } catch (SQLException e) {
+            System.out.println("DAO.ADMIN.Account_DAO.findAll()" + e);
+        } finally {
+            if (resultSet != null) {
+                resultSet.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return product;
+    }
+
+    public List<Product_Model> findTopProduct() throws ClassNotFoundException, SQLException {
+
+        List<Product_Model> productList = new ArrayList<>();
+        try {
+            con = DB_Connection.getConnection();
+            if (con != null) {
+                sql = "SELECT p.product_id, p.name,p.stock_quantity, p.size,p.price, Sum(p1.sum) as SL FROM Product p JOIN (\n"
+                        + "	SELECT od.product_id, Sum(od.quantity) as sum FROM [Order] o JOIN [OrderDetail] od ON o.order_id = od.order_id\n"
+                        + "	where o.status =1 GROUP BY od.product_id) as p1 ON p.product_id=p1.product_id \n"
+                        + "Where p.status = 1 \n"
+                        + "GROUP BY p.product_id, p.name, p.stock_quantity, p.size, p.price";
+                stm = con.prepareStatement(sql);
+                resultSet = stm.executeQuery();
+                while (resultSet.next()) {
+                    int productId = resultSet.getInt("product_id");
+                    String name = resultSet.getString("name");
+                    String size = resultSet.getString("size");
+                    int quantity = resultSet.getInt("stock_quantity");
+                    int count = resultSet.getInt("SL");
+                    double price = resultSet.getDouble("price");
+                    Product_Model product = new Product_Model();
+                    product.setId(productId);
+                    product.setName(name);
+                    product.setSize(size);
+                    product.setPrice(price);
+                    product.setStockQuantity(quantity);
+                    product.setCount(count);
+                    productList.add(product);
+                }
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        } finally {
+            if (resultSet != null) {
+                resultSet.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return productList;
+    }
+
 }

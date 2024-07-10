@@ -156,6 +156,7 @@
                                 </div>
                             </div>
                         </form>
+                       
                 </main>
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">
@@ -186,24 +187,25 @@
                                         }
         </script>
         <script>
-        function validateForm() {
-            var price = document.getElementById("price").value;
-            var quantity = document.getElementById("quantity").value;
-            var errorMessage = "";
+            function validateForm() {
+                var price = document.getElementById("price").value;
+                var quantity = document.getElementById("quantity").value;
+                var errorMessage = "";
 
-            if (price <= 0 ) {
-                errorMessage += "Price  must be greater than 0.\n";
-            }
-            if (!Number.isInteger(Number(quantity)) ||quantity <= 0) {
-                errorMessage += "Quantity  must be a positive integer.\n";
-            }
+                if (price <= 0) {
+                    errorMessage += "Price  must be greater than 0.\n";
+                }
+                if (!Number.isInteger(Number(quantity)) || quantity <= 0) {
+                    errorMessage += "Quantity  must be a positive integer.\n";
+                }
 
-            if (errorMessage !== "") {
-                alert(errorMessage);
-                return false;
+                if (errorMessage !== "") {
+                    alert(errorMessage);
+                    return false;
+                }
+                return true;
             }
-            return true;
-        }
-    </script>
+           
+        </script>
     </body>
 </html>

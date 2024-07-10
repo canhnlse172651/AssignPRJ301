@@ -45,6 +45,8 @@ public class AdminCategoryServlet extends HttpServlet {
 	response.setCharacterEncoding("UTF-8");
         try {
             List<Cate_Model> listCate = cateDAO.findAll();
+            List<Cate_Model> top = cateDAO.findTopCate();
+            request.setAttribute("top", top);
             request.setAttribute("listCate", listCate);
         }finally {
             RequestDispatcher rd = request.getRequestDispatcher(ADMIN_CATEGORY_MANAGE_PAGE);

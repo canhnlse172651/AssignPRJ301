@@ -136,7 +136,7 @@ public class Category_DAO implements Serializable {
                 stm.setString(1, cate.getName());
                 stm.setString(2, cate.getImage());
                 stm.setBoolean(3, cate.getStatus());
-               stm.setInt(4, cate.getCategoryId());
+                stm.setInt(4, cate.getCategoryId());
                 int rowsUpdated = stm.executeUpdate();
                 return rowsUpdated > 0;
             }
@@ -159,11 +159,11 @@ public class Category_DAO implements Serializable {
             con = DB_Connection.getConnection();
             if (con != null) {
                 Cate_Model cate = findOneById(categoryId);
-                cate.setStatus(false);                
+                cate.setStatus(false);
                 return updateCategory(cate);
             }
         } catch (Exception e) {
-            System.out.println("DAO.ADMIN.Category_DAO.deleteCategory()"+ e);
+            System.out.println("DAO.ADMIN.Category_DAO.deleteCategory()" + e);
             return false;
         } finally {
             if (stm != null) {
@@ -176,4 +176,77 @@ public class Category_DAO implements Serializable {
         return false;
     }
 
+    public Cate_Model findOneByName(String categoryName) throws ClassNotFoundException, SQLException {
+        Cate_Model cate = new Cate_Model();
+        try {
+            con = DB_Connection.getConnection();
+            if (con != null) {
+                sql = "select * from [Categories] where name = ? ";
+            }
+
+            stm = con.prepareStatement(sql);
+            stm.setString(1, categoryName);
+            resultSet = stm.executeQuery();
+            while (resultSet.next()) {
+                int cateId = resultSet.getInt("category_id");
+                String name = resultSet.getString("name");
+                String image = resultSet.getString("image");
+                boolean status = resultSet.getBoolean("status");
+                cate = new Cate_Model(cateId, name, image, status);
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            System.out.println("DAO.ADMIN.Account_DAO.findAll()" + e);
+        } finally {
+            if (resultSet != null) {
+                resultSet.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+
+        }
+        return cate;
+    }
+
+    public List<Cate_Model> findTopCate() throws ClassNotFoundException, SQLException {
+
+        List<Cate_Model> cateList = new ArrayList<>();
+        try {
+            con = DB_Connection.getConnection();
+            if (con != null) {
+                sql = "SELECT c.category_id, c.name, c.image, c.status, COUNT(p.category_id) AS productCount FROM Categories c LEFT JOIN Product p ON c.category_id = p.category_id\n"
+                        + "GROUP BY c.category_id, c.name, c.image, c.status ORDER BY productCount DESC";
+            }
+            stm = con.prepareStatement(sql);
+            resultSet = stm.executeQuery();
+            while (resultSet.next()) {
+                int cateId = resultSet.getInt("category_id");
+                String name = resultSet.getString("name");
+                String image = resultSet.getString("image");
+                int number = resultSet.getInt("productCount");
+                boolean status = resultSet.getBoolean("status");
+                Cate_Model cate = new Cate_Model(cateId, name, image, status);                
+                cate.setProductNumber(number);
+                cateList.add(cate);
+            }
+
+        } catch (Exception e) {
+            System.out.println(e);
+        } finally {
+            if (resultSet != null) {
+                resultSet.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+
+        return cateList;
+    }
 }
