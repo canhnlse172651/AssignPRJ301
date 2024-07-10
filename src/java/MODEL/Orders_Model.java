@@ -20,7 +20,7 @@ public class Orders_Model {
     private double totalPrice;
     private String fullName;
     private String paymentType;
-    private String paymentStatus;
+    private boolean paymentStatus;
     private String cardNumber;
     private Date paymentDate;
     private String bankBranding;
@@ -40,7 +40,7 @@ public class Orders_Model {
     }
 
     public Orders_Model(int orderId, int userId, int status, Date orderDate, Date deliveryDate, double totalPrice,
-            String fullName, String paymentType, String paymentStatus, String cardNumber, Date paymentDate,
+            String fullName, String paymentType, boolean paymentStatus, String cardNumber, Date paymentDate,
             String bankBranding, String cardholderName) {
         this.orderId = orderId;
         this.userId = userId;
@@ -122,11 +122,11 @@ public class Orders_Model {
         this.paymentType = paymentType;
     }
 
-    public String getPaymentStatus() {
+    public boolean getPaymentStatus() {
         return paymentStatus;
     }
 
-    public void setPaymentStatus(String paymentStatus) {
+    public void setPaymentStatus(boolean paymentStatus) {
         this.paymentStatus = paymentStatus;
     }
 

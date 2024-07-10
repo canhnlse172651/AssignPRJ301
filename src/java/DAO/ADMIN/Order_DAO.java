@@ -47,7 +47,7 @@ public class Order_DAO implements Serializable {
                 double totalPrice = resultSet.getDouble("totalPrice");
                 String fullName = resultSet.getString("full_name");
                 String paymentType = resultSet.getString("payment_type");
-                String paymentStatus = resultSet.getString("paymentStatus");
+                boolean paymentStatus = resultSet.getBoolean("paymentStatus");
                 String cardNumber = resultSet.getString("card_number");
                 Date paymentDate = resultSet.getDate("payment_date");
                 String bankBranding = resultSet.getString("bank_branding");
@@ -73,13 +73,14 @@ public class Order_DAO implements Serializable {
         return orderList;
     }
 
-    public boolean updateOrderStatus(int orderId, String status) throws SQLException {
+    public boolean updateOrderStatus(int orderId, int status) throws SQLException {
         try {
             con = DB_Connection.getConnection();
             if (con != null) {
                 sql = "UPDATE [Order] SET status = ? WHERE order_id = ?";
             }
-            stm.setString(1, status);
+            stm = con.prepareStatement(sql);
+            stm.setInt(1, status);
             stm.setInt(2, orderId);
             boolean rowUpdated = stm.executeUpdate() > 0;
             return rowUpdated;
@@ -99,16 +100,18 @@ public class Order_DAO implements Serializable {
         }
     }
 
-    public boolean updatePaymentStatus(int paymentId, String status) throws SQLException {
+    public boolean updatePaymentStatus(int paymentId, boolean status) throws SQLException {
         try {
             con = DB_Connection.getConnection();
             if (con != null) {
                 sql = "UPDATE Payment SET status = ? WHERE payment_id = ?";
+                stm = con.prepareStatement(sql);
+                stm.setBoolean(1, status);
+                stm.setInt(2, paymentId);
+                int rowUpdated = stm.executeUpdate();
+                return rowUpdated > 0;
             }
-            stm.setString(1, status);
-            stm.setInt(2, paymentId);
-            boolean rowUpdated = stm.executeUpdate() > 0;
-            return rowUpdated;
+            return false;
         } catch (Exception e) {
             System.out.println("DAO.ADMIN.Order_DAO.updateOrderStatus()" + e);
             return false;
@@ -123,6 +126,6 @@ public class Order_DAO implements Serializable {
                 con.close();
             }
         }
-        
+
     }
 }
