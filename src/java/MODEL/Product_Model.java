@@ -20,6 +20,7 @@ public class Product_Model {
     private String image;
     private Cate_Model categoryModel;
     private String categoryname;
+    private int count;
 
     // Constructors
     public Product_Model() {
@@ -121,6 +122,13 @@ public class Product_Model {
     }
     public void setCateModel(Cate_Model categoryModel) {
         this.categoryModel = categoryModel;
+    }
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
     }
 
     // toString method for debugging

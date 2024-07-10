@@ -42,13 +42,13 @@
                         <li><a class="dropdown-item" href="#!">Settings</a></li>
                         <li><a class="dropdown-item" href="#!">Activity Log</a></li>
                         <li><hr class="dropdown-divider" /></li>
-                       <li><a class="dropdown-item" href="/Grocery/Logout">Logout</a></li>
+                        <li><a class="dropdown-item" href="/Grocery/Logout">Logout</a></li>
                     </ul>
                 </li>
             </ul>
         </nav>
-         <div id="layoutSidenav">
-              <div id="layoutSidenav_nav">
+        <div id="layoutSidenav">
+            <div id="layoutSidenav_nav">
                 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                     <div class="sb-sidenav-menu">
                         <div class="nav">
@@ -84,72 +84,84 @@
                     <div class="container-fluid px-4">
                         <h1 class="mt-4">CATEGORY MANAGE</h1>
                         <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item active">CATEGORY MANAGE</li>
+                            <li class="breadcrumb-item active">TOP 4 CATEGORIES</li>
                         </ol>
                         <div class="row">
                             <div class="col-xl-3 col-md-6">
                                 <div class="card bg-primary text-white mb-4">
-                                    <div class="card-body">Primary Card</div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <span class="col-12">${top[0].name!=null ? top[0].name :"Primary Card"} (${top[0].status!=null ? "Active" :"Deleted"}) </span>
+<!--                                            <image style="width: 40px; height: 40px;" src="${top[0].image!=null ? top[0].image :"Primary Card"}"/>-->
+                                        </div>
+                                    </div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">View Details</a>
+                                        <div class="col-4">${top[0].productNumber!=null ? top[0].productNumber :0} Products</div>
                                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-xl-3 col-md-6">
                                 <div class="card bg-warning text-white mb-4">
-                                    <div class="card-body">Warning Card</div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <span class="col-12">${top[1].name!=null ? top[1].name :"Category"} (${top[1].status!=null ? "Active" :"Deleted"})</span>
+<!--                                            <image style="width: 40px; height: 40px;" src="${top[0].image!=null ? top[0].image :"Primary Card"}"/>-->
+                                        </div>
+                                    </div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">View Details</a>
+                                        <div class="col-4">${top[1].productNumber!=null ? top[1].productNumber :0} Products</div>
                                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-xl-3 col-md-6">
                                 <div class="card bg-success text-white mb-4">
-                                    <div class="card-body">Success Card</div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <span class="col-12">${top[2].name!=null ? top[2].name :"Category"} (${top[2].status!=null ? "Active" :"Deleted"}) </span>
+<!--                                            <image style="width: 40px; height: 40px;" src="${top[0].image!=null ? top[0].image :"Primary Card"}"/>-->
+                                        </div>
+                                    </div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">View Details</a>
+                                        <div class="col-4">${top[2].productNumber!=null ? top[2].productNumber :0} Products</div>
                                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-xl-3 col-md-6">
                                 <div class="card bg-danger text-white mb-4">
-                                    <div class="card-body">Danger Card</div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <span class="col-12">${top[3].name!=null ? top[3].name :"Category"} (${top[3].status!=null ? "Active" :"Deleted"}) </span>
+<!--                                            <image style="width: 40px; height: 40px;" src="${top[0].image!=null ? top[0].image :"Primary Card"}"/>-->
+                                        </div>
+                                    </div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">View Details</a>
+                                        <div class="col-4">${top[3].productNumber!=null ? top[3].productNumber :0} Products</div>
                                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-xl-6">
-                                <div class="card mb-4">
-                                    <div class="card-header">
-                                        <i class="fas fa-chart-area me-1"></i>
-                                        Area Chart Example
-                                    </div>
-                                    <div class="card-body"><canvas id="myAreaChart" width="100%" height="40"></canvas></div>
-                                </div>
-                            </div>
-                            <div class="col-xl-6">
+
+                            <div class="col-8">
                                 <div class="card mb-4">
                                     <div class="card-header">
                                         <i class="fas fa-chart-bar me-1"></i>
-                                        Bar Chart Example
+                                        Category Chart
                                     </div>
-                                    <div class="card-body"><canvas id="myBarChart" width="100%" height="40"></canvas></div>
+                                    <div class="card-body"><canvas id="myBarChart1" width="100%" height="40"></canvas></div>
                                 </div>
                             </div>
                         </div>
                         <div class="my-3">
                             <a href="<c:url value='/MainServlet?btn=adminAddCategory'/>">
-                            <button type="button" class="btn btn-primary">Add new category</button>
+                                <button type="button" class="btn btn-primary">Add new category</button>
                             </a>
                         </div>
-                        
+
                         <div class="card mb-4">
                             <div class="card-header">
                                 <i class="fas fa-table me-1"></i>
@@ -215,5 +227,27 @@
         <script src="web/view/admin/styleAdmin/assets/demo/chart-bar-demo.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
         <script src="web/view/admin/styleAdmin/js/datatables-simple-demo.js"></script>
+        <script>
+
+            /// Biểu đồ cột.
+
+            var barChartData = {
+
+                labels: [<c:forEach var="item" items="${top}">'${item.name}',</c:forEach>'', ],
+                        datasets: [
+                            {
+                                fillColor: "#47d4f7",
+                                label: 'Category Name',
+                                data: [<c:forEach var="item" items="${top}">${item.productNumber},</c:forEach>0, ],
+                                backgroundColor: 'rgb(71, 212, 247)'
+                            }]
+
+            };
+            new Chart(document.getElementById("myBarChart1").getContext("2d"), {
+                type: 'bar',
+                data: barChartData
+
+            });
+        </script>
     </body>
 </html>

@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import static java.lang.System.out;
 import java.sql.SQLException;
+import java.util.Comparator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -47,11 +48,10 @@ public class AdminProductServlet extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         try {
             List<Product_Model> listProduct = product_DAO.findAll(0);
-            System.out.println("---------------------------------------------------------------------------------------------------------------------------------------SERVLET.ADMIN.PROCUCT.AdminProductServlet.processRequest()");
-            for(Product_Model pro: listProduct){
-                System.out.println("Name: "+pro.getName()+" Cate: "+pro.getCateModel().getName() );
-            }
+            List<Product_Model> top = product_DAO.findTopProduct();
+            top.sort(Comparator.comparing(Product_Model::getCount).reversed());
             request.setAttribute("listProduct", listProduct);
+            request.setAttribute("top", top);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(AdminProductServlet.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
