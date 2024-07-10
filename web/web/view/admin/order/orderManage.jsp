@@ -89,27 +89,67 @@
                         </ol>
 
                         <div class="my-3 orderDetail">
-                            <!-- Button trigger modal -->
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-                                Launch demo modal
-                            </button>
 
                             <!-- Modal -->
-                            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal fade" id="orderDetailModal" tabindex="-1" role="dialog" aria-labelledby="orderDetailModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <h5 class="modal-title" id="orderDetailModalLabel">Order Detail</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="closeModal()">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
                                         <div class="modal-body">
-                                            ...
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                            <button type="button" class="btn btn-primary">Save changes</button>
+                                            <form action="MainServlet" method="post">
+                                                <div class="row">
+                                                    <div class="form-group col-6">
+                                                        <label for="orderId">Order ID</label>
+                                                        <input type="text" class="form-control" name="orderId" id="orderId" value="orderId" readonly>
+                                                    </div>                                                    
+                                                    <div class="form-group col-6">
+                                                        <label for="customerName">Customer Name</label>
+                                                        <input type="text" class="form-control" id="customerName" name="customerName" readonly>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="form-group col-6">
+                                                        <label for="orderDate">Order Date</label>
+                                                        <input type="text" class="form-control" id="orderDate" name="orderDate" readonly>
+                                                    </div>
+                                                    <div class="form-group col-6">
+                                                        <label for="deliveryDate">Delivery Date</label>
+                                                        <input type="text" class="form-control" id="deliveryDate" name="deliveryDate" readonly>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="form-group col-6">
+                                                        <label for="totalPrice">Total Price</label>
+                                                        <input type="text" class="form-control" id="totalPrice" name="totalPrice" readonly>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="form-group  col-6">
+                                                        <label for="status">Order Status</label>
+                                                        <select class="form-control" id="status" name="status">
+                                                            <option value="0">Delivering</option>
+                                                            <option value="1">Succeed</option>
+                                                            <option value="2">Cancelled</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group col-6">
+                                                        <label for="paymentStatus">Payment Status</label>
+                                                        <select class="form-control" id="paymentStatus" name="paymentStatus">
+                                                            <option value="0">Unpaid</option>
+                                                            <option value="1">Paid</option>
+                                                        </select>
+                                                    </div> 
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="closeModal()">Close</button>
+                                                    <button type="submit" class="btn btn-primary" name="btn" value="AdminUpdateOrder">Save changes</button>
+                                                </div>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
@@ -177,10 +217,17 @@
                                                         </c:choose>
                                                     </div>
                                                 </td>
-                                                <td>${order.paymentStatus==1 ? "Paid": "Unpaid"}</td>
+                                                <td>${order.paymentStatus ? "Paid": "Unpaid"}</td>
                                                 <td>
                                                     <div class="hidden-sm hidden-xs btn-group">                                                       
-                                                        <button class="btn btn-xs btn-sm" data-toggle="modal" data-target="#exampleModalCenter">
+                                                        <button class="btn btn-xs btn-sm view-detail" 
+                                                                data-orderid="${order.orderId}" 
+                                                                data-customername="${order.fullName}" 
+                                                                data-orderdate="${order.orderDate}" 
+                                                                data-deliverydate="${order.deliveryDate!= null ? order.deliveryDate : 'Not yet'}" 
+                                                                data-totalprice="${order.totalPrice}" 
+                                                                data-status="${order.status}" 
+                                                                data-paymentstatus="${order.paymentStatus ? 1 : 0}">
                                                             <i class="fa-solid fa-pen-to-square fa-beat fa-lg" style="color: #24f59a;"></i>
                                                         </button>     
                                                     </div>
@@ -209,15 +256,38 @@
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="web/view/admin/styleAdmin/js/scripts.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-        <script src="web/view/admin/styleAdmin/assets/demo/chart-area-demo.js"></script>
-        <script src="web/view/admin/styleAdmin/assets/demo/chart-bar-demo.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
         <script src="web/view/admin/styleAdmin/js/datatables-simple-demo.js"></script>
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <script>
+                                                        $(document).ready(function () {
+                                                            $('.view-detail').on('click', function () {
+                                                                var orderId = $(this).data('orderid');
+                                                                var customerName = $(this).data('customername');
+                                                                var orderDate = $(this).data('orderdate');
+                                                                var deliveryDate = $(this).data('deliverydate');
+                                                                var totalPrice = $(this).data('totalprice');
+                                                                var status = $(this).data('status');
+                                                                var paymentStatus = $(this).data('paymentstatus');
 
+                                                                $('#orderId').val(orderId);
+                                                                $('#customerName').val(customerName);
+                                                                $('#orderDate').val(orderDate);
+                                                                $('#deliveryDate').val(deliveryDate);
+                                                                $('#totalPrice').val(totalPrice);
+                                                                $('#status').val(status);
+                                                                $('#paymentStatus').val(paymentStatus);
+
+                                                                $('#orderDetailModal').modal('show');
+                                                            });
+                                                        });
+
+                                                        function closeModal() {
+                                                            $('#orderDetailModal').modal('hide'); // Thay #orderDetailModal bằng id của modal của bạn
+                                                        }
+        </script>
 
     </body>
 </html>

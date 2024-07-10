@@ -32,6 +32,7 @@ public class MainServlet extends HttpServlet {
     private final String ADMIN_UPADTE_ACCOUNT_SERVLET = "/AdminUpdateAccountServlet";
     private final String ADMIN_UPADTE_CATEGORY_SERVLET = "/AdminUpdateCategoryServlet";
     private final String ADMIN_UPADTE_PRODUCT_SERVLET = "/AdminUpdateProductServlet";
+    private final String ADMIN_UPADTE_ORDER_SERVLET = "/AdminUpdateOrderServlet";
     private final String ADMIN_ADD_ACCOUNT_PAGE = "web/view/admin/account/addAccount.jsp";
     private final String ADMIN_ADD_CATEGORY_PAGE = "web/view/admin/category/addCategory.jsp";
     private final String ADMIN_ADD_PRODUCT_PAGE = "web/view/admin/product/addProduct.jsp";
@@ -99,6 +100,8 @@ public class MainServlet extends HttpServlet {
                     url = ADMIN_UPADTE_PRODUCT_SERVLET;
                 }else if (button.equals("adminGetDeleteProduct")) {
                     url = ADMIN_GET_DELETE_PRODUCT_SERVLET;
+                }else if (button.equals("AdminUpdateOrder")) {
+                    url = ADMIN_UPADTE_ORDER_SERVLET;
                 }
             }else{
                 url = LOGIN_PAGE; 
