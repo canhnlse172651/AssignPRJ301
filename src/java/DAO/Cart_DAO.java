@@ -121,9 +121,9 @@ public class Cart_DAO {
         
         try {
             con =DB_Connection.getConnection();
-            String sql = "SELECT c.user_id, c.product_id,c.quantity, p.name AS product_name, p.price \n"
+            String sql = "SELECT c.user_id, c.product_id,c.quantity, p.name AS product_name, p.price, p.image, p.stock_quantity\n" 
                     + "  FROM cart as c JOIN Product as p ON c.product_id = p.product_id \n"
-                    + "  WHERE c.user_id = ?";
+                    + "  WHERE c.user_id = ? and p.status = 1";
             
             stm = con.prepareStatement(sql);
             stm.setInt(1, userId);
@@ -136,12 +136,14 @@ public class Cart_DAO {
                 int quantity = resultSet.getInt("quantity");
                 String productName = resultSet.getString("product_name");
                 double productPrice = resultSet.getDouble("price");
-                Product_Model product = new Product_Model();
-                product.setId(productId);
-                product.setName(productName);
-                product.setPrice(productPrice);
+                String productImage  = resultSet.getString("image");
+                int stockQuantityProduct  = resultSet.getInt("stock_quantity");
+               
+                
+                Cart_Model cart = new Cart_Model(productId, userId, quantity, productName, productImage, quantity, productPrice);
+               
                 // Tạo đối tượng Cart và thêm vào danh sách
-                Cart_Model cart = new Cart_Model(productId, userId, quantity, product);
+               
                 carts.add(cart);
             }
             

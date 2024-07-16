@@ -9,18 +9,18 @@ package MODEL;
  * @author Thinkpad
  */
 public class Product_Model {
-    private int id;
-    private int categoryId;
-    private String name;
-    private boolean status;
-    private String size;
-    private double price;
-    private int stockQuantity;
-    private String description;
-    private String image;
-    private Cate_Model categoryModel;
-    private String categoryname;
-    private int count;
+    int id;
+    int categoryId;
+    String name;
+    boolean status;
+    String size;
+    double price;
+    int stockQuantity;
+    String description;
+    String image;
+    Cate_Model categoryModel;
+    String categoryname;
+    int count;
 
     // Constructors
     public Product_Model() {
