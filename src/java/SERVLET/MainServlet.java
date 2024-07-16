@@ -106,6 +106,8 @@ public class MainServlet extends HttpServlet {
                     url = ADD_TO_CART_SERVLET;
                 } else if (button.equals("viewCart")) {
                     url = VIEW_CART_SERVLET;
+                }else if(button.equals("SignUp")){
+                    url = LOGIN_PAGE;
                 }
             }
         } finally {
