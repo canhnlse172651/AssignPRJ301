@@ -8,7 +8,18 @@
         <title>GroceryMart</title>
         <link rel="stylesheet" href="web/view/HomePage/homePageStyle.css">
 
-
+  <style>
+     .search > div:after {
+          content: "";
+          background: black;
+          width: 4px;
+          height: 20px;
+          position: absolute;
+          top: 22px;
+          right: -2px;
+          transform: rotate(140deg);
+      }
+    </style>
     </head>
     <body>
         <header class="header">
@@ -36,7 +47,7 @@
                 <div class="flexbox">
                     <div class="search">
                         <div>
-                            <input type="text" placeholder="Search . . ." required>
+                            <input style="width: 5px; height: 5px;" type="text" placeholder="Search . . ." required>
                         </div>
                     </div>
                 </div>
@@ -58,9 +69,9 @@
                     
                     <c:forEach items="${categories}" var="category">
                         <li class="category-item">
-                            <a href="HomeServlet?category_id=${category.categoryId}">
+                            <a style="gap: 15px; width: 100%; display: flex; align-items: center;" href="HomeServlet?category_id=${category.categoryId}">
                                 <img src="web/view/HomePage/image/coffee-cup-logo-template-vector-icon-design_preview_rev_1.png" alt="">
-                                ${category.name}
+                                <span>${category.name}</span>
                             </a>
                         </li>
                     </c:forEach>
@@ -74,13 +85,13 @@
                 </div>
 
                 <div class="fliter">
-                    <p>Total product</p>
+                    <p style="margin: 15px 0" >List Product By Category</p>
 
                 </div>
                 <div class="product-list">
                     <c:forEach var="product" items="${productLists}">
                         <form action="MainServlet" method="post">
-                            <div class="product-card" >
+                            <div class="product-card" style="padding: 40px; width: 200px; height: 350px;">
                                 <img src="web/view/HomePage/image/coffe3.png" alt="${product.name}">
                                 <h3><span >${product.id}</span></h3>
                                 <div class="Branch">
@@ -90,7 +101,19 @@
                                     <div class="price">Price: ${product.price}</div>
                                 </div>
                                 <input type="hidden" name="productId" value="${product.id}">
-                                <button style="cursor: pointer;" type="submit" name="btn" value="productDetail" >View Details</button>
+                                <button style="
+                                        cursor: pointer;
+                                        background-color: #4CAF50;
+                                        color: white; /* White text */
+                                        border: none; /* Remove borders */
+                                        padding: 10px 20px; /* Add some padding */
+                                        font-size: 16px; /* Increase font size */
+                                        margin-bottom: 10px;
+                                        transition-duration: 0.4s; /* Animation duration */
+                                        border-radius: 8px; /* Rounded corners */
+                                        " type="submit" name="btn" value="productDetail">
+                                    View Details
+                                </button>
                             </div>
                         </form>
                     </c:forEach>
@@ -105,7 +128,7 @@
                         <img src="web/view/HomePage/image/logo.png" alt="Grocery Mart Logo">
                         <h2>grocerymart</h2>
                     </div>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam, maxime et veniam eligendi rem voluptatibus.</p>
+                    <p>We are one and only</p>
                     <div class="newsletter">
                         <p>Receive product news and updates.</p>
                         <form action="#">
@@ -138,20 +161,19 @@
                         <li><a href="#">Terms of Use</a></li>
                         <li><a href="#">Privacy</a></li>
                         <li><a href="#">Careers</a></li>
-                        <li><a href="#">About</a></li>
-                        <li><a href="#">Affiliates</a></li>
+                       
                     </ul>
                 </div>
                 <div class="footer-column">
-                    <h3>CONTACT</h3>
-                    <p>Email: contact@grocerymart.com</p>
-                    <p>Hotline: 18008888</p>
-                    <p>Address: No. 11D, Lot A10, Nam Trung Yen urban area, Yen Hoa Ward, Cau Giay District, City. Hanoi</p>
-                    <p>Hours: M - F 08:00am - 06:00pm</p>
+                    <h3>CONTACT US</h3>
+
+                    <p style="margin-bottom: 10px;">Email: contact@grocerymart.com</p>
+                    <p style="margin-bottom: 10px;">Hotline: 18008888</p>
+
                     <div class="social-icons">
-                        <a href="#"><img src="web/view/HomePage/image/facebook.jpeg" alt="Facebook"></a>
+
                         <a href="#"><img src="web/view/HomePage/image/youtube.png" alt="YouTube"></a>
-                        <a href="#"><img src="web/view/HomePage/image/tiktok.jpeg" alt="TikTok"></a>
+
                         <a href="#"><img src="web/view/HomePage/image/twet.png" alt="Twitter"></a>
                         <a href="#"><img src="web/view/HomePage/image/link.jpeg" alt="LinkedIn"></a>
                     </div>
