@@ -28,6 +28,7 @@ import javax.servlet.http.HttpServletResponse;
 public class HomeServlet extends HttpServlet {
 
     private final String HOME_PAGE = "web/view/HomePage/homePage.jsp";
+     private static final String ERROR_PAGE = "web/error.jsp";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -68,8 +69,9 @@ public class HomeServlet extends HttpServlet {
                     }
             }
 
-        } catch (NamingException ex) {
-            log("SearchServlet_Naming" + ex.getMessage());
+        } catch (Exception e) {
+            url = ERROR_PAGE;
+             request.setAttribute("ERROR_MESSAGE", "Database error: " + e.getMessage());
 
         } finally {
             

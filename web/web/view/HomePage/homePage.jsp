@@ -43,7 +43,7 @@
 
                 <span class="user-profile">
                     <div class="cart">
-                        <img src="web/view/HomePage/image/cart.png" alt=cart>
+                        <a href="MainServlet?btn=viewCart" > <img src="web/view/HomePage/image/cart.png" alt=cart></a>
                         <span>03</span>
                         <span>$65.42</span>
                     </div>

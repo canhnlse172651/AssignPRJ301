@@ -33,7 +33,8 @@ public class Product_DAO {
             con = DB_Connection.getConnection();
             if (con != null) {
                 //2 create SQL String
-                sql = "SELECT * FROM Product WHERE category_id = ? ";
+                 
+                sql = "SELECT * FROM Product WHERE category_id = ? AND status = 1 AND stock_quantity > 0";
 
             }
             // 3 Create statement Object

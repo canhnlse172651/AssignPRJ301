@@ -1,18 +1,16 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 package SERVLET;
 
-import DAO.User_DAO;
+import DAO.Cart_DAO;
+import MODEL.Cart_Model;
 import MODEL.User_Model;
 import java.io.IOException;
 import java.io.PrintWriter;
 import static java.lang.System.out;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -25,12 +23,13 @@ import javax.servlet.http.HttpSession;
  *
  * @author Thinkpad
  */
-@WebServlet(name = "LoginServlet", urlPatterns = {"/LoginServlet"})
-public class LoginServlet extends HttpServlet {
+@WebServlet(name = "ViewCartServlet", urlPatterns = {"/ViewCartServlet"})
+public class ViewCartServlet extends HttpServlet {
 
-    private static String INVALID_PAGE = "web/view/Login/InvalidPage.html";
-    private final String HOME_PAGE = "HomeServlet";
-     private static final String ERROR_PAGE = "web/error.jsp";
+    private final String VIEW_CART_PAGE = "/web/view/AddToCart/cart.jsp";
+    private final String LOGIN_PAGE = "/web/view/Login/login.html";
+    private static final String ERROR_PAGE = "web/error.jsp";
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -41,38 +40,37 @@ public class LoginServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, ClassNotFoundException, SQLException {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        String url = "";
 
-        String username = request.getParameter("txtUsername");
-
-        String password = request.getParameter("txtPassword");
-
-        String url = INVALID_PAGE;
-         
         try {
-            User_DAO dao = new User_DAO();
-            User_Model user = dao.checkLogin(username, password);
+            Cart_DAO dao = new Cart_DAO();
 
-            if (user != null) {
-                // Lưu thông tin người dùng vào session
-                HttpSession session = request.getSession(true);
-                session.setAttribute("USER", user);
+            HttpSession session = request.getSession(false);
+            if (session != null && session.getAttribute("USER") != null) {
+                System.out.println("SERVLET.ViewCartServlet.processRequest()");
+                User_Model user = (User_Model) session.getAttribute("USER");
+                int userId = user.getUserId();
 
-                // Chuyển hướng đến trang thành công
-                url = HOME_PAGE;
+                List<Cart_Model> cart = dao.getCartsByUserId(userId);
+                if (cart != null) {
+                    request.setAttribute("CART", cart); // Trong trường hợp này, cart là đối tượng Cart_Model
+
+                    url = VIEW_CART_PAGE;               //  create cart for user
+                }
+
             } else {
-                // Xử lý khi đăng nhập không thành công
-                url = INVALID_PAGE;
+                url = LOGIN_PAGE;
             }
-        } catch(Exception e){
+
+        } catch (Exception e) {
             url = ERROR_PAGE;
-            
-             request.setAttribute("ERROR_MESSAGE", "Database error: " + e.getMessage());
+
+            request.setAttribute("ERROR_MESSAGE", "Database error: " + e.getMessage());
         } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
-            out.close();
         }
 
     }
@@ -89,13 +87,7 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -109,13 +101,7 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**
