@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "MainServlet", urlPatterns = {"/MainServlet"})
 public class MainServlet extends HttpServlet {
+<<<<<<< HEAD
 
     private final String LOGIN_SERVLET = "LoginServlet";
     private final String HOME_SERVLET = "HomeServlet";
@@ -46,6 +47,22 @@ public class MainServlet extends HttpServlet {
     private final String ADMIN_GET_DELETE_PRODUCT_SERVLET = "/AdminGetDeleteProduct";
     private final String ADMIN_ACCOUNT_SERVLET = "/AccountServlet";
 
+=======
+   
+    
+     private final String LOGIN_SERVLET = "LoginServlet";
+      private final String ADD_TO_CART_SERVLET = "AddToCart";
+      private final String HOME_SERVLET = "HomeServlet";
+      private final String PRODUCT_DETAIL_SERVLET = "ProductDetailServlet";
+     private final String LOGIN_PAGE = "web/view/Login/login.html";
+     private final String ADMIN_ADD_ACCOUNT_SERVLET = "/AddAccountServlet";
+     private final String ADMIN_UPADTE_ACCOUNT_SERVLET = "/AdminUpdateAccountServlet";
+     private final String ADMIN_ADD_ACCOUNT_PAGE = "web/view/admin/account/addAccount.jsp";
+     private final String ADMIN_GET_UPDATE_ACCOUNT_SERVLET = "/AdminGetUpdateAccount";
+     private final String ADMIN_UPDATE_ACCOUNT_PAGE = "web/view/admin/account/updateAccount.jsp";
+     private final String VIEW_CART_SERVLET = "ViewCartServlet";
+     
+>>>>>>> 1051d80 (view cart)
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -106,8 +123,23 @@ public class MainServlet extends HttpServlet {
             }else{
                 url = LOGIN_PAGE; 
             }
+<<<<<<< HEAD
 
         } finally {
+=======
+           
+           if(action!=null && action.equals("adminAddAccount")){
+               url = ADMIN_ADD_ACCOUNT_PAGE;
+           }else if(action!=null && action.equals("adminGetUpdateAccount")){
+               url = ADMIN_GET_UPDATE_ACCOUNT_SERVLET;
+           }else if(button.equals("addToCart")){
+               url = ADD_TO_CART_SERVLET;
+           }else if(button.equals("viewCart")){
+               url = VIEW_CART_SERVLET;
+           }
+           
+        }finally {
+>>>>>>> 1051d80 (view cart)
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
         }

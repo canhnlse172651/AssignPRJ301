@@ -32,7 +32,7 @@
             </div>
             <span class="user-profile">
                 <div class="cart">
-                    <img src="web/view/ProductPgae/image/cart.png" alt="cart">
+                   <a href="MainServlet?btn=viewCart" > <img src="web/view/HomePage/image/cart.png" alt=cart></a>
                     <span>03</span>
                     <span>$65.42</span>
                 </div>
@@ -73,14 +73,17 @@
                             <span>Out of 2 stores, today</span></div>
                     </div>
                 </div>
-                <div class="price-box"  style="margin-left: 480px;" >
-                    <div class="price-discount">
-                        <div class="original-price">$500.00</div>
-                        <div class="discount">10% off</div>
+                <form action="MainServlet" method="post">
+                    <div class="price-box" style="margin-left: 480px;">
+                        <div class="price-discount">
+                            <div class="original-price">$500.00</div>
+                            <div class="discount">10% off</div>
+                        </div>
+                        <div class="current-price">$${product.price}</div>
+                        <input type="hidden" name="productId" value="${product.id}">
+                        <button type="submit" class="add-to-cart"  name="btn" value="addToCart"  >Add to cart</button>
                     </div>
-                    <div class="current-price">$${product.price}</div>
-                    <button class="add-to-cart">Add to cart</button>
-                </div>
+                </form>
             </div>
         </div>
     </div>
