@@ -88,6 +88,7 @@ a:hover {
 .cart img{
     width: 10%;
     left: 10%;
+    
 }
 .user-profile img {
     width: 40px;
@@ -150,6 +151,7 @@ a:hover {
 }
 .product-list {
     display: flex;
+    flex-wrap: wrap;
     gap: 20px;
     position: relative;
    justify-content: space-around;
