@@ -21,15 +21,16 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "MainServlet", urlPatterns = {"/MainServlet"})
 public class MainServlet extends HttpServlet {
-<<<<<<< HEAD
 
+    private final String VIEW_CART_SERVLET = "ViewCartServlet";
+    private final String ADD_TO_CART_SERVLET = "AddToCart";
     private final String LOGIN_SERVLET = "LoginServlet";
     private final String HOME_SERVLET = "HomeServlet";
     private final String PRODUCT_DETAIL_SERVLET = "ProductDetailServlet";
     private final String LOGIN_PAGE = "web/view/Login/login.html";
     private final String ADMIN_ADD_ACCOUNT_SERVLET = "/AddAccountServlet";
-    private final String ADMIN_ADD_CATEGORY_SERVLET = "/AdminAddCategoryServlet";   
-    private final String ADMIN_ADD_PRODUCT_SERVLET = "/AdminAddProductServlet";   
+    private final String ADMIN_ADD_CATEGORY_SERVLET = "/AdminAddCategoryServlet";
+    private final String ADMIN_ADD_PRODUCT_SERVLET = "/AdminAddProductServlet";
     private final String ADMIN_UPADTE_ACCOUNT_SERVLET = "/AdminUpdateAccountServlet";
     private final String ADMIN_UPADTE_CATEGORY_SERVLET = "/AdminUpdateCategoryServlet";
     private final String ADMIN_UPADTE_PRODUCT_SERVLET = "/AdminUpdateProductServlet";
@@ -47,22 +48,6 @@ public class MainServlet extends HttpServlet {
     private final String ADMIN_GET_DELETE_PRODUCT_SERVLET = "/AdminGetDeleteProduct";
     private final String ADMIN_ACCOUNT_SERVLET = "/AccountServlet";
 
-=======
-   
-    
-     private final String LOGIN_SERVLET = "LoginServlet";
-      private final String ADD_TO_CART_SERVLET = "AddToCart";
-      private final String HOME_SERVLET = "HomeServlet";
-      private final String PRODUCT_DETAIL_SERVLET = "ProductDetailServlet";
-     private final String LOGIN_PAGE = "web/view/Login/login.html";
-     private final String ADMIN_ADD_ACCOUNT_SERVLET = "/AddAccountServlet";
-     private final String ADMIN_UPADTE_ACCOUNT_SERVLET = "/AdminUpdateAccountServlet";
-     private final String ADMIN_ADD_ACCOUNT_PAGE = "web/view/admin/account/addAccount.jsp";
-     private final String ADMIN_GET_UPDATE_ACCOUNT_SERVLET = "/AdminGetUpdateAccount";
-     private final String ADMIN_UPDATE_ACCOUNT_PAGE = "web/view/admin/account/updateAccount.jsp";
-     private final String VIEW_CART_SERVLET = "ViewCartServlet";
-     
->>>>>>> 1051d80 (view cart)
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -81,8 +66,6 @@ public class MainServlet extends HttpServlet {
         try {
             if (request.getParameter("btn") != null) {
                 String button = request.getParameter("btn");
-                System.out.println("SERVLET.MainServlet.processRequest()" + button);
-               
                 if (button.equals("Login")) {
                     url = LOGIN_SERVLET;
                 } else if (button.equals("productDetail")) {
@@ -101,46 +84,32 @@ public class MainServlet extends HttpServlet {
                     url = ADMIN_ADD_CATEGORY_PAGE;
                 } else if (button.equals("adminAddNewCategory")) {
                     url = ADMIN_ADD_CATEGORY_SERVLET;
-                }else if (button.equals("adminGetUpdateCategory")) {
+                } else if (button.equals("adminGetUpdateCategory")) {
                     url = ADMIN_GET_UPDATE_CATEGORY_SERVLET;
-                }else if (button.equals("AdminUpdateCategory")) {
+                } else if (button.equals("AdminUpdateCategory")) {
                     url = ADMIN_UPADTE_CATEGORY_SERVLET;
-                }else if (button.equals("adminGetDeleteCategory")) {
+                } else if (button.equals("adminGetDeleteCategory")) {
                     url = ADMIN_GET_DELETE_CATEGORY_SERVLET;
-                }else if (button.equals("adminAddProduct")) {
+                } else if (button.equals("adminAddProduct")) {
                     url = ADMIN_GET_ADD_PRODUCT_SERVLET;
-                }else if (button.equals("adminAddNewProduct")) {
+                } else if (button.equals("adminAddNewProduct")) {
                     url = ADMIN_ADD_PRODUCT_SERVLET;
-                }else if (button.equals("adminGetUpdateProduct")) {
+                } else if (button.equals("adminGetUpdateProduct")) {
                     url = ADMIN_GET_UPDATE_PRODUCT_SERVLET;
-                }else if (button.equals("adminUpdateProduct")) {
+                } else if (button.equals("adminUpdateProduct")) {
                     url = ADMIN_UPADTE_PRODUCT_SERVLET;
-                }else if (button.equals("adminGetDeleteProduct")) {
+                } else if (button.equals("adminGetDeleteProduct")) {
                     url = ADMIN_GET_DELETE_PRODUCT_SERVLET;
-                }else if (button.equals("AdminUpdateOrder")) {
+                } else if (button.equals("AdminUpdateOrder")) {
                     url = ADMIN_UPADTE_ORDER_SERVLET;
+                } else if (button.equals("addToCart")) {
+                    url = ADD_TO_CART_SERVLET;
+                } else if (button.equals("viewCart")) {
+                    url = VIEW_CART_SERVLET;
                 }
-            }else{
-                url = LOGIN_PAGE; 
             }
-<<<<<<< HEAD
-
         } finally {
-=======
-           
-           if(action!=null && action.equals("adminAddAccount")){
-               url = ADMIN_ADD_ACCOUNT_PAGE;
-           }else if(action!=null && action.equals("adminGetUpdateAccount")){
-               url = ADMIN_GET_UPDATE_ACCOUNT_SERVLET;
-           }else if(button.equals("addToCart")){
-               url = ADD_TO_CART_SERVLET;
-           }else if(button.equals("viewCart")){
-               url = VIEW_CART_SERVLET;
-           }
-           
-        }finally {
->>>>>>> 1051d80 (view cart)
-            RequestDispatcher rd = request.getRequestDispatcher(url);
+                      RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
         }
     }
