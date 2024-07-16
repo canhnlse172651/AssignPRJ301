@@ -151,6 +151,7 @@ a:hover {
 }
 .product-list {
     display: flex;
+    flex-wrap: wrap;
     gap: 20px;
     position: relative;
    justify-content: space-around;
