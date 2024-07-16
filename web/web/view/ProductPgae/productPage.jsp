@@ -7,6 +7,19 @@
     <title>GroceryMart</title>
     <link rel="stylesheet" href="web/view/ProductPgae/productPage.css">
     <link href='https://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
+    
+    <style>
+     .search > div:after {
+          content: "";
+          background: black;
+          width: 4px;
+          height: 20px;
+          position: absolute;
+          top: 22px;
+          right: -2px;
+          transform: rotate(140deg);
+      }
+    </style>
 </head>
 <body>
     <header class="header">
@@ -26,7 +39,7 @@
             <div class="flexbox">
                 <div class="search">
                     <div>
-                        <input type="text" placeholder="Search . . ." required>
+                        <input style="width: 5px; height: 5px;" type="text" placeholder="Search . . ." required>
                     </div>
                 </div>
             </div>
@@ -121,66 +134,65 @@
     <script src="web/view/ProductPgae/js.js"></script>
 </body>
 <footer>
-    <div class="footer-container">
-        <div class="footer-column">
-            <div class="footer-logo">
-                <img src="web/view/ProductPgae/image/logo.png" alt="Grocery Mart Logo">
-                <h2>grocerymart</h2>
+            <div class="footer-container">
+                <div class="footer-column">
+                    <div class="footer-logo">
+                        <img src="web/view/HomePage/image/logo.png" alt="Grocery Mart Logo">
+                        <h2>grocerymart</h2>
+                    </div>
+                    <p>We are one and only</p>
+                    <div class="newsletter">
+                        <p>Receive product news and updates.</p>
+                        <form action="#">
+                            <input type="email" placeholder="Email address" required>
+                            <button type="submit">SEND</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>SHOP</h3>
+                    <ul>
+                        <li><a href="#">All Departments</a></li>
+                        <li><a href="#">Fashion Deals</a></li>
+                        <li><a href="#">Electronics Discounts</a></li>
+                        <li><a href="#">Home & Living Specials</a></li>
+                        <li><a href="#">Beauty Bargains</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>SUPPORT</h3>
+                    <ul>
+                        <li><a href="#">Store Locator</a></li>
+                        <li><a href="#">Order Status</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>COMPANY</h3>
+                    <ul>
+                        <li><a href="#">Customer Service</a></li>
+                        <li><a href="#">Terms of Use</a></li>
+                        <li><a href="#">Privacy</a></li>
+                        <li><a href="#">Careers</a></li>
+                       
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>CONTACT US</h3>
+
+                    <p style="margin-bottom: 10px;">Email: contact@grocerymart.com</p>
+                    <p style="margin-bottom: 10px;">Hotline: 18008888</p>
+
+                    <div class="social-icons">
+
+                        <a href="#"><img src="web/view/HomePage/image/youtube.png" alt="YouTube"></a>
+
+                        <a href="#"><img src="web/view/HomePage/image/twet.png" alt="Twitter"></a>
+                        <a href="#"><img src="web/view/HomePage/image/link.jpeg" alt="LinkedIn"></a>
+                    </div>
+                </div>
             </div>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam, maxime et veniam eligendi rem voluptatibus.</p>
-            <div class="newsletter">
-                <p>Receive product news and updates.</p>
-                <form action="#">
-                    <input type="email" placeholder="Email address" required>
-                    <button type="submit">SEND</button>
-                </form>
+            <div class="footer-bottom">
+                <p>&copy; 2010 - 2025 Grocery Mart. All rights reserved.</p>
             </div>
-        </div>
-        <div class="footer-column">
-            <h3>SHOP</h3>
-            <ul>
-                <li><a href="#">All Departments</a></li>
-                <li><a href="#">Fashion Deals</a></li>
-                <li><a href="#">Electronics Discounts</a></li>
-                <li><a href="#">Home & Living Specials</a></li>
-                <li><a href="#">Beauty Bargains</a></li>
-            </ul>
-        </div>
-        <div class="footer-column">
-            <h3>SUPPORT</h3>
-            <ul>
-                <li><a href="#">Store Locator</a></li>
-                <li><a href="#">Order Status</a></li>
-            </ul>
-        </div>
-        <div class="footer-column">
-            <h3>COMPANY</h3>
-            <ul>
-                <li><a href="#">Customer Service</a></li>
-                <li><a href="#">Terms of Use</a></li>
-                <li><a href="#">Privacy</a></li>
-                <li><a href="#">Careers</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Affiliates</a></li>
-            </ul>
-        </div>
-        <div class="footer-column">
-            <h3>CONTACT</h3>
-            <p>Email: contact@grocerymart.com</p>
-            <p>Hotline: 18008888</p>
-            <p>Address: No. 11D, Lot A10, Nam Trung Yen urban area, Yen Hoa Ward, Cau Giay District, City. Hanoi</p>
-            <p>Hours: M - F 08:00am - 06:00pm</p>
-            <div class="social-icons">
-                <a href="#"><img src="web/view/ProductPgae/image/facebook.jpeg" alt="Facebook"></a>
-                <a href="#"><img src="web/view/ProductPgae/image/youtube.png" alt="YouTube"></a>
-                <a href="#"><img src="web/view/ProductPgae/image/tiktok.jpeg" alt="TikTok"></a>
-                <a href="#"><img src="web/view/ProductPgae/image/twet.png" alt="Twitter"></a>
-                <a href="#"><img src="web/view/ProductPgae/image/link.jpeg" alt="LinkedIn"></a>
-            </div>
-        </div>
-    </div>
-    <div class="footer-bottom">
-        <p>&copy; 2010 - 2025 Grocery Mart. All rights reserved.</p>
-    </div>
-</footer>
+        </footer>
 </html>

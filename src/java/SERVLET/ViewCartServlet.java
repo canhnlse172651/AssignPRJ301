@@ -26,8 +26,8 @@ import javax.servlet.http.HttpSession;
 @WebServlet(name = "ViewCartServlet", urlPatterns = {"/ViewCartServlet"})
 public class ViewCartServlet extends HttpServlet {
 
-    private final String VIEW_CART_PAGE = "/web/view/AddToCart/cart.jsp";
-    private final String LOGIN_PAGE = "/web/view/Login/login.html";
+    private final String VIEW_CART_PAGE = "web/view/AddToCart/cart.jsp";
+    private final String LOGIN_PAGE = "web/view/Login/login.html";
     private static final String ERROR_PAGE = "web/error.jsp";
 
     /**
@@ -61,7 +61,7 @@ public class ViewCartServlet extends HttpServlet {
                 }
 
             } else {
-                url = LOGIN_PAGE;
+                url = ERROR_PAGE;
             }
 
         } catch (Exception e) {

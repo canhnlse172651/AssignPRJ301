@@ -29,28 +29,24 @@ body {
 }
 .navigation{
   display: flex;
-  justify-content:start;
+  justify-content:center;
+   cursor: pointer;
 }
 .navigation img{
   width: 2%;
   margin-left: 10px;
   margin-right: 10px;
- padding-bottom: 0.1%;
+ padding-top: 0.1%;
 }
-.navigation p{
-   padding: 0 0 5px 5px;
-   font-weight: 500;
-}
-
 .Logo{
   display: flex; 
   align-items: center;
 }
-.Logo-word {
+.Logo-word{
  color: #1A162E;
- font-weight: 900;
+ font-weight: 800;
  font-size: 150%;
- padding-bottom:0.9%;
+ padding-bottom: 4%;
 }
 .Logo img{
   width: 60px;

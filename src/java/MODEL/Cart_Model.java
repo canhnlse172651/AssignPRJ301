@@ -12,11 +12,26 @@ import DAO.Product_DAO;
  */
 public class Cart_Model {
     
-     private int productId;
-    private int userId;
-    private int quantity;
+     int productId;
+     int userId;
+    int quantity;
+   String productName;
+   String productImage;
+   int stockQuantity;
+   double price;
+
+    public Cart_Model(int productId, int userId, int quantity, String productName, String productImage, int stockQuantity, double price) {
+        this.productId = productId;
+        this.userId = userId;
+        this.quantity = quantity;
+        this.productName = productName;
+        this.productImage = productImage;
+        this.stockQuantity = stockQuantity;
+        this.price = price;
+    }
    
-     private Product_Model product;
+   
+    
     
     // Constructors
     public Cart_Model() {}
@@ -26,13 +41,39 @@ public class Cart_Model {
         this.quantity = quantity;
      }
 
-    public Cart_Model(int productId, int userId, int quantity, Product_Model product) {
-        this.productId = productId;
-        this.userId = userId;
-        this.quantity = quantity;
-        this.product = product;
+    public String getProductName() {
+        return productName;
     }
 
+    public String getProductImage() {
+        return productImage;
+    }
+
+    public int getStockQuantity() {
+        return stockQuantity;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    public void setProductImage(String productImage) {
+        this.productImage = productImage;
+    }
+
+    public void setStockQuantity(int stockQuantity) {
+        this.stockQuantity = stockQuantity;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+  
     // Getters and setters
     public int getProductId() {
         return productId;
