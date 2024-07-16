@@ -15,11 +15,11 @@
 </head>
 <body>
       <header class="header">
-        <div class="container Logo">
-            <img src="web/view/AddToCart/image/logo.png" alt="logo">
+        <div class="container Logo"  style ="margin-top: 15px">
+            
             <div class="Logo-word">grocerymart</div>
         </div>
-        <div class="navigation">
+        <div class="navigation" style="margin-right: 00px" >
             <p>Home</p>
             <img src="web/view/AddToCart/image/down-arrow-5.png" alt="logo">
             <p>Manager</p>
