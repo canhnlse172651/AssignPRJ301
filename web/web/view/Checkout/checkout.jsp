@@ -83,17 +83,17 @@
                                 <div class="input-group flex-nowrap mb-3">
                                     <span class="input-group-text" id="addon-wrapping">Name</span>
                                     <input type="text" class="form-control" placeholder="Full Name" aria-label="Full Name" aria-describedby="addon-wrapping"
-                                           name="fullName" value="${USER.fullName}">
+                                           name="fullName" value="${USER.fullName}" required>
                                 </div>
                                 <div class="input-group flex-nowrap mb-3">
                                     <span class="input-group-text" id="addon-wrapping">Address</span>
                                     <input type="text" class="form-control" placeholder="Address" aria-label="Address" aria-describedby="addon-wrapping"
-                                           name="address" value="${USER.address}">
+                                           name="address" value="${USER.address}" required>
                                 </div>
                                 <div class="input-group flex-nowrap mb-3">
                                     <span class="input-group-text" id="addon-wrapping">Phone</span>
                                     <input type="number" class="form-control" placeholder="Phone" aria-label="Phone" aria-describedby="addon-wrapping"
-                                           name="phone" value="${USER.phone}"/>
+                                           name="phone" value="${USER.phone}" required/>
                                 </div>
                             </div>
                         </div>
