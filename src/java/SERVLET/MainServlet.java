@@ -51,6 +51,8 @@ public class MainServlet extends HttpServlet {
     private final String ADMIN_GET_DELETE_CATEGORY_SERVLET = "/AdminGetDeleteCategory";
     private final String ADMIN_GET_DELETE_PRODUCT_SERVLET = "/AdminGetDeleteProduct";
     private final String ADMIN_ACCOUNT_SERVLET = "/AccountServlet";
+     private final String SIGN_UP_SERVLET = "/SignUpServlet";
+      private final String SIGN_UP_PAGE = "/web/view/Login/SignUp.jsp";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -119,7 +121,9 @@ public class MainServlet extends HttpServlet {
                 }else if (button.equals("CheckoutOrder")) {
                     url = ORDER_SERVLET;
                 }else if(button.equals("SignUp")){
-                    url = LOGIN_PAGE;
+                    url = SIGN_UP_PAGE;
+                }else if(button.equals("Create")){
+                    url = SIGN_UP_SERVLET;
                 }
             }
         } finally {

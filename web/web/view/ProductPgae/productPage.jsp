@@ -40,7 +40,7 @@
     </header>
     <div class="container">
         <div class="product-page" style="background-color:#fff;" >
-            <div class="product-image" style="margin:0 140px" >
+            <div class="product-image" style="margin:0 100px" >
                 <img style = "max-width: none; margin-top: 70px"  src=${product.image} alt="${product.name}">
             </div>
             <div class="product-details" style="background-color:#fff;" >
