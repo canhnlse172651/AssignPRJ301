@@ -5,7 +5,6 @@
 package DAO.ADMIN;
 
 import DB_Connecttion.DB_Connection;
-import MODEL.Cate_Model;
 import MODEL.Orders_Model;
 import java.io.Serializable;
 import java.sql.Connection;
@@ -55,7 +54,7 @@ public class Order_DAO implements Serializable {
                 Orders_Model dto = new Orders_Model(orderId, userId, status, orderDate, deliveryDate, totalPrice, fullName, paymentType, paymentStatus, cardNumber, paymentDate, bankBranding, cardholderName);
                 orderList.add(dto);
             }
-        } catch (Exception e) {
+        } catch (ClassNotFoundException | SQLException e) {
             System.out.println(e);
 
         } finally {
@@ -75,16 +74,22 @@ public class Order_DAO implements Serializable {
 
     public boolean updateOrderStatus(int orderId, int status) throws SQLException {
         try {
+
             con = DB_Connection.getConnection();
             if (con != null) {
-                sql = "UPDATE [Order] SET status = ? WHERE order_id = ?";
+                if (status == 1) {
+                    sql = "UPDATE [Order] SET status = ?, delivery_date= GETDATE() WHERE order_id = ?";
+                } else {
+                    sql = "UPDATE [Order] SET status = ?, delivery_date= NULL WHERE order_id = ?";
+                }
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, status);
+                stm.setInt(2, orderId);
+                boolean rowUpdated = stm.executeUpdate() > 0;
+                return rowUpdated;
             }
-            stm = con.prepareStatement(sql);
-            stm.setInt(1, status);
-            stm.setInt(2, orderId);
-            boolean rowUpdated = stm.executeUpdate() > 0;
-            return rowUpdated;
-        } catch (Exception e) {
+            return false;
+        } catch (ClassNotFoundException | SQLException e) {
             System.out.println("DAO.ADMIN.Order_DAO.updateOrderStatus()" + e);
             return false;
         } finally {
@@ -104,7 +109,11 @@ public class Order_DAO implements Serializable {
         try {
             con = DB_Connection.getConnection();
             if (con != null) {
-                sql = "UPDATE Payment SET status = ? WHERE payment_id = ?";
+                if (status == true) {
+                    sql = "UPDATE Payment SET status = ?, payment_date = GETDATE() WHERE payment_id = ?";
+                } else {
+                    sql = "UPDATE Payment SET status = ?, payment_date = NULL WHERE payment_id = ?";
+                }
                 stm = con.prepareStatement(sql);
                 stm.setBoolean(1, status);
                 stm.setInt(2, paymentId);
@@ -112,7 +121,7 @@ public class Order_DAO implements Serializable {
                 return rowUpdated > 0;
             }
             return false;
-        } catch (Exception e) {
+        } catch (ClassNotFoundException | SQLException e) {
             System.out.println("DAO.ADMIN.Order_DAO.updateOrderStatus()" + e);
             return false;
         } finally {

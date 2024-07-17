@@ -10,6 +10,7 @@ import MODEL.User_Model;
 import java.io.IOException;
 import java.io.PrintWriter;
 import static java.lang.System.out;
+import java.sql.SQLException;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -67,7 +68,7 @@ public class ViewCartServlet extends HttpServlet {
             } else {
                 url = ERROR_PAGE;
             }
-        } catch (Exception e) {
+        } catch (ClassNotFoundException | SQLException e) {
             url = ERROR_PAGE;
             request.setAttribute("ERROR_MESSAGE", "Database error: " + e.getMessage());
         } finally {
