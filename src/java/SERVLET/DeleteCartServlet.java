@@ -9,6 +9,7 @@ import MODEL.Cart_Model;
 import MODEL.User_Model;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -59,7 +60,7 @@ public class DeleteCartServlet extends HttpServlet {
             } else {
                 url = LOGIN_PAGE;
             }
-        } catch (Exception e) {
+        } catch (ClassNotFoundException | NumberFormatException | SQLException e) {
             url = ERROR_PAGE;
             request.setAttribute("ERROR_MESSAGE", "Database error: " + e.getMessage());
         } finally {

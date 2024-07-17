@@ -5,12 +5,17 @@
 package SERVLET;
 
 import DAO.Cart_DAO;
+import DAO.OrderDetail_DAO;
 import DAO.Order_DAO;
+import DAO.Payment_DAO;
 import MODEL.Cart_Model;
+import MODEL.OrderDetail_Model;
 import MODEL.Orders_Model;
+import MODEL.Payment_Model;
 import MODEL.User_Model;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -26,7 +31,7 @@ import javax.servlet.http.HttpSession;
 @WebServlet(name = "CreateOrderServlet", urlPatterns = {"/CreateOrderServlet"})
 public class CreateOrderServlet extends HttpServlet {
 
-    private final String VIEW_CART_SERVLET = "/ViewCartServlet";
+    private final String VIEW_CHECKOUT_PAGE = "/web/view/Checkout/checkout.jsp";
     private final String LOGIN_PAGE = "web/view/Login/login.html";
     private final String ERROR_PAGE = "web/error.jsp";
     private final String HOME_SERVLET = "/HomeServlet";
@@ -49,6 +54,8 @@ public class CreateOrderServlet extends HttpServlet {
         try {
             Cart_DAO dao = new Cart_DAO();
             Order_DAO orderDAO = new Order_DAO();
+            OrderDetail_DAO orderDetail_DAO = new OrderDetail_DAO();
+            Payment_DAO payment_DAO = new Payment_DAO();
             HttpSession session = request.getSession(false);
             if (session != null && session.getAttribute("USER") != null) {
                 User_Model user = (User_Model) session.getAttribute("USER");
@@ -56,12 +63,10 @@ public class CreateOrderServlet extends HttpServlet {
                 String address = request.getParameter("address");
                 String fullName = request.getParameter("fullName");
                 String phone = request.getParameter("phone");
-                String cardNumber = request.getParameter("cardNumber");
-                String bankName = request.getParameter("bankName");
-                String owner = request.getParameter("owner");
+
                 String paymentMethod = request.getParameter("paymentMethod");
                 String shippingOption = request.getParameter("shippingOption");
-                double totalPrice = Double.parseDouble(request.getParameter("totalPrice"));
+                double totalPrice = Double.parseDouble(request.getParameter("totalPriceValue"));
                 int ship = 0;
                 if (shippingOption != null) {
                     if (shippingOption.equals("fast")) {
@@ -70,33 +75,36 @@ public class CreateOrderServlet extends HttpServlet {
                         ship = 20000;
                     }
                 }
-                Orders_Model order = new Orders_Model(-1, userId, 1, null, null, totalPrice, fullName, address, phone, ship);
-                if (orderDAO.insertOrder(order) != -1) {
-                    List<Cart_Model> listCart = dao.getCartsByUserId(userId);
-                    for (Cart_Model item : listCart) {
-                        totalPrice += item.getPrice() * item.getQuantity();
-                        //dao.deleteCart(item);
-                    }
-                }
-
+                Payment_Model payment = new Payment_Model();
                 if (paymentMethod != null) {
                     if (paymentMethod.equals("card")) {
-                        ship = 50000;
+                        String bankName = request.getParameter("bankName");
+                        String owner = request.getParameter("owner");
+                        String cardNumber = request.getParameter("cardNumber");
+                        payment = new Payment_Model(-1, cardNumber, null, bankName, owner, false, "Credit card");
                     } else {
-                        ship = 20000;
+                        payment = new Payment_Model(-1, null, null, null, null, false, "Pay in cash");
                     }
                 }
-//                Cart_Model cart = dao.findOneCart(userId, productId);
-//                cart.setQuantity(quanty);
-//                if (dao.deleteCart(cart)) {
-//                    url = VIEW_CART_SERVLET;
-//                } else {
-//                    url = HOME_SERVLET;
-//                }
+                Orders_Model order = new Orders_Model(-1, userId, 1, null, null, totalPrice, fullName, address, phone, ship);
+                int orderId = orderDAO.insertOrder(order);
+                if (orderId != -1) {
+                    List<Cart_Model> listCart = dao.getCartsByUserId(userId);
+                    for (Cart_Model item : listCart) {
+                        totalPrice = item.getPrice() * item.getQuantity();
+                        OrderDetail_Model orderDetail = new OrderDetail_Model(orderId, item.getProductId(), item.getQuantity(), 0, totalPrice);
+                        orderDetail_DAO.insertOrderDetail(orderDetail, userId);
+                    }
+                    payment.setPaymentId(orderId);
+                    payment_DAO.insertPayment(payment);
+                    url = HOME_SERVLET;
+                } else {
+                    url = VIEW_CHECKOUT_PAGE;
+                }
             } else {
                 url = LOGIN_PAGE;
             }
-        } catch (Exception e) {
+        } catch (ClassNotFoundException | NumberFormatException | SQLException e) {
             url = ERROR_PAGE;
             request.setAttribute("ERROR_MESSAGE", "Database error: " + e.getMessage());
         } finally {

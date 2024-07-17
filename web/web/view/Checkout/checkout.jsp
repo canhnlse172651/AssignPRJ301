@@ -233,6 +233,7 @@
                                 <div class="row">
                                     <div class="col-6">Estimated Total:</div>
                                     <div class="col-6 text-end"  > <b id='totalPrice' name='totalPrice'>${Total} </b> VNĐ</div>
+                                    <input type="hidden" id="totalPriceValue" name="totalPriceValue">
                                 </div>        
 
                             </div>
@@ -292,6 +293,7 @@
                 }
                 shipping
                 document.getElementById("totalPrice").innerText = totalPrice;
+                document.getElementById("totalPriceValue").value = totalPrice;
                 document.getElementById("shipping").innerText = ship;
             }
         </script>

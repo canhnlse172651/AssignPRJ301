@@ -7,6 +7,7 @@ package DAO;
 import DB_Connecttion.DB_Connection;
 import MODEL.Cart_Model;
 import MODEL.Product_Model;
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,7 +19,7 @@ import java.util.List;
  *
  * @author Thinkpad
  */
-public class Cart_DAO {
+public class Cart_DAO implements Serializable {
 
     Connection con;
     PreparedStatement stm;
@@ -63,25 +64,12 @@ public class Cart_DAO {
         try {
             con = DB_Connection.getConnection();
             if (con != null) {
-                String sql = "BEGIN TRANSACTION;\n"
-                        + "INSERT INTO [cart] (user_id, product_id, quantity) VALUES (?, ?, ?);\n"
-                        + "UPDATE [Product] SET stock_quantity = stock_quantity - ? WHERE product_id = ?;\n"
-                        + "IF @@ROWCOUNT = 0\n"
-                        + "BEGIN\n"
-                        + "    ROLLBACK TRANSACTION;\n"
-                        + "    PRINT 'Error: Product not found or insufficient stock quantity';\n"
-                        + "END\n"
-                        + "ELSE\n"
-                        + "BEGIN\n"
-                        + "    COMMIT TRANSACTION;\n"
-                        + "    PRINT 'Product added to cart and stock quantity updated successfully';\n"
-                        + "END;";
+                String sql = "INSERT INTO [cart] (user_id, product_id, quantity) VALUES (?, ?, ?);";
+                      
                 stm = con.prepareStatement(sql);
                 stm.setInt(1, cart.getUserId());
                 stm.setInt(2, cart.getProductId());
                 stm.setInt(3, 1);
-                stm.setInt(4, 1);
-                stm.setInt(5, cart.getProductId());
                 int rowsInserted = stm.executeUpdate();
                 return rowsInserted > 0;
             }
@@ -140,7 +128,6 @@ public class Cart_DAO {
             resultSet = stm.executeQuery();
 
             while (resultSet.next()) {
-
                 int productId = resultSet.getInt("product_id");
                 int quantity = resultSet.getInt("quantity");
                 String productName = resultSet.getString("product_name");
