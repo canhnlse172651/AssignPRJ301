@@ -17,6 +17,10 @@ public class Orders_Model {
     private int status;
     private Date orderDate;
     private Date deliveryDate;
+    private String fullNameOrder;
+    private String address;
+    private String phone;
+    private int shipping;
     private double totalPrice;
     private String fullName;
     private String paymentType;
@@ -28,6 +32,19 @@ public class Orders_Model {
 
     // Constructor
     public Orders_Model() {
+    }
+
+    public Orders_Model(int orderId, int userId, int status, Date orderDate, Date deliveryDate, double totalPrice, String fullNameOrder, String address, String phone, int shipping) {
+        this.orderId = orderId;
+        this.userId = userId;
+        this.status = status;
+        this.orderDate = orderDate;
+        this.deliveryDate = deliveryDate;
+        this.totalPrice = totalPrice;
+        this.fullNameOrder = fullNameOrder;
+        this.address = address;
+        this.phone = phone;
+        this.shipping = shipping;
     }
 
     public Orders_Model(int orderId, int userId, int status, Date orderDate, Date deliveryDate, double totalPrice) {
@@ -58,6 +75,38 @@ public class Orders_Model {
     }
 
     // Getters and Setters
+    public String getFullNameOrder() {
+        return fullNameOrder;
+    }
+
+    public void setFullNameOrder(String fullNameOrder) {
+        this.fullNameOrder = fullNameOrder;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public int getShipping() {
+        return shipping;
+    }
+
+    public void setShipping(int shipping) {
+        this.shipping = shipping;
+    }
+
     public int getOrderId() {
         return orderId;
     }

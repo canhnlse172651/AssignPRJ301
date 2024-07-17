@@ -12,13 +12,14 @@ import DAO.Product_DAO;
  */
 public class Cart_Model {
     
-     int productId;
-     int userId;
-    int quantity;
-   String productName;
-   String productImage;
-   int stockQuantity;
-   double price;
+   private int productId;
+    private int userId;
+   private int quantity;
+   private String productName;
+   private String productImage;
+   private int stockQuantity;
+   private double price;
+   private String size;
 
     public Cart_Model(int productId, int userId, int quantity, String productName, String productImage, int stockQuantity, double price) {
         this.productId = productId;
@@ -64,6 +65,15 @@ public class Cart_Model {
     public void setProductImage(String productImage) {
         this.productImage = productImage;
     }
+
+    public String getSize() {
+        return size;
+    }
+
+    public void setSize(String size) {
+        this.size = size;
+    }
+    
 
     public void setStockQuantity(int stockQuantity) {
         this.stockQuantity = stockQuantity;
