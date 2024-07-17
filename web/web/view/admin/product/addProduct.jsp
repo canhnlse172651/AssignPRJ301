@@ -116,7 +116,7 @@
                                     <div class="input-group">
                                         <input type="number" class="form-control" id="price" name="price" required>
                                         <div class="input-group-append">
-                                            <span class="input-group-text">VND</span>
+                                            <span class="input-group-text">$</span>
                                         </div>
                                     </div>
                                 </div>
