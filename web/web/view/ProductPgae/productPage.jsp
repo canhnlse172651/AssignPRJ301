@@ -8,18 +8,7 @@
     <link rel="stylesheet" href="web/view/ProductPgae/productPage.css">
     <link href='https://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
     
-    <style>
-     .search > div:after {
-          content: "";
-          background: black;
-          width: 4px;
-          height: 20px;
-          position: absolute;
-          top: 22px;
-          right: -2px;
-          transform: rotate(140deg);
-      }
-    </style>
+   
 </head>
 <body>
     <header class="header">
@@ -37,11 +26,7 @@
         </div>
         <span class="user-info">
             <div class="flexbox">
-                <div class="search">
-                    <div>
-                        <input style="width: 5px; height: 5px;" type="text" placeholder="Search . . ." required>
-                    </div>
-                </div>
+               
             </div>
             <span class="user-profile">
                 <div class="cart">
@@ -54,32 +39,25 @@
         </span>
     </header>
     <div class="container">
-        <div class="product-page">
-            <div class="product-image">
-                <img src="web/view/ProductPgae/image/coffe1.png" alt="${product.name}">
+        <div class="product-page" style="background-color:#fff;" >
+            <div class="product-image" style="margin:0 140px" >
+                <img style = "max-width: none; margin-top: 70px"  src=${product.image} alt="${product.name}">
             </div>
-            <div class="product-details">
-                <h1  style="font-size: 28px; text-align: center;" >${product.name} - ${product.description}</h1>
-                
-                <div class="size-additional" style="display: flex; justify-content: space-evenly;" >
+            <div class="product-details" style="background-color:#fff;" >
+                <h1 style="font-size: 28px; text-align: start;">
+                    ${product.name} - ${product.status ? "In Stock" : "Out of Stock"}
+                </h1>                
+                <div class="size-additional" style="display: flex; align-items: center  " >
                     <div class="size-weight">
                         <h2>Size/Weight</h2>
-                        <div class="dropdowns">
-                            <select>
-                                <option value="500">500g</option>
-                                <option value="1000">1000g</option>
-                                <option value="1500">1500g</option>
-                            </select>
-                            
-                        </div>
-                        <div class="sizes">
-                            <button class="size-btn">Small</button>
-                            <button class="size-btn">Medium</button>
-                            <button class="size-btn">Large</button>
+
+                        <div class="sizes" style="padding : 0" >
+                            <button style="padding : 10px 30px" class="size-btn">${product.size}</button>
+                           
                         </div>
                     </div>
                     <div class="additional-options">
-                        <div><span></span> Compare</div>
+                        <div><span></span> Compare Product</div>
                         <div><span></span> Delivery 
                             <span>From $6 for 1-3 days</span></div>
                         <div><span></span> Pickup 
@@ -87,10 +65,10 @@
                     </div>
                 </div>
                 <form action="MainServlet" method="post">
-                    <div class="price-box" style="margin-left: 480px;">
+                    <div class="price-box" style="margin: 0;padding: 20px 40px;">
                         <div class="price-discount">
-                            <div class="original-price">$500.00</div>
-                            <div class="discount">10% off</div>
+                            <div class="original-price">${product.price}</div>
+                            <div class="discount">0% off</div>
                         </div>
                         <div class="current-price">$${product.price}</div>
                         <input type="hidden" name="productId" value="${product.id}">
@@ -112,7 +90,7 @@
                 
                 <p>${product.description}</p>
                 <div class="img-des">
-                    <img src="web/view/ProductPage/image/${product.image}" alt="${product.name}">
+                    <img style="width:200px" src=${product.image} alt="${product.name}">
                 </div>
             </div>
             <div class="tab-content" id="features">

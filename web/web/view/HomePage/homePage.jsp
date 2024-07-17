@@ -8,18 +8,15 @@
         <title>GroceryMart</title>
         <link rel="stylesheet" href="web/view/HomePage/homePageStyle.css">
 
-  <style>
-     .search > div:after {
-          content: "";
-          background: black;
-          width: 4px;
-          height: 20px;
-          position: absolute;
-          top: 22px;
-          right: -2px;
-          transform: rotate(140deg);
-      }
-    </style>
+        <!-- Bao g?m CSS c?a Slick -->
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel/slick/slick.css"/>
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel/slick/slick-theme.css"/>
+
+        <!-- Bao g?m JavaScript c?a Slick -->
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel/slick/slick.min.js"></script>
+
+
+ 
     </head>
     <body>
         <header class="header">
@@ -45,11 +42,7 @@
             </div>
             <span class="user-info">
                 <div class="flexbox">
-                    <div class="search">
-                        <div>
-                            <input style="width: 5px; height: 5px;" type="text" placeholder="Search . . ." required>
-                        </div>
-                    </div>
+                   
                 </div>
 
                 <span class="user-profile">
@@ -88,17 +81,44 @@
                     <p style="margin: 15px 0" >List Product By Category</p>
 
                 </div>
-                <div class="product-list">
+                <div class ="product-slider" >
+                     <button class="slick-prev">Previous</button>
+                      <div class="product-list">
                     <c:forEach var="product" items="${productLists}">
                         <form action="MainServlet" method="post">
-                            <div class="product-card" style="padding: 40px; width: 200px; height: 350px;">
-                                <img src="web/view/HomePage/image/coffe3.png" alt="${product.name}">
-                                <h3><span >${product.id}</span></h3>
+                            <div class="product-card" style="padding: 40px; width: 200px; height: 350px; margin-top: 30px">
+                                <img src=${product.image} alt="${product.name}">
+                                <h3><span >${product.name}</span></h3>
                                 <div class="Branch">
-                                    <p>Lava highland</p>
+                                    <p style="text-align: center" >Lava highland</p>
                                 </div>
-                                <div class="price-rating">
-                                    <div class="price">Price: ${product.price}</div>
+                                <div class="price-rating" style="display: block" >
+                                    <div style="margin-top: 10px" class="price">Price: ${product.price}</div>
+                                </div>
+                                <input type="hidden" name="productId" value="${product.id}">
+                                <button style="
+                                        cursor: pointer;
+                                        background-color: #4CAF50;
+                                        color: white; /* White text */
+                                        border: none; /* Remove borders */
+                                        padding: 10px 20px; /* Add some padding */
+                                        font-size: 16px; /* Increase font size */
+                                        margin-bottom: 10px;
+                                        transition-duration: 0.4s; /* Animation duration */
+                                        border-radius: 8px; /* Rounded corners */
+                                        " type="submit" name="btn" value="productDetail">
+                                    View Details
+                                </button>
+                            </div>
+                                
+                                 <div class="product-card" style="padding: 40px; width: 200px; height: 350px; margin-top: 30px">
+                                <img src=${product.image} alt="${product.name}">
+                                <h3><span >${product.name}</span></h3>
+                                <div class="Branch">
+                                    <p style="text-align: center" >Lava highland</p>
+                                </div>
+                                <div class="price-rating" style="display: block" >
+                                    <div style="margin-top: 10px" class="price">Price: ${product.price}</div>
                                 </div>
                                 <input type="hidden" name="productId" value="${product.id}">
                                 <button style="
@@ -117,6 +137,9 @@
                             </div>
                         </form>
                     </c:forEach>
+                           <button class="slick-next">Next</button>
+                </div>
+                    
                 </div>
 
             </main>
@@ -184,6 +207,40 @@
             </div>
         </footer>
         <script src="web/view/HomePage/js.js" ></script>
+        
+     <script>
+    $(document).ready(function(){
+        $('.product-list').slick({
+            slidesToShow: 3,
+            slidesToScroll: 1,
+            autoplay: true,
+            autoplaySpeed: 2000,
+            responsive: [
+                {
+                    breakpoint: 768,
+                    settings: {
+                        slidesToShow: 2
+                    }
+                },
+                {
+                    breakpoint: 480,
+                    settings: {
+                        slidesToShow: 1
+                    }
+                }
+            ]
+        });
+
+        // Kích ho?t các nút ?i?u khi?n
+        $('.slick-prev').click(function(){
+            $('.product-list').slick('slickPrev');
+        });
+
+        $('.slick-next').click(function(){
+            $('.product-list').slick('slickNext');
+        });
+    });
+</script>
     </body>
 </html>
 
