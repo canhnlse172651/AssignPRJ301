@@ -10,6 +10,7 @@ import MODEL.User_Model;
 import java.io.IOException;
 import java.io.PrintWriter;
 import static java.lang.System.out;
+import java.sql.SQLException;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -46,27 +47,29 @@ public class ViewCartServlet extends HttpServlet {
 
         try {
             Cart_DAO dao = new Cart_DAO();
-
             HttpSession session = request.getSession(false);
             if (session != null && session.getAttribute("USER") != null) {
-                System.out.println("SERVLET.ViewCartServlet.processRequest()");
                 User_Model user = (User_Model) session.getAttribute("USER");
                 int userId = user.getUserId();
-
-                List<Cart_Model> cart = dao.getCartsByUserId(userId);
-                if (cart != null) {
-                    request.setAttribute("CART", cart); // Trong trường hợp này, cart là đối tượng Cart_Model
-
+                int totalPrice = 0;
+                int subtotal  = 0;
+                List<Cart_Model> listCart = dao.getCartsByUserId(userId);
+                if (listCart != null) {
+                    for(Cart_Model item : listCart){
+                        subtotal += item.getQuantity();
+                        totalPrice+= item.getPrice()* item.getQuantity();
+                    }
+                    request.setAttribute("CART", listCart); 
+                    request.setAttribute("Total", totalPrice); 
+                    request.setAttribute("Subtotal", subtotal ); 
                     url = VIEW_CART_PAGE;               //  create cart for user
                 }
 
             } else {
                 url = ERROR_PAGE;
             }
-
-        } catch (Exception e) {
+        } catch (ClassNotFoundException | SQLException e) {
             url = ERROR_PAGE;
-
             request.setAttribute("ERROR_MESSAGE", "Database error: " + e.getMessage());
         } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);

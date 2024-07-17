@@ -23,6 +23,10 @@ import javax.servlet.http.HttpServletResponse;
 public class MainServlet extends HttpServlet {
 
     private final String VIEW_CART_SERVLET = "ViewCartServlet";
+    private final String ORDER_SERVLET = "CreateOrderServlet";
+    private final String CHECKOUT_CART_USER_SERVLET = "CheckoutCartServlet";
+    private final String UPDATE_CART_USER_SERVLET = "UpdateCartServlet";
+    private final String DELETE_CART_USER_SERVLET = "DeleteCartServlet";
     private final String ADD_TO_CART_SERVLET = "AddToCart";
     private final String LOGIN_SERVLET = "LoginServlet";
     private final String HOME_SERVLET = "HomeServlet";
@@ -106,6 +110,14 @@ public class MainServlet extends HttpServlet {
                     url = ADD_TO_CART_SERVLET;
                 } else if (button.equals("viewCart")) {
                     url = VIEW_CART_SERVLET;
+                }else if (button.equals("updateCartUser")) {
+                    url = UPDATE_CART_USER_SERVLET;
+                }else if (button.equals("deleteCartUser")) {
+                    url = DELETE_CART_USER_SERVLET;
+                }else if (button.equals("CheckoutCart")) {
+                    url = CHECKOUT_CART_USER_SERVLET;
+                }else if (button.equals("CheckoutOrder")) {
+                    url = ORDER_SERVLET;
                 }else if(button.equals("SignUp")){
                     url = LOGIN_PAGE;
                 }
