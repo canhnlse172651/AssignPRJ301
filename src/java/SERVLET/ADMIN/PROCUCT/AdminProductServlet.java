@@ -33,7 +33,7 @@ public class AdminProductServlet extends HttpServlet {
 
     private static String ADMIN_PRODUCT_MANAGE_PAGE = "web/view/admin/product/productManage.jsp";
     Product_DAO product_DAO = new Product_DAO();
-    private final String LOGIN_PAGE = "/web/view/Login/login.html";
+    private final String LOGIN_PAGE = "web/view/Login/login.html";
     String url = LOGIN_PAGE;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
