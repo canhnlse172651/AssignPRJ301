@@ -182,7 +182,7 @@
                                         <c:forEach var="order" items="${listOrder}">
                                             <tr>
                                                 <td>${order.orderId}</td>
-                                                <td>${order.fullName}</td>
+                                                <td>${order.fullNameOrder}</td>
                                                 <td>${order.orderDate}</td>
                                                 <td>${order.deliveryDate!= null ? order.deliveryDate : "Not yet"}</td>
                                                 <td>${order.totalPrice}</td>

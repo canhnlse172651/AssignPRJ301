@@ -4,6 +4,7 @@
  */
 package SERVLET;
 
+import DAO.ADMIN.Account_DAO;
 import DAO.Cart_DAO;
 import DAO.OrderDetail_DAO;
 import DAO.Order_DAO;
@@ -56,6 +57,7 @@ public class CreateOrderServlet extends HttpServlet {
             Order_DAO orderDAO = new Order_DAO();
             OrderDetail_DAO orderDetail_DAO = new OrderDetail_DAO();
             Payment_DAO payment_DAO = new Payment_DAO();
+            Account_DAO accDAO = new Account_DAO();
             HttpSession session = request.getSession(false);
             if (session != null && session.getAttribute("USER") != null) {
                 User_Model user = (User_Model) session.getAttribute("USER");
@@ -97,6 +99,9 @@ public class CreateOrderServlet extends HttpServlet {
                     }
                     payment.setPaymentId(orderId);
                     payment_DAO.insertPayment(payment);
+                    User_Model acc= accDAO.findOneById(userId);
+                    acc.setNumberOrdered(acc.getNumberOrdered()+1);
+                    accDAO.updateUser(acc);
                     url = HOME_SERVLET;
                 } else {
                     url = VIEW_CHECKOUT_PAGE;

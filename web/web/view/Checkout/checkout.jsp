@@ -47,21 +47,14 @@
                 <div class="Logo-word pt-5">grocerymart</div>
             </div>
             <div class="navigation me-5 pt-3">
-                <p>Home</p>
+                <a href="/Grocery/HomeServlet"> Home </a>
                 <i class="fa-solid fa-chevron-down pt-1 px-1" style="color: #3b3d40;"></i>
-                <p>Manager</p>
+                <a href="/Grocery/AccountServlet"> Manager </a>
                 <i class="fa-solid fa-chevron-down pt-1 px-1" style="color: #3b3d40;"></i>
-                <p>Contact</p>
+                <a href="/Grocery/Contact"> Contact </a> 
                 <i class="fa-solid fa-chevron-down pt-1 px-1" style="color: #3b3d40;"></i>
             </div>
             <span class="user-info">
-                <div class="flexbox">
-                    <!--                <div class="search">
-                                        <div>
-                                            <input style="width: 5px; height: 5px;" type="text" placeholder="Search . . ." required>
-                                        </div>
-                                    </div>-->
-                </div>
                 <span class="user-profile">
                     <div class="cart">
                         <img src="web/view/AddToCart/image/cart.png" alt="cart" style="margin-right: 10px"  >
@@ -71,6 +64,7 @@
                     <img src="web/view/AddToCart/image/user.png" alt="User">                    
                 </span>
             </span>
+            <a href="/Grocery/Logout"><div class="back-logout" ><i class="fa-solid fa-right-from-bracket fa-xl" style=" color: #000000; margin-left: 10px; cursor : pointer" title="Logout"></i></div> </a>
         </header>
 
         <main class="container">

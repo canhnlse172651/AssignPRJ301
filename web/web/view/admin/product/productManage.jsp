@@ -260,7 +260,7 @@
                 /// Biều đồ đường.
 
                 var lineChartData = {
-                labels: [<c:forEach var="item" items="${top}">'${item.name}',</c:forEach>],
+                labels: [<c:forEach var="item" items="${listProduct}">'${item.name}',</c:forEach>],
                         datasets: [
                         {
                         //fillColor: "#FC8213",
@@ -268,7 +268,7 @@
                                 fill: true,
                                 backgroundColor: "transparent",
                                 borderColor: "rgb(255, 69, 96)",
-                                data: [<c:forEach var="item" items="${top}">${item.stockQuantity},</c:forEach>],
+                                data: [<c:forEach var="item" items="${listProduct}">${item.stockQuantity},</c:forEach>],
                         }
                         ]
 

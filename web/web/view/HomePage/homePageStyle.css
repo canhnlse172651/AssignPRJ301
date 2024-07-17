@@ -35,12 +35,12 @@ a:hover {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     height: 60px;
 }
-.navigation{
+.navigation {
   display: flex;
   justify-content:center;
   cursor: pointer;
 }
-.navigation img{
+.navigation a{
   width: 2%;
   margin-left: 10px;
   margin-right: 10px;

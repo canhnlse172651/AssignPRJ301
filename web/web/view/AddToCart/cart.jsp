@@ -22,6 +22,10 @@
             .text-small{
                 font-size: 11px;
             }
+            a{
+                text-decoration: none;
+                color: black;
+            }
         </style>
     </head>
     <body>
@@ -31,21 +35,14 @@
                 <div class="Logo-word pt-5">grocerymart</div>
             </div>
             <div class="navigation me-5 pt-3">
-                <p>Home</p>
+                <a href="/Grocery/HomeServlet"> Home </a>
                 <i class="fa-solid fa-chevron-down pt-1 px-1" style="color: #3b3d40;"></i>
-                <p>Manager</p>
+                <a href="/Grocery/AccountServlet"> Manager </a>
                 <i class="fa-solid fa-chevron-down pt-1 px-1" style="color: #3b3d40;"></i>
-                <p>Contact</p>
+                <a href="/Grocery/Contact"> Contact </a>
                 <i class="fa-solid fa-chevron-down pt-1 px-1" style="color: #3b3d40;"></i>
             </div>
             <span class="user-info">
-                <div class="flexbox">
-                    <!--                <div class="search">
-                                        <div>
-                                            <input style="width: 5px; height: 5px;" type="text" placeholder="Search . . ." required>
-                                        </div>
-                                    </div>-->
-                </div>
                 <span class="user-profile">
                     <div class="cart">
                         <img src="web/view/AddToCart/image/cart.png" alt="cart" style="margin-right: 10px"  >
@@ -55,6 +52,7 @@
                     <img src="web/view/AddToCart/image/user.png" alt="User">
                 </span>
             </span>
+            <a href="/Grocery/Logout"><div class="back-logout" ><i class="fa-solid fa-right-from-bracket fa-xl" style=" color: #000000; margin-left: 10px; cursor : pointer" title="Logout"></i></div> </a>
         </header>
 
         <main class="container">
@@ -73,7 +71,7 @@
                                     <p>$${item.price} <span class="in-stock">${item.stockQuantity > 0 ? "In stock" : "Out stock"}</span></p>
                                     <div class="item-controls">
                                         <select>
-                                            <option>Trung Nguyên</option>
+                                            <option>${item.size}</option>
                                         </select>
                                         <input type="number" name="quantity" value="${item.quantity}" min="1" max="${item.stockQuantity}">
                                         <input type="hidden" value="${item.productId}" name="productId"/>
@@ -109,11 +107,11 @@
                         </div>          
 
                     </div>
-                        <form action="MainServlet" method="post">
-                            <button type="submit" class='checkout-btn'${Subtotal > 0 ?  '': 'disabled '}
-                                    name="btn" value="CheckoutCart">Continue to checkout</button>
-                        </form>    
-                    
+                    <form action="MainServlet" method="post">
+                        <button type="submit" class='checkout-btn'${Subtotal > 0 ?  '': 'disabled '}
+                                name="btn" value="CheckoutCart">Continue to checkout</button>
+                    </form>    
+
 
                     <div class="gift">
                         <div class="row">

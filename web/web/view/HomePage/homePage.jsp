@@ -14,52 +14,42 @@
 
         <!-- Bao g?m JavaScript c?a Slick -->
         <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel/slick/slick.min.js"></script>
-
-
- 
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+        <style>
+            .navigation {
+                gap: 50px;
+            }
+        </style>
     </head>
     <body>
-        <header class="header">
+        <header class="header row">
             <div class="container Logo">
                 <img src="web/view/HomePage/image/logo.png" alt="logo">
                 <div class="Logo-word">grocerymart</div>
             </div>
             <div class="navigation">
+                <a href="/Grocery/HomeServlet"> Home </a>
+                <a href="/Grocery/AccountServlet">
+                    Manage
+                </a>
+                <a href="/Grocery/Contact">Contact</a>
 
-                <p>
-                    Departments  
-                </p>
-                <img src="web/view/HomePage/image/down-arrow-5.png" alt="logo">
-
-                <p>
-                    Grocery
-                </p>
-                <img src="web/view/HomePage/image/down-arrow-5.png" alt="logo"> 
-                <p>
-                    Beauty
-                </p>
-                <img src="web/view/HomePage/image/down-arrow-5.png" alt="logo">
             </div>
-            <span class="user-info">
-                <div class="flexbox">
-                   
-                </div>
-
+            <div class="user-info">
                 <span class="user-profile">
                     <div class="cart">
                         <a href="MainServlet?btn=viewCart" > <img src="web/view/HomePage/image/cart.png" alt=cart></a>
-                        <span>03</span>
-                        <span>$65.42</span>
                     </div>
-                    <img src="web/view/HomePage/image/user.png" alt="User">
+                    <img src="web/view/HomePage/image/user.png" alt="User"/> 
                 </span>
-            </span>
+                <a href="/Grocery/Logout"><div class="back-logout" ><i class="fa-solid fa-right-from-bracket fa-xl" style=" color: #000000; margin-left: 10px; cursor : pointer" title="Logout"></i></div> </a>
+            </div>
         </header>
         <div class="container">
             <aside class="sidebar">
                 <h1>Categories</h1>
                 <ul class="categories">
-                    
+
                     <c:forEach items="${categories}" var="category">
                         <li class="category-item">
                             <a style="gap: 15px; width: 100%; display: flex; align-items: center;" href="HomeServlet?category_id=${category.categoryId}">
@@ -82,64 +72,64 @@
 
                 </div>
                 <div class ="product-slider" >
-                     <button class="slick-prev">Previous</button>
-                      <div class="product-list">
-                    <c:forEach var="product" items="${productLists}">
-                        <form action="MainServlet" method="post">
-                            <div class="product-card" style="padding: 40px; width: 200px; height: 350px; margin-top: 30px">
-                                <img src=${product.image} alt="${product.name}">
-                                <h3><span >${product.name}</span></h3>
-                                <div class="Branch">
-                                    <p style="text-align: center" >Lava highland</p>
+                    <button class="slick-prev">Previous</button>
+                    <div class="product-list">
+                        <c:forEach var="product" items="${productLists}">
+                            <form action="MainServlet" method="post">
+                                <div class="product-card" style="padding: 40px; width: 200px; height: 350px; margin-top: 30px">
+                                    <img src=${product.image} alt="${product.name}">
+                                    <h3><span >${product.name}</span></h3>
+                                    <div class="Branch">
+                                        <p style="text-align: center" >Lava highland</p>
+                                    </div>
+                                    <div class="price-rating" style="display: block" >
+                                        <div style="margin-top: 10px" class="price">Price: ${product.price}</div>
+                                    </div>
+                                    <input type="hidden" name="productId" value="${product.id}">
+                                    <button style="
+                                            cursor: pointer;
+                                            background-color: #4CAF50;
+                                            color: white; /* White text */
+                                            border: none; /* Remove borders */
+                                            padding: 10px 20px; /* Add some padding */
+                                            font-size: 16px; /* Increase font size */
+                                            margin-bottom: 10px;
+                                            transition-duration: 0.4s; /* Animation duration */
+                                            border-radius: 8px; /* Rounded corners */
+                                            " type="submit" name="btn" value="productDetail">
+                                        View Details
+                                    </button>
                                 </div>
-                                <div class="price-rating" style="display: block" >
-                                    <div style="margin-top: 10px" class="price">Price: ${product.price}</div>
+
+                                <div class="product-card" style="padding: 40px; width: 200px; height: 350px; margin-top: 30px">
+                                    <img src=${product.image} alt="${product.name}">
+                                    <h3><span >${product.name}</span></h3>
+                                    <div class="Branch">
+                                        <p style="text-align: center" >Lava highland</p>
+                                    </div>
+                                    <div class="price-rating" style="display: block" >
+                                        <div style="margin-top: 10px" class="price">Price: ${product.price}</div>
+                                    </div>
+                                    <input type="hidden" name="productId" value="${product.id}">
+                                    <button style="
+                                            cursor: pointer;
+                                            background-color: #4CAF50;
+                                            color: white; /* White text */
+                                            border: none; /* Remove borders */
+                                            padding: 10px 20px; /* Add some padding */
+                                            font-size: 16px; /* Increase font size */
+                                            margin-bottom: 10px;
+                                            transition-duration: 0.4s; /* Animation duration */
+                                            border-radius: 8px; /* Rounded corners */
+                                            " type="submit" name="btn" value="productDetail">
+                                        View Details
+                                    </button>
                                 </div>
-                                <input type="hidden" name="productId" value="${product.id}">
-                                <button style="
-                                        cursor: pointer;
-                                        background-color: #4CAF50;
-                                        color: white; /* White text */
-                                        border: none; /* Remove borders */
-                                        padding: 10px 20px; /* Add some padding */
-                                        font-size: 16px; /* Increase font size */
-                                        margin-bottom: 10px;
-                                        transition-duration: 0.4s; /* Animation duration */
-                                        border-radius: 8px; /* Rounded corners */
-                                        " type="submit" name="btn" value="productDetail">
-                                    View Details
-                                </button>
-                            </div>
-                                
-                                 <div class="product-card" style="padding: 40px; width: 200px; height: 350px; margin-top: 30px">
-                                <img src=${product.image} alt="${product.name}">
-                                <h3><span >${product.name}</span></h3>
-                                <div class="Branch">
-                                    <p style="text-align: center" >Lava highland</p>
-                                </div>
-                                <div class="price-rating" style="display: block" >
-                                    <div style="margin-top: 10px" class="price">Price: ${product.price}</div>
-                                </div>
-                                <input type="hidden" name="productId" value="${product.id}">
-                                <button style="
-                                        cursor: pointer;
-                                        background-color: #4CAF50;
-                                        color: white; /* White text */
-                                        border: none; /* Remove borders */
-                                        padding: 10px 20px; /* Add some padding */
-                                        font-size: 16px; /* Increase font size */
-                                        margin-bottom: 10px;
-                                        transition-duration: 0.4s; /* Animation duration */
-                                        border-radius: 8px; /* Rounded corners */
-                                        " type="submit" name="btn" value="productDetail">
-                                    View Details
-                                </button>
-                            </div>
-                        </form>
-                    </c:forEach>
-                           <button class="slick-next">Next</button>
-                </div>
-                    
+                            </form>
+                        </c:forEach>
+                        <button class="slick-next">Next</button>
+                    </div>
+
                 </div>
 
             </main>
@@ -184,7 +174,7 @@
                         <li><a href="#">Terms of Use</a></li>
                         <li><a href="#">Privacy</a></li>
                         <li><a href="#">Careers</a></li>
-                       
+
                     </ul>
                 </div>
                 <div class="footer-column">
@@ -207,40 +197,40 @@
             </div>
         </footer>
         <script src="web/view/HomePage/js.js" ></script>
-        
-     <script>
-    $(document).ready(function(){
-        $('.product-list').slick({
-            slidesToShow: 3,
-            slidesToScroll: 1,
-            autoplay: true,
-            autoplaySpeed: 2000,
-            responsive: [
-                {
-                    breakpoint: 768,
-                    settings: {
-                        slidesToShow: 2
-                    }
-                },
-                {
-                    breakpoint: 480,
-                    settings: {
-                        slidesToShow: 1
-                    }
-                }
-            ]
-        });
 
-        // Kích ho?t các nút ?i?u khi?n
-        $('.slick-prev').click(function(){
-            $('.product-list').slick('slickPrev');
-        });
+        <script>
+            $(document).ready(function () {
+                $('.product-list').slick({
+                    slidesToShow: 3,
+                    slidesToScroll: 1,
+                    autoplay: true,
+                    autoplaySpeed: 2000,
+                    responsive: [
+                        {
+                            breakpoint: 768,
+                            settings: {
+                                slidesToShow: 2
+                            }
+                        },
+                        {
+                            breakpoint: 480,
+                            settings: {
+                                slidesToShow: 1
+                            }
+                        }
+                    ]
+                });
 
-        $('.slick-next').click(function(){
-            $('.product-list').slick('slickNext');
-        });
-    });
-</script>
+                // Kích ho?t các nút ?i?u khi?n
+                $('.slick-prev').click(function () {
+                    $('.product-list').slick('slickPrev');
+                });
+
+                $('.slick-next').click(function () {
+                    $('.product-list').slick('slickNext');
+                });
+            });
+        </script>
     </body>
 </html>
 

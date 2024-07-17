@@ -57,7 +57,7 @@ public class AdminUpdateOrderServlet extends HttpServlet {
         } catch (NumberFormatException | SQLException e) {
             System.out.println("SERVLET.ADMIN.ACCOUNT.AddAccountServlet.processRequest()" + e);
         } finally {
-            response.sendRedirect(request.getContextPath() +url );
+            response.sendRedirect(request.getContextPath() + url );
         }
     }
 

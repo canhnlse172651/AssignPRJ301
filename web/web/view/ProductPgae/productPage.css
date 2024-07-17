@@ -29,12 +29,13 @@ body {
 .navigation{
   display: flex;
   justify-content:center;
+  cursor: pointer;
 }
 .navigation img{
   width: 2%;
   margin-left: 10px;
   margin-right: 10px;
- padding-top: 0.1%;
+  padding-top: 0.1%;
 }
 .Logo{
   display: flex; 
