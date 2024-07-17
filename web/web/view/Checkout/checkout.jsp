@@ -114,7 +114,7 @@
                                                 </div >
                                                 <div class="col-8">
                                                     <h5 >Express Deliver</h5>
-                                                    <div>Price: 50,000 VND</div>
+                                                    <div>Price: $5</div>
                                                     <div class="">Delivery in 10 days</div>
                                                 </div>
                                             </div>                                           
@@ -131,7 +131,7 @@
                                                 </div >
                                                 <div class="col-9">
                                                     <h5 >Regular shipping</h5>
-                                                    <div>Price: 20,000 VNĐ</div>
+                                                    <div>Price: $2</div>
                                                     <div class="">Delivery in 15 days</div>
                                                 </div>
 
@@ -161,7 +161,7 @@
                                                         <p>x ${item.quantity} <span class="in-stock">items</span></p>
                                                     </div>
                                                     <div class="col-4 ">
-                                                        <p class="text-warning"><span class="text-dark"> = </span><b> ${item.price * item.quantity} </b> <span class="text-dark"> VNĐ</span></p>
+                                                        <p class="text-warning"><span class="text-dark"> = $</span><b> ${item.price * item.quantity} </b></p>
                                                     </div>
                                                 </div>                                                    
                                                 <div class="item-controls">
@@ -223,16 +223,16 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-6">Price (Total):</div>
-                                    <div class="col-6 text-end"> <b>${Total} </b> VNĐ</div>
+                                    <div class="col-6 text-end"> $<b>${Total} </b></div>
                                 </div>
                                 <div class="row mb-1">
                                     <div class="col-6">Shipping:</div>
-                                    <div class="col-6 text-end"> <b id='shipping'>50 0000 </b> VNĐ</div>
+                                    <div class="col-6 text-end"> <b id='shipping'>$5 </b></div>
                                 </div>
                                 <div class="row px-3">---------------------------------------------------------</div>
                                 <div class="row">
                                     <div class="col-6">Estimated Total:</div>
-                                    <div class="col-6 text-end"  > <b id='totalPrice' name='totalPrice'>${Total} </b> VNĐ</div>
+                                    <div class="col-6 text-end"  > $<b id='totalPrice' name='totalPrice'>${Total} </b></div>
                                     <input type="hidden" id="totalPriceValue" name="totalPriceValue">
                                 </div>        
 
@@ -282,11 +282,11 @@
                 for (var i = 0; i < shippingOptions.length; i++) {
                     if (shippingOptions[i].checked) {
                         if (shippingOptions[i].value === "fast") {
-                            totalPrice += 50000;
-                            ship = 50000;
+                            totalPrice += 5;
+                            ship = 5;
                         } else if (shippingOptions[i].value === "regular") {
-                            totalPrice += 20000;
-                            ship = 20000;
+                            totalPrice += 2;
+                            ship = 2;
                         }
                         break;
                     }

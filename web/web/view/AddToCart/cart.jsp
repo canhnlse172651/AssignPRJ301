@@ -96,16 +96,16 @@
                         </div>
                         <div class="row">
                             <div class="col-6">Price (Total):</div>
-                            <div class="col-6 text-end"> <b>${Total} </b> VNĐ</div>
+                            <div class="col-6 text-end"> $<b>${Total} </b></div>
                         </div>
                         <div class="row mb-1">
                             <div class="col-6">Shipping:</div>
-                            <div class="col-6 text-end"> <b>50 0000 </b> VNĐ</div>
+                            <div class="col-6 text-end">$ <b>5 </b></div>
                         </div>
                         <div class="row px-3">---------------------------------------------------------</div>
                         <div class="row">
                             <div class="col-6">Estimated Total:</div>
-                            <div class="col-6 text-end"> <b>${Total + 50000} </b> VNĐ</div>
+                            <div class="col-6 text-end"> $<b>${Total + 5} </b></div>
                         </div>          
 
                     </div>
