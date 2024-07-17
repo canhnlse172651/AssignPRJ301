@@ -4,6 +4,8 @@
  */
 package SERVLET.ADMIN.ACCOUNT;
 
+import DAO.ADMIN.Account_DAO;
+import MODEL.User_Model;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -11,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -18,6 +21,11 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "AdminUpdateAccountServlet", urlPatterns = {"/AdminUpdateAccountServlet"})
 public class AdminUpdateAccountServlet extends HttpServlet {
+
+    private static String ADMIN_ACCOUNT_MANAGE_SERVLET = "/AccountServlet";
+    private final String LOGIN_PAGE = "/web/view/Login/login.html";
+    String url = LOGIN_PAGE;
+    Account_DAO accountDao = new Account_DAO();
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,17 +39,34 @@ public class AdminUpdateAccountServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet AdminUpdateAccountServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet AdminUpdateAccountServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        try {
+            HttpSession session = request.getSession(false);
+            if (session != null && session.getAttribute("USER") != null) {
+                User_Model userAdmin = (User_Model) session.getAttribute("USER");
+                if (userAdmin.isRole() == true) {
+                    int userId = Integer.parseInt(request.getParameter("userId"));
+                    int numberOrdered = Integer.parseInt(request.getParameter("numberOrdered"));
+                    String username = request.getParameter("username");
+                    String fullName = request.getParameter("fullName");
+                    String email = request.getParameter("email");
+                    String password = request.getParameter("password");
+                    String address = request.getParameter("address");
+                    String phone = request.getParameter("phone");
+                    boolean role = Integer.parseInt(request.getParameter("role")) == 1;
+                    boolean status = Integer.parseInt(request.getParameter("status")) == 1;
+                    url = "/MainServlet?btn=adminGetUpdateAccount&userId=" + userId;
+                    User_Model user = new User_Model(userId, username, password, fullName, email, numberOrdered, phone, status, address, role);
+                    if (accountDao.updateUser(user)) {
+                        url = ADMIN_ACCOUNT_MANAGE_SERVLET;
+                    }
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("SERVLET.ADMIN.ACCOUNT.AddAccountServlet.processRequest()" + e);
+        } finally {
+            response.sendRedirect(request.getContextPath() + url);
         }
     }
 

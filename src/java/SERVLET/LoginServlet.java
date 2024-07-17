@@ -19,6 +19,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -28,8 +29,8 @@ import javax.servlet.http.HttpServletResponse;
 public class LoginServlet extends HttpServlet {
 
     private static String INVALID_PAGE = "web/view/Login/InvalidPage.html";
-    private static String SUCSESS_PAGE = "web/view/Login/sucsess.html";
-
+    private final String HOME_PAGE = "HomeServlet";
+     private static final String ERROR_PAGE = "web/error.jsp";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -50,21 +51,30 @@ public class LoginServlet extends HttpServlet {
         String url = INVALID_PAGE;
          
         try {
-
             User_DAO dao = new User_DAO();
-
             User_Model user = dao.checkLogin(username, password);
 
             if (user != null) {
-                url = SUCSESS_PAGE;
-            }
+                // Lưu thông tin người dùng vào session
+                HttpSession session = request.getSession(true);
+                session.setAttribute("USER", user);
 
+                // Chuyển hướng đến trang thành công
+                url = HOME_PAGE;
+            } else {
+                // Xử lý khi đăng nhập không thành công
+                url = INVALID_PAGE;
+            }
+        } catch(Exception e){
+            url = ERROR_PAGE;
+            
+             request.setAttribute("ERROR_MESSAGE", "Database error: " + e.getMessage());
         } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
-
             out.close();
         }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -101,8 +101,9 @@ public class Account_DAO implements Serializable {
             }
         }
     }
-     public User_Model findOneById(int id) throws ClassNotFoundException, SQLException {
-         User_Model user = new User_Model();
+
+    public User_Model findOneById(int id) throws ClassNotFoundException, SQLException {
+        User_Model user = new User_Model();
         try {
             con = DB_Connection.getConnection();
             if (con != null) {
@@ -144,4 +145,100 @@ public class Account_DAO implements Serializable {
         return user;
     }
 
+    public boolean updateUser(User_Model user) throws SQLException, ClassNotFoundException {
+        try {
+            con = DB_Connection.getConnection();
+            if (con != null) {
+                String sql = "UPDATE [User] SET  password = ?, full_name = ?, email = ?, number_ordered = ?, phone = ?, status = ?, address = ?, role = ?, username = ? WHERE user_id = ?";
+                stm = con.prepareStatement(sql);
+                stm.setString(1, user.getPassword());
+                stm.setString(2, user.getFullName());
+                stm.setString(3, user.getEmail());
+                stm.setInt(4, user.getNumberOrdered());
+                stm.setString(5, user.getPhone());
+                stm.setBoolean(6, user.isStatus());
+                stm.setString(7, user.getAddress());
+                stm.setBoolean(8, user.isRole());
+                stm.setString(9, user.getUserName());
+                stm.setInt(10, user.getUserId());
+                int rowsUpdated = stm.executeUpdate();
+                return rowsUpdated > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return false;
+    }
+
+    public boolean deleteUser(int userId) throws SQLException, ClassNotFoundException {
+        try {
+            con = DB_Connection.getConnection();
+            if (con != null) {
+                User_Model user = findOneById(userId);
+                if(user!=null){
+                    user.setStatus(false);
+                    return updateUser(user);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return false;
+    }
+ public List<User_Model> findTopUser() throws ClassNotFoundException, SQLException {
+        List<User_Model> listUser = new ArrayList<>();
+        try {
+            con = DB_Connection.getConnection();
+            if (con != null) {
+                sql ="select top 3 * from [User] order by number_ordered desc";
+            }
+
+            stm = con.prepareStatement(sql);
+            resultSet = stm.executeQuery();
+            while (resultSet.next()) {
+                int userId = resultSet.getInt("user_id");
+                String user_Name = resultSet.getString("username");
+                String user_password = resultSet.getString("password");
+                String fullName = resultSet.getString("full_name");
+                String email = resultSet.getString("email");
+                int numberOrdered = resultSet.getInt("number_ordered");
+                String phone = resultSet.getString("phone");
+                boolean status = resultSet.getBoolean("status");
+                String address = resultSet.getString("address");
+                boolean role = resultSet.getBoolean("role");
+                User_Model user = new User_Model(userId, user_Name, user_password, fullName, email, numberOrdered, phone, status, address, role);
+                listUser.add(user);
+            }
+        } catch (SQLException e) {
+            System.out.println("DAO.ADMIN.Account_DAO.findAll()" + e);
+        } finally {
+            if (resultSet != null) {
+                resultSet.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+
+        }
+        return listUser;
+    }
 }

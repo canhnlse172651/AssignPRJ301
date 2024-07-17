@@ -20,6 +20,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import org.apache.jasper.tagplugins.jstl.core.ForEach;
 
 /**
@@ -31,6 +32,8 @@ public class AccountServlet extends HttpServlet {
 
     Account_DAO accountDao = new Account_DAO();
     private static String ADMIN_ACCOUNT_MANAGE_PAGE = "web/view/admin/account/accountManage.jsp";
+    private final String LOGIN_PAGE = "web/view/Login/login.html";
+    String url = LOGIN_PAGE;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -45,13 +48,26 @@ public class AccountServlet extends HttpServlet {
             throws ServletException, IOException, ClassNotFoundException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
-	response.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
         try {
-            List<User_Model> listUser = accountDao.findAll();
-            request.setAttribute("listUser", listUser);
+            HttpSession session = request.getSession(false);
+            if (session != null && session.getAttribute("USER") != null) {
+                User_Model userAdmin = (User_Model) session.getAttribute("USER");
+                if (userAdmin.isRole() == true) {
+                    List<User_Model> top = accountDao.findTopUser();
+                    List<User_Model> listUser = accountDao.findAll();
+                    System.out.println("SERVLET.ADMIN.AccountServlet.processRequest()===============================================================");
+                    for (User_Model user : top) {
+                        System.out.println(user.getFullName() + "  ");
+                    }
+                    request.setAttribute("listUser", listUser);
+                    request.setAttribute("top", top);
+                    url = ADMIN_ACCOUNT_MANAGE_PAGE;
+                } 
+            }
 
         } finally {
-            RequestDispatcher rd = request.getRequestDispatcher(ADMIN_ACCOUNT_MANAGE_PAGE);
+            RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
             out.close();
         }

@@ -4,7 +4,7 @@
     Author     : LA DAT
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/web/common/taglib.jsp" %>
 <!DOCTYPE html>
 <html>
@@ -59,16 +59,16 @@
                                 Account
                             </a>
                             <div class="sb-sidenav-menu-heading">STORE MANAGE</div>
-                            <a class="nav-link collapsed" href="/Grocery/AdminCategoryServlet" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                            <a class="nav-link" href="/Grocery/AdminCategoryServlet">
                                 <div class="sb-nav-link-icon"><i class="fas fa-columns fa-bounce"></i></div>
                                 Category
                             </a>
 
-                            <a class="nav-link collapsed" href="/Grocery/AdminProductServlet" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
+                            <a class="nav-link" href="/Grocery/AdminProductServlet">
                                 <div class="sb-nav-link-icon"><i class="fa-solid fa-mug-saucer fa-bounce"></i></div>
                                 Product
                             </a>
-                            <a class="nav-link collapsed" href="/Grocery/AdminOrderServlet" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
+                            <a class="nav-link" href="/Grocery/AdminOrderServlet">
                                 <div class="sb-nav-link-icon"><i class="fa-solid fa-truck fa-bounce"></i></div>
                                 Order
                             </a>
@@ -83,71 +83,52 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4">Dashboard</h1>
+                        <h1 class="mt-4">ACCOUNT MANAGE</h1>
                         <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item active">Dashboard</li>
+                            <li class="breadcrumb-item active">TOP 3 LOYAL CUSTOMERS</li>
                         </ol>
                         <div class="row">
                             <div class="col-xl-3 col-md-6">
                                 <div class="card bg-primary text-white mb-4">
-                                    <div class="card-body">Primary Card</div>
+                                    <div class="card-body">
+                                        <div><b>Top 1: </b> ${top[0].fullName}<span>       </span>  <i class="fa-solid fa-trophy fa-2xl" style="color: #FFC717;"></i></div>
+                                        <div><b>Phone: </b>${top[0].phone}</div>
+                                    </div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">View Details</a>
+                                       <div>${top[0].numberOrdered} Orders</div>
                                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-xl-3 col-md-6">
-                                <div class="card bg-warning text-white mb-4">
-                                    <div class="card-body">Warning Card</div>
+                                <div class="card text-white mb-4" style="background-color: #ffcc66;">
+                                    <div class="card-body">
+                                        <div><b>Top 2: </b> ${top[1].fullName} <span>       </span>  <i class="fa-solid fa-trophy fa-2xl" style="color: #c1c5cd;"></i></div> 
+                                        <div><b>Phone: </b>${top[1].phone}</div>
+                                    </div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">View Details</a>
+                                        <div>${top[1].numberOrdered} Orders</div>
                                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-xl-3 col-md-6">
                                 <div class="card bg-success text-white mb-4">
-                                    <div class="card-body">Success Card</div>
-                                    <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">View Details</a>
-                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                    <div class="card-body">
+                                         <div><b>Top 3: </b> ${top[2].fullName} <span>       </span>  <i class="fa-solid fa-trophy fa-2xl" style="color: #bb8438;"></i></div> 
+                                        <div><b>Phone: </b>${top[2].phone}</div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-md-6">
-                                <div class="card bg-danger text-white mb-4">
-                                    <div class="card-body">Danger Card</div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">View Details</a>
+                                         <div>${top[2].numberOrdered} Orders</div>
                                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-xl-6">
-                                <div class="card mb-4">
-                                    <div class="card-header">
-                                        <i class="fas fa-chart-area me-1"></i>
-                                        Area Chart Example
-                                    </div>
-                                    <div class="card-body"><canvas id="myAreaChart" width="100%" height="40"></canvas></div>
-                                </div>
-                            </div>
-                            <div class="col-xl-6">
-                                <div class="card mb-4">
-                                    <div class="card-header">
-                                        <i class="fas fa-chart-bar me-1"></i>
-                                        Bar Chart Example
-                                    </div>
-                                    <div class="card-body"><canvas id="myBarChart" width="100%" height="40"></canvas></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="my-3">
-                            <a href="<c:url value='/MainServlet?action=adminAddAccount'/>">
-                            <button type="button" class="btn btn-primary">Add new account</button>
+                       
+                        <div class="my-3 mt-5">
+                            <a href="<c:url value='/MainServlet?btn=adminAddAccount'/>">
+                            <button type="button" class="btn btn-success">Add new account</button>
                             </a>
                         </div>
                         
@@ -189,12 +170,12 @@
                                                 <td >${user.role ? "admin":"customer"}</td>
                                                 <td>
                                                     <div class="hidden-sm hidden-xs btn-group">
-                                                        <a href="<c:url value='/MainServlet?action=adminGetUpdateAccount&userId=${user.userId}'/>">
+                                                        <a href="<c:url value='/MainServlet?btn=adminGetUpdateAccount&userId=${user.userId}'/>">
                                                             <button class="btn btn-xs btn-sm">
                                                                 <i class="fa-solid fa-pen-to-square fa-beat fa-lg" style="color: #24f59a;"></i>
                                                             </button>
                                                         </a>
-                                                        <a href="<c:url value='/adminGetDeleteAccount?userId=${user.userId}'/>">
+                                                        <a href="<c:url value='/MainServlet?btn=adminGetDeleteAccount&userId=${user.userId}'/>">
                                                             <button class="btn btn-xs btn-sm">
                                                                 <i class="fa-solid fa-trash fa-beat fa-lg" style="color: #fb2109;"></i>
                                                             </button>

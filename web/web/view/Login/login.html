@@ -14,36 +14,63 @@ login with user name and password
     </head>
     <body>
         
-         <div class="container">
-        <div class="left-section">
-            <div class="image">
-                <img src="web/view/Login/image/banner_Login.png" alt="Illustration"> <br/>
-            </div>
-            <p>The best of luxury brand values, high quality products, and innovative services</p><br/>
+        <div class="container">
+    <div class="left-section">
+        <div class="image">
+            <img src="web/view/Login/image/banner_Login.png" alt="Illustration"> <br/>
         </div>
-        <div class="right-section">
-            <div class="form-container">
-                <div class="mart"> 
-                    
-                    <img src="web/view/Login/image/logo_login.jpg" alt="Illustration">
-                    <b>grocerymart</b>
-                </div>
-                <h2>Sign Up</h2>
-                <p>Let's create your account and Shop like a pro and save money.</p>
-                <form action="MainServlet" method="post" >
-                    <input type = "text" placeholder = "User Name"  name = "txtUsername"  value = "">
-                    <input type = "password" placeholder = "Password"  name = "txtPassword" value = "" >
-                    <div class="checkbox-container">
-                        <input type="checkbox" id="defaultCard">
-                        <label for="defaultCard">Set as default card</label>
-                    </div>
-                    <a href="#" class="recovery-password">Recovery Password</a>
-                    <button type="submit"  name="btn" value="Login" >Sign Up</button  >
-                    <button type="button" class="google-signin">Sign in with Gmail</button>
-                </form>
-                <p>Have an account yet? <a href="#">Sign In</a></p>
+        <p>The best of luxury brand values, high quality products, and innovative services</p><br/>
+    </div>
+    <div class="right-section">
+        <div class="form-container">
+            <div class="mart"> 
+                <img src="web/view/Login/image/logo_login.jpg" alt="Illustration">
+                <b>grocery Store</b>
             </div>
+            <h2>Sign Up</h2>
+            <p>Let's create your account and Shop like a pro and save money.</p>
+            <form id="login-form" action="MainServlet" method="post" onsubmit="return validateForm()">
+                <input style="padding: 10px;margin-bottom: 15px;" type="text" placeholder="User Name" name="txtUsername" id="txtUsername" value="bob_jackson">
+                <input type="password" placeholder="Password" name="txtPassword" id="txtPassword" value="passwordabc">
+                <div class="checkbox-container">
+                    <input type="checkbox" id="defaultCard">
+                    <label for="defaultCard">Set as default card</label>
+                </div>
+                <a href="#" class="recovery-password">Recovery Password</a>
+                <button type="submit" name="btn" value="Login">Sign Up</button>
+                <button type="button" class="google-signin">Sign in with Gmail</button>
+            </form>
+            <p>Have an account yet? <a href="MainServlet?btn=SignUp">Sign In</a></p>
         </div>
     </div>
-    </body>
+</div>
+
+<script>
+    function validateForm() {
+        var username = document.getElementById('txtUsername').value;
+        var password = document.getElementById('txtPassword').value;
+
+        var error = false;
+        var errorMessage = "";
+
+        if (username.trim() === '') {
+            errorMessage += "Please enter a username.\n";
+            error = true;
+        }
+
+        if (password.trim() === '') {
+            errorMessage += "Please enter a password.\n";
+            error = true;
+        }
+
+        if (error) {
+            alert(errorMessage);
+            return false; // Prevent form submission
+        }
+
+        return true; // Allow form submission
+    }
+</script>
+
+</body>
 </html>

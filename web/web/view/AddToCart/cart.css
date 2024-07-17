@@ -1,0 +1,318 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : Jul 6, 2024, 9:36:48 PM
+    Author     : Thinkpad
+*/
+@import url("https://fonts.googleapis.com/css?family=Roboto:400,400i,700");
+
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f8f8;
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+
+.header {
+    background-color: #ffffff;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    height: 60px;
+}
+.navigation{
+  display: flex;
+  justify-content:center;
+   cursor: pointer;
+}
+.navigation img{
+  width: 2%;
+  margin-left: 10px;
+  margin-right: 10px;
+ padding-top: 0.1%;
+}
+.Logo{
+  display: flex; 
+  align-items: center;
+}
+.Logo-word{
+ color: #1A162E;
+ font-weight: 800;
+ font-size: 150%;
+ padding-bottom: 4%;
+}
+.Logo img{
+  width: 60px;
+  height: 67px;
+  align-items: center;
+}
+
+.sidebar{
+    padding-right: 2%;
+}
+
+
+
+.user-info {
+    display: flex;
+    align-items:center;
+    gap: 10px;
+    justify-content:end;
+}
+
+
+.user-profile{
+  display: flex;
+  align-items: center;
+}
+
+.cart{
+  display: flex;
+  align-items: center;
+  padding-right: 10%;
+}
+.cart img{
+    width: 10%;
+    left: 10%;
+}
+.count{
+  display: flex;
+}
+#cart-count{
+ padding-top: 12%;
+ padding-right: 10px;
+}
+.user-profile img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 20px;
+    
+}
+
+
+
+
+* {
+  font-family: Roboto, sans-serif;
+  padding: 0;
+  margin: 0;
+}
+
+
+
+.flexbox {
+ 
+  width: 50%;
+  height: 70%;
+  display: flex;
+  justify-content:end;
+  align-items:center;
+  padding-bottom: 3%;
+  
+}
+
+.search {
+  margin: 20px;
+  padding-left: px;
+  height: 30%;
+ 
+}
+
+
+.search > div {
+  display: inline-block;
+  position: relative;
+   margin-left: 150px; 
+  color: black;
+}
+
+.search > div:after {
+  content: "";
+  background: black;
+  width: 4px;
+  height: 20px;
+  position: absolute;
+  top: 34px;
+  right: 2px;
+  transform: rotate(142deg);
+}
+
+.search > div > input {
+  color: black;
+  font-size: 16px;
+  background: transparent;
+  width: 15px;
+  height: 15px;
+  padding: 10px;
+  border: solid 3px black;
+  outline: none;
+  border-radius: 35px;
+  transition: width 0.5s;
+}
+
+.search > div > input::placeholder {
+  color: black;
+  opacity: 0;
+  transition: opacity 150ms ease-out;
+}
+
+.search > div > input:focus::placeholder {
+  opacity: 1;
+}
+
+.search > div > input:focus,
+.search > div > input:not(:placeholder-shown) {
+  width: 250px;
+}
+
+.container {
+    width: 100%;
+    margin: 0 auto;
+    height: 100%;
+}
+.breadcrumbs {
+    margin: 20px 0;
+}
+
+.breadcrumbs a {
+    text-decoration: none;
+    color: #333;
+}
+
+.breadcrumbs span {
+    color: #999;
+}
+
+.checkout {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 20%;
+}
+
+.checkout-items {
+    width: 70%;
+}
+
+.checkout-items .item {
+    display: flex;
+    background: #fff;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.checkout-items .item img {
+    width: 80px;
+    height: 80px;
+    margin-right: 20px;
+}
+
+.checkout-items .item-info {
+    flex: 1;
+}
+
+.checkout-items .item-info h3 {
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+.checkout-items .item-info p {
+    margin-bottom: 10px;
+    color: #555;
+}
+
+.checkout-items .item-info .in-stock {
+    color: #4CAF50;
+    font-weight: bold;
+}
+
+.checkout-items .item-controls {
+    display: flex;
+    align-items: center;
+}
+
+.checkout-items .item-controls select,
+.checkout-items .item-controls input[type="number"] {
+    margin-right: 10px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.checkout-items .item-controls button {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+   
+}
+
+.checkout-items .item-controls .save {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.checkout-items .item-controls .save:hover {
+    background-color: #45a049;
+}
+
+.checkout-items .item-controls .delete {
+    background-color: #f44336;
+    color: white;
+    margin-left: 20px;
+}
+
+.checkout-items .item-controls .delete:hover {
+    background-color: #e53935;
+    
+}
+
+.summary {
+    width: 25%;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.summary .subtotal p {
+    margin-bottom: 30px;
+    
+}
+#total{
+    padding-top: 30px;
+}
+
+.summary .checkout-btn {
+    width: 100%;
+    padding: 10px;
+    background-color: #ffcc00;
+    color: #333;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+    margin-bottom: 20px;
+}
+
+.summary .checkout-btn:hover {
+    background-color: #e6b800;
+}
+
+.summary .gift {
+    background: #f4f4f9;
+    padding: 10px;
+    border-radius: 4px;
+    text-align: center;
+}
