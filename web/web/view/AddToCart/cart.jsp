@@ -34,7 +34,7 @@
                 <img src="web/view/AddToCart/image/logo.png" alt="logo">
                 <div class="Logo-word pt-5">grocerymart</div>
             </div>
-            <div class="navigation me-5 pt-3">
+            <div class="navigation">
                 <a href="/Grocery/HomeServlet"> Home </a>
                 <i class="fa-solid fa-chevron-down pt-1 px-1" style="color: #3b3d40;"></i>
                 <a href="/Grocery/AccountServlet"> Manager </a>
@@ -71,7 +71,7 @@
                                     <p>$${item.price} <span class="in-stock">${item.stockQuantity > 0 ? "In stock" : "Out stock"}</span></p>
                                     <div class="item-controls">
                                         <select>
-                                            <option>${item.size}</option>
+                                            <option>${item.productId}</option>
                                         </select>
                                         <input type="number" name="quantity" value="${item.quantity}" min="1" max="${item.stockQuantity}">
                                         <input type="hidden" value="${item.productId}" name="productId"/>

@@ -12,7 +12,6 @@
         <title>SignUp</title>
         <link rel="stylesheet" href="web/view/Login/loginStyle.css">
     </head>
-    
     <style>
         input{
           padding: 10px;
@@ -30,11 +29,11 @@
             <h2>Sign Up</h2>
             <p>Let's create your account and Shop like a pro and save money.</p>
             <form id="signup-form" action="MainServlet" method="post" onsubmit="return validateForm()">
-                <input type="text" placeholder="User Name" name="txtUsername" id="txtUsername" value="bob_jackson">
+                <input type="text" placeholder="User Name" name="txtUsername" id="txtUsername" value="">
                 <input type="text" placeholder="Full name" name="txtFullName" id="txtFullName" value="">
                 <input type="text" placeholder="Email" name="txtEmail" id="txtEmail" value="">
                 <input type="text" placeholder="Phone" name="txtPhone" id="txtPhone" value="">
-                <input type="password" placeholder="Password" name="txtPassword" id="txtPassword" value="passwordabc">
+                <input type="password" placeholder="Password" name="txtPassword" id="txtPassword" value="">
                 <input type="password" placeholder="Confirm Password" name="txtConfirmPassword" id="txtConfirmPassword" value="">
                 <button type="submit" name="btn" value="Create">Sign Up</button>
                 <!-- <a href="MainServlet?btn=null">Sign In</a> -->
