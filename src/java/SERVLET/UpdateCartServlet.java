@@ -6,10 +6,10 @@ package SERVLET;
 
 import DAO.Cart_DAO;
 import MODEL.Cart_Model;
-import MODEL.Product_Model;
 import MODEL.User_Model;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,11 +20,16 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author Thinkpad
+ * @author LA DAT
  */
-@WebServlet(name = "AddToCart", urlPatterns = {"/AddToCart"})
-public class AddToCart extends HttpServlet {
-     
+@WebServlet(name = "UpdateCartServlet", urlPatterns = {"/UpdateCartServlet"})
+public class UpdateCartServlet extends HttpServlet {
+
+    private final String VIEW_CART_SERVLET = "/ViewCartServlet";
+    private final String LOGIN_PAGE = "web/view/Login/login.html";
+    private final String ERROR_PAGE = "web/error.jsp";
+    private final String HOME_SERVLET = "/HomeServlet";
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -34,47 +39,35 @@ public class AddToCart extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-      private final String LOGIN_PAGE = "web/view/Login/login.html";
-    private static final String ERROR_PAGE = "web/error.jsp";
-  
-
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-          
-        Cart_DAO dao = new Cart_DAO();
+        response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
         String url = "";
         try {
-             HttpSession session = request.getSession(false);
-             if(session != null && session.getAttribute("USER")!= null){
-                 
-                 int productId = Integer.parseInt(request.getParameter("productId"));
-                 int quantity = 1; // hoặc lấy số lượng từ request nếu có
-                 User_Model user = (User_Model) session.getAttribute("USER");
-                 int userId = user.getUserId();
+            Cart_DAO dao = new Cart_DAO();
+            HttpSession session = request.getSession(false);
+            if (session != null && session.getAttribute("USER") != null) {
+                User_Model user = (User_Model) session.getAttribute("USER");
+                int userId = user.getUserId();
+                int quanty = Integer.parseInt(request.getParameter("quantity"));
+                int productId = Integer.parseInt(request.getParameter("productId"));
                 Cart_Model cart = dao.findOneCart(userId, productId);
-                 if (cart != null) {
-                     cart.setQuantity(cart.getQuantity() + 1);
-                     dao.updateCart(cart);
-                 } else {
-                     Product_Model product = new Product_Model(); //  create cart for user
-                     Cart_Model cart1 = new Cart_Model(productId, userId, 1);
-                     dao.insertCart(cart1);
-                 }
-                 
-                 url = "ProductDetailServlet?productId="+productId;   // gọi lại tính năng trước đó (gọi lại trang product page)
-                 
-             }else {
-                 url =  LOGIN_PAGE;
-             }
-           
-
-            
+                cart.setQuantity(quanty);
+                if (dao.updateCart(cart)) {
+                    url = VIEW_CART_SERVLET;
+                } else {
+                    url = HOME_SERVLET;
+                }
+            } else {
+                url = LOGIN_PAGE;
+            }
         } catch (Exception e) {
-           request.setAttribute("ERROR_MESSAGE", "Database error: " + e.getMessage());
-           url = ERROR_PAGE;
-        }finally {
-            RequestDispatcher rd = request.getRequestDispatcher(url);
-            rd.forward(request, response);
+            url = ERROR_PAGE;
+            request.setAttribute("ERROR_MESSAGE", "Database error: " + e.getMessage());
+        } finally {
+            response.sendRedirect(request.getContextPath() +url);
         }
     }
 
