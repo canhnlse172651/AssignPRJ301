@@ -5,13 +5,16 @@
 package SERVLET.ADMIN.ORDER;
 
 import DAO.ADMIN.Order_DAO;
+import MODEL.User_Model;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -19,8 +22,12 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "AdminUpdateOrderServlet", urlPatterns = {"/AdminUpdateOrderServlet"})
 public class AdminUpdateOrderServlet extends HttpServlet {
-private static String ADMIN_ORDER_MANAGE_SERVLET = "/AdminOrderServlet";
+
+    private static String ADMIN_ORDER_MANAGE_SERVLET = "/AdminOrderServlet";
     Order_DAO orderDAO = new Order_DAO();
+    private final String LOGIN_PAGE = "/web/view/Login/login.html";
+    String url = LOGIN_PAGE;
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -36,14 +43,21 @@ private static String ADMIN_ORDER_MANAGE_SERVLET = "/AdminOrderServlet";
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
         try {
-            int orderId = Integer.parseInt(request.getParameter("orderId"));
-            int status = Integer.parseInt(request.getParameter("status"));
-            boolean paymentStatus = Integer.parseInt(request.getParameter("paymentStatus"))==1;
-            if(orderDAO.updateOrderStatus(orderId, status) && orderDAO.updatePaymentStatus(orderId, paymentStatus));
-        }catch (Exception e) {
+            HttpSession session = request.getSession(false);
+            if (session != null && session.getAttribute("USER") != null) {
+                User_Model userAdmin = (User_Model) session.getAttribute("USER");
+                if (userAdmin.isRole() == true) {
+                    int orderId = Integer.parseInt(request.getParameter("orderId"));
+                    int status = Integer.parseInt(request.getParameter("status"));
+                    boolean paymentStatus = Integer.parseInt(request.getParameter("paymentStatus")) == 1;
+                    if (orderDAO.updateOrderStatus(orderId, status) && orderDAO.updatePaymentStatus(orderId, paymentStatus));
+                    url = ADMIN_ORDER_MANAGE_SERVLET;
+                }
+            }
+        } catch (NumberFormatException | SQLException e) {
             System.out.println("SERVLET.ADMIN.ACCOUNT.AddAccountServlet.processRequest()" + e);
         } finally {
-            response.sendRedirect(request.getContextPath() + ADMIN_ORDER_MANAGE_SERVLET);
+            response.sendRedirect(request.getContextPath() +url );
         }
     }
 

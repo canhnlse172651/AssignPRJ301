@@ -17,6 +17,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -27,7 +28,8 @@ public class AdminGetUpdateCategory extends HttpServlet {
 
     private static String ADMIN_CATEGORY_MANAGE_SERVLET = "/AdminCategoryServlet";
     private static String ADMIN_UPDATE_CATEGORY_PAGE = "web/view/admin/category/updateCategory.jsp";
-    String url = ADMIN_CATEGORY_MANAGE_SERVLET;
+    private final String LOGIN_PAGE = "web/view/Login/login.html";
+    String url = LOGIN_PAGE;
     Category_DAO cateDAO = new Category_DAO();
 
     /**
@@ -45,12 +47,19 @@ public class AdminGetUpdateCategory extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
         try {
-            if (request.getParameter("categoryId") != null) {
-                int categoryId = Integer.parseInt(request.getParameter("categoryId"));
-                Cate_Model cate = cateDAO.findOneById(categoryId);
-                if (cate != null) {
-                    request.setAttribute("CateUpdate", cate);
-                    url = ADMIN_UPDATE_CATEGORY_PAGE;
+            HttpSession session = request.getSession(false);
+            if (session != null && session.getAttribute("USER") != null) {
+                User_Model userAdmin = (User_Model) session.getAttribute("USER");
+                if (userAdmin.isRole() == true) {
+                    url = ADMIN_CATEGORY_MANAGE_SERVLET;
+                    if (request.getParameter("categoryId") != null) {
+                        int categoryId = Integer.parseInt(request.getParameter("categoryId"));
+                        Cate_Model cate = cateDAO.findOneById(categoryId);
+                        if (cate != null) {
+                            request.setAttribute("CateUpdate", cate);
+                            url = ADMIN_UPDATE_CATEGORY_PAGE;
+                        }
+                    }
                 }
             }
         } catch (Exception e) {

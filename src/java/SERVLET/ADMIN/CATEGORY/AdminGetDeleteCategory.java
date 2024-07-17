@@ -6,6 +6,7 @@ package SERVLET.ADMIN.CATEGORY;
 
 import DAO.ADMIN.Account_DAO;
 import DAO.ADMIN.Category_DAO;
+import MODEL.User_Model;
 import java.io.IOException;
 import java.io.PrintWriter;
 import static java.lang.System.out;
@@ -15,6 +16,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -22,9 +24,12 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "AdminGetDeleteCategory", urlPatterns = {"/AdminGetDeleteCategory"})
 public class AdminGetDeleteCategory extends HttpServlet {
- private static String ADMIN_CATEGORY_MANAGE_SERVLET = "/AdminCategoryServlet";
-    String url = ADMIN_CATEGORY_MANAGE_SERVLET;
+
+    private static String ADMIN_CATEGORY_MANAGE_SERVLET = "/AdminCategoryServlet";
+    private final String LOGIN_PAGE = "web/view/Login/login.html";
+    String url = LOGIN_PAGE;
     Category_DAO cateDao = new Category_DAO();
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -38,13 +43,20 @@ public class AdminGetDeleteCategory extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try {
-            if (request.getParameter("categoryId") != null) {
-                int categoryId = Integer.parseInt(request.getParameter("categoryId"));
-                if (cateDao.deleteCategory(categoryId)) {
+            HttpSession session = request.getSession(false);
+            if (session != null && session.getAttribute("USER") != null) {
+                User_Model userAdmin = (User_Model) session.getAttribute("USER");
+                if (userAdmin.isRole() == true) {
                     url = ADMIN_CATEGORY_MANAGE_SERVLET;
+                    if (request.getParameter("categoryId") != null) {
+                        int categoryId = Integer.parseInt(request.getParameter("categoryId"));
+                        if (cateDao.deleteCategory(categoryId)) {
+                            url = ADMIN_CATEGORY_MANAGE_SERVLET;
+                        }
+                    }
                 }
             }
-        }catch (Exception e) {
+        } catch (Exception e) {
             System.out.println("SERVLET.ADMIN.ACCOUNT.AdminGetUpdateAccount.processRequest()" + e);
         } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);

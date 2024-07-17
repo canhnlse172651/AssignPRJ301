@@ -6,6 +6,7 @@ package SERVLET.ADMIN.PROCUCT;
 
 import DAO.ADMIN.Category_DAO;
 import MODEL.Cate_Model;
+import MODEL.User_Model;
 import java.io.IOException;
 import java.io.PrintWriter;
 import static java.lang.System.out;
@@ -19,6 +20,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -26,8 +28,12 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "AdminGetAddProductServlet", urlPatterns = {"/AdminGetAddProductServlet"})
 public class AdminGetAddProductServlet extends HttpServlet {
+
     private final String ADMIN_ADD_PRODUCT_PAGE = "web/view/admin/product/addProduct.jsp";
     Category_DAO cateDAO = new Category_DAO();
+    private final String LOGIN_PAGE = "web/view/Login/login.html";
+    String url = LOGIN_PAGE;
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -41,12 +47,19 @@ public class AdminGetAddProductServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try {
-            List<Cate_Model> listCate = cateDAO.findAll();
-            request.setAttribute("listCate", listCate);
+            HttpSession session = request.getSession(false);
+            if (session != null && session.getAttribute("USER") != null) {
+                User_Model userAdmin = (User_Model) session.getAttribute("USER");
+                if (userAdmin.isRole() == true) {
+                    List<Cate_Model> listCate = cateDAO.findAll();
+                    request.setAttribute("listCate", listCate);
+                    url= ADMIN_ADD_PRODUCT_PAGE;
+                }
+            }
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(AdminGetAddProductServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }finally {
-            RequestDispatcher rd = request.getRequestDispatcher(ADMIN_ADD_PRODUCT_PAGE);
+        } finally {
+            RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
             out.close();
         }

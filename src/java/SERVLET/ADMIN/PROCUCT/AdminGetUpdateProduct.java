@@ -8,9 +8,11 @@ import DAO.ADMIN.Category_DAO;
 import DAO.ADMIN.Product_DAO;
 import MODEL.Cate_Model;
 import MODEL.Product_Model;
+import MODEL.User_Model;
 import java.io.IOException;
 import java.io.PrintWriter;
 import static java.lang.System.out;
+import java.sql.SQLException;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -18,6 +20,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -25,11 +28,14 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "AdminGetUpdateProduct", urlPatterns = {"/AdminGetUpdateProduct"})
 public class AdminGetUpdateProduct extends HttpServlet {
+
     private static String ADMIN_PRODUCT_MANAGE_SERVLET = "/AdminProductServlet";
     private static String ADMIN_UPDATE_PRODUCT_PAGE = "web/view/admin/product/updateProduct.jsp";
-    String url = ADMIN_PRODUCT_MANAGE_SERVLET;
+    private final String LOGIN_PAGE = "/web/view/Login/login.html";
+    String url = LOGIN_PAGE;
     Category_DAO cateDAO = new Category_DAO();
     Product_DAO product_DAO = new Product_DAO();
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -44,19 +50,25 @@ public class AdminGetUpdateProduct extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
-        try  {
-           if (request.getParameter("productId") != null) {
-                int productId = Integer.parseInt(request.getParameter("productId"));
-                Product_Model product = product_DAO.findOneById(productId);
-               
-                List<Cate_Model> listCate = cateDAO.findAll();  
-                if (product != null && listCate.size()>0) {
-                    request.setAttribute("ProUpdate", product);
-                    request.setAttribute("listCate", listCate);
-                    url = ADMIN_UPDATE_PRODUCT_PAGE;
+        try {
+            HttpSession session = request.getSession(false);
+            if (session != null && session.getAttribute("USER") != null) {
+                User_Model userAdmin = (User_Model) session.getAttribute("USER");
+                if (userAdmin.isRole() == true) {
+                    url = ADMIN_PRODUCT_MANAGE_SERVLET;
+                    if (request.getParameter("productId") != null) {
+                        int productId = Integer.parseInt(request.getParameter("productId"));
+                        Product_Model product = product_DAO.findOneById(productId);
+                        List<Cate_Model> listCate = cateDAO.findAll();
+                        if (product != null && listCate.size() > 0) {
+                            request.setAttribute("ProUpdate", product);
+                            request.setAttribute("listCate", listCate);
+                            url = ADMIN_UPDATE_PRODUCT_PAGE;
+                        }
+                    }
                 }
             }
-        }catch (Exception e) {
+        } catch (ClassNotFoundException | NumberFormatException | SQLException e) {
             System.out.println("SERVLET.ADMIN.ACCOUNT.AdminGetUpdateAccount.processRequest()" + e);
         } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);

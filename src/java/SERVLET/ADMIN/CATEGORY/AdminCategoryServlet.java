@@ -6,6 +6,7 @@ package SERVLET.ADMIN.CATEGORY;
 
 import DAO.ADMIN.Category_DAO;
 import MODEL.Cate_Model;
+import MODEL.User_Model;
 import java.io.IOException;
 import java.io.PrintWriter;
 import static java.lang.System.out;
@@ -19,6 +20,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -29,6 +31,9 @@ public class AdminCategoryServlet extends HttpServlet {
 
     private static String ADMIN_CATEGORY_MANAGE_PAGE = "web/view/admin/category/categoryManage.jsp";
     Category_DAO cateDAO = new Category_DAO();
+     private final String LOGIN_PAGE = "web/view/Login/login.html";
+     String url = LOGIN_PAGE;
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -41,15 +46,22 @@ public class AdminCategoryServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, ClassNotFoundException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
-         request.setCharacterEncoding("UTF-8");
-	response.setCharacterEncoding("UTF-8");
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
         try {
-            List<Cate_Model> listCate = cateDAO.findAll();
-            List<Cate_Model> top = cateDAO.findTopCate();
-            request.setAttribute("top", top);
-            request.setAttribute("listCate", listCate);
-        }finally {
-            RequestDispatcher rd = request.getRequestDispatcher(ADMIN_CATEGORY_MANAGE_PAGE);
+            HttpSession session = request.getSession(false);
+            if (session != null && session.getAttribute("USER") != null) {
+                User_Model userAdmin = (User_Model) session.getAttribute("USER");
+                if (userAdmin.isRole() == true) {
+                    List<Cate_Model> listCate = cateDAO.findAll();
+                    List<Cate_Model> top = cateDAO.findTopCate();
+                    request.setAttribute("top", top);
+                    request.setAttribute("listCate", listCate);
+                    url = ADMIN_CATEGORY_MANAGE_PAGE;
+                }
+            }
+        } finally {
+            RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
             out.close();
         }

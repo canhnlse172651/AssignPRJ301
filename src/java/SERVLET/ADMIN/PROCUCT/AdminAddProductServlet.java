@@ -6,13 +6,16 @@ package SERVLET.ADMIN.PROCUCT;
 
 import DAO.ADMIN.Product_DAO;
 import MODEL.Product_Model;
+import MODEL.User_Model;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -23,7 +26,8 @@ public class AdminAddProductServlet extends HttpServlet {
 
     private static String ADMIN_ADD_PRODUCT_PAGE = "/MainServlet?btn=adminAddProduct";
     private static String ADMIN_PRODUCT_MANAGE_SERVLET = "/AdminProductServlet";
-    String url = ADMIN_ADD_PRODUCT_PAGE;
+    private final String LOGIN_PAGE = "/web/view/Login/login.html";
+    String url = LOGIN_PAGE;
     Product_DAO product_DAO = new Product_DAO();
 
     /**
@@ -41,25 +45,32 @@ public class AdminAddProductServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
         try {
-            String name = request.getParameter("name");
-            int categoryId = Integer.parseInt(request.getParameter("categoryId"));
-            double price = Double.parseDouble(request.getParameter("price"));
-            int quantity = Integer.parseInt(request.getParameter("quantity"));
-            String size = request.getParameter("size");
-            String description = request.getParameter("description");
-            String image = request.getParameter("image");
-            Product_Model product = product_DAO.findOneByName(name, size);
-            if (product.getName() == null) {
-                product = new Product_Model(0, categoryId, name, true, size, price, quantity, description, image);
-                if (product_DAO.insertProduct(product)) {
-                    url = ADMIN_PRODUCT_MANAGE_SERVLET;
-                } else {                    
+            HttpSession session = request.getSession(false);
+            if (session != null && session.getAttribute("USER") != null) {
+                User_Model userAdmin = (User_Model) session.getAttribute("USER");
+                if (userAdmin.isRole() == true) {
                     url = ADMIN_ADD_PRODUCT_PAGE;
+                    String name = request.getParameter("name");
+                    int categoryId = Integer.parseInt(request.getParameter("categoryId"));
+                    double price = Double.parseDouble(request.getParameter("price"));
+                    int quantity = Integer.parseInt(request.getParameter("quantity"));
+                    String size = request.getParameter("size");
+                    String description = request.getParameter("description");
+                    String image = request.getParameter("image");
+                    Product_Model product = product_DAO.findOneByName(name, size);
+                    if (product.getName() == null) {
+                        product = new Product_Model(0, categoryId, name, true, size, price, quantity, description, image);
+                        if (product_DAO.insertProduct(product)) {
+                            url = ADMIN_PRODUCT_MANAGE_SERVLET;
+                        } else {
+                            url = ADMIN_ADD_PRODUCT_PAGE;
+                        }
+                    } else {
+                        url = ADMIN_ADD_PRODUCT_PAGE;
+                    }
                 }
-            } else {
-                url = ADMIN_ADD_PRODUCT_PAGE;
             }
-        } catch (Exception e) {
+        } catch (ClassNotFoundException | NumberFormatException | SQLException e) {
             System.out.println("SERVLET.ADMIN.ACCOUNT.AddAccountServlet.processRequest()" + e.getMessage());
         } finally {
             response.sendRedirect(request.getContextPath() + url);
