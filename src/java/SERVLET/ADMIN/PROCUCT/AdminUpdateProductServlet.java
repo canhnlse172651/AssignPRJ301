@@ -6,6 +6,7 @@ package SERVLET.ADMIN.PROCUCT;
 
 import DAO.ADMIN.Product_DAO;
 import MODEL.Product_Model;
+import MODEL.User_Model;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -13,6 +14,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -20,9 +22,12 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "AdminUpdateProductServlet", urlPatterns = {"/AdminUpdateProductServlet"})
 public class AdminUpdateProductServlet extends HttpServlet {
+
     private static String ADMIN_PRODUCT_MANAGE_SERVLET = "/AdminProductServlet";
-    String url = "";
+     private final String LOGIN_PAGE = "web/view/Login/login.html";
+    String url = LOGIN_PAGE;
     Product_DAO product_DAO = new Product_DAO();
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -38,21 +43,27 @@ public class AdminUpdateProductServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
         try {
-            int id = Integer.parseInt(request.getParameter("productId"));
-            url = "/MainServlet?btn=adminGetUpdateCategory&categoryId="+id;
-            String name = request.getParameter("name");
-            int categoryId = Integer.parseInt(request.getParameter("categoryId"));
-            double price = Double.parseDouble(request.getParameter("price"));
-            int quantity = Integer.parseInt(request.getParameter("quantity"));
-            String size = request.getParameter("size");
-            String description = request.getParameter("description");
-            String image = request.getParameter("image");
-            boolean status = Integer.parseInt(request.getParameter("status"))==1;
-            Product_Model product = new Product_Model(id, categoryId, name, status, size, price, quantity, description, image);
-            if(product_DAO.updateProduct(product)){
-                url= ADMIN_PRODUCT_MANAGE_SERVLET;
+            HttpSession session = request.getSession(false);
+            if (session != null && session.getAttribute("USER") != null) {
+                User_Model userAdmin = (User_Model) session.getAttribute("USER");
+                if (userAdmin.isRole() == true) {
+                    int id = Integer.parseInt(request.getParameter("productId"));
+                    url = "/MainServlet?btn=adminGetUpdateCategory&categoryId=" + id;
+                    String name = request.getParameter("name");
+                    int categoryId = Integer.parseInt(request.getParameter("categoryId"));
+                    double price = Double.parseDouble(request.getParameter("price"));
+                    int quantity = Integer.parseInt(request.getParameter("quantity"));
+                    String size = request.getParameter("size");
+                    String description = request.getParameter("description");
+                    String image = request.getParameter("image");
+                    boolean status = Integer.parseInt(request.getParameter("status")) == 1;
+                    Product_Model product = new Product_Model(id, categoryId, name, status, size, price, quantity, description, image);
+                    if (product_DAO.updateProduct(product)) {
+                        url = ADMIN_PRODUCT_MANAGE_SERVLET;
+                    }
+                }
             }
-        }catch (Exception e) {
+        } catch (Exception e) {
             System.out.println("SERVLET.ADMIN.ACCOUNT.AddAccountServlet.processRequest()" + e);
         } finally {
             response.sendRedirect(request.getContextPath() + url);

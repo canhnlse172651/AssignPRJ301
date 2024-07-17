@@ -5,15 +5,18 @@
 package SERVLET.ADMIN.PROCUCT;
 
 import DAO.ADMIN.Product_DAO;
+import MODEL.User_Model;
 import java.io.IOException;
 import java.io.PrintWriter;
 import static java.lang.System.out;
+import java.sql.SQLException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -21,9 +24,12 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "AdminGetDeleteProduct", urlPatterns = {"/AdminGetDeleteProduct"})
 public class AdminGetDeleteProduct extends HttpServlet {
+
     private static String ADMIN_PRODUCT_MANAGE_SERVLET = "/AdminProductServlet";
-    String url = ADMIN_PRODUCT_MANAGE_SERVLET;
-    Product_DAO product_DAO = new Product_DAO();
+    private final String LOGIN_PAGE = "web/view/Login/login.html";
+    String url = LOGIN_PAGE;
+       Product_DAO product_DAO = new Product_DAO();
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -37,13 +43,20 @@ public class AdminGetDeleteProduct extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try {
-            if (request.getParameter("productId") != null) {
-                int productId = Integer.parseInt(request.getParameter("productId"));
-                if (product_DAO.deleteProduct(productId)) {
+            HttpSession session = request.getSession(false);
+            if (session != null && session.getAttribute("USER") != null) {
+                User_Model userAdmin = (User_Model) session.getAttribute("USER");
+                if (userAdmin.isRole() == true) {
                     url = ADMIN_PRODUCT_MANAGE_SERVLET;
+                    if (request.getParameter("productId") != null) {
+                        int productId = Integer.parseInt(request.getParameter("productId"));
+                        if (product_DAO.deleteProduct(productId)) {
+                            url = ADMIN_PRODUCT_MANAGE_SERVLET;
+                        }
+                    }
                 }
             }
-        }catch (Exception e) {
+        } catch (ClassNotFoundException | NumberFormatException | SQLException e) {
             System.out.println("SERVLET.ADMIN.ACCOUNT.AdminGetUpdateAccount.processRequest()" + e);
         } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);

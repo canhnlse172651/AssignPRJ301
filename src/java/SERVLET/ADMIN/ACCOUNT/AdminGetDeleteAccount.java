@@ -15,6 +15,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -24,7 +25,8 @@ import javax.servlet.http.HttpServletResponse;
 public class AdminGetDeleteAccount extends HttpServlet {
 
     private static String ADMIN_ACCOUNT_MANAGE_SERVLET = "/AccountServlet";
-    String url = ADMIN_ACCOUNT_MANAGE_SERVLET;
+    private final String LOGIN_PAGE = "web/view/Login/login.html";
+    String url = LOGIN_PAGE;
     Account_DAO accountDao = new Account_DAO();
 
     /**
@@ -42,11 +44,15 @@ public class AdminGetDeleteAccount extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
         try {
-            if (request.getParameter("userId") != null) {
-                int userId = Integer.parseInt(request.getParameter("userId"));
-
-                if (accountDao.deleteUser(userId)) {
-                    url = ADMIN_ACCOUNT_MANAGE_SERVLET;
+            HttpSession session = request.getSession(false);
+            if (session != null && session.getAttribute("USER") != null) {
+                User_Model userAdmin = (User_Model) session.getAttribute("USER");
+                if (userAdmin.isRole() == true) {
+                    if (request.getParameter("userId") != null) {
+                        int userId = Integer.parseInt(request.getParameter("userId"));
+                        accountDao.deleteUser(userId);
+                        url = ADMIN_ACCOUNT_MANAGE_SERVLET;
+                    }
                 }
             }
         } catch (Exception e) {

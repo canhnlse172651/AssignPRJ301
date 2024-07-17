@@ -13,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -22,7 +23,8 @@ import javax.servlet.http.HttpServletResponse;
 public class AdminUpdateAccountServlet extends HttpServlet {
 
     private static String ADMIN_ACCOUNT_MANAGE_SERVLET = "/AccountServlet";
-    String url = "";
+    private final String LOGIN_PAGE = "/web/view/Login/login.html";
+    String url = LOGIN_PAGE;
     Account_DAO accountDao = new Account_DAO();
 
     /**
@@ -40,20 +42,26 @@ public class AdminUpdateAccountServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
         try {
-            int userId = Integer.parseInt(request.getParameter("userId"));
-            int numberOrdered = Integer.parseInt(request.getParameter("numberOrdered"));
-            String username = request.getParameter("username");
-            String fullName = request.getParameter("fullName");
-            String email = request.getParameter("email");
-            String password = request.getParameter("password");
-            String address = request.getParameter("address");
-            String phone = request.getParameter("phone");
-            boolean role = Integer.parseInt(request.getParameter("role"))==1;
-            boolean status = Integer.parseInt(request.getParameter("status")) == 1;
-            url = "/MainServlet?btn=adminGetUpdateAccount&userId="+userId;
-            User_Model user = new User_Model(userId, username, password, fullName, email, numberOrdered, phone, status, address, role);
-            if(accountDao.updateUser(user)){
-               url = ADMIN_ACCOUNT_MANAGE_SERVLET;
+            HttpSession session = request.getSession(false);
+            if (session != null && session.getAttribute("USER") != null) {
+                User_Model userAdmin = (User_Model) session.getAttribute("USER");
+                if (userAdmin.isRole() == true) {
+                    int userId = Integer.parseInt(request.getParameter("userId"));
+                    int numberOrdered = Integer.parseInt(request.getParameter("numberOrdered"));
+                    String username = request.getParameter("username");
+                    String fullName = request.getParameter("fullName");
+                    String email = request.getParameter("email");
+                    String password = request.getParameter("password");
+                    String address = request.getParameter("address");
+                    String phone = request.getParameter("phone");
+                    boolean role = Integer.parseInt(request.getParameter("role")) == 1;
+                    boolean status = Integer.parseInt(request.getParameter("status")) == 1;
+                    url = "/MainServlet?btn=adminGetUpdateAccount&userId=" + userId;
+                    User_Model user = new User_Model(userId, username, password, fullName, email, numberOrdered, phone, status, address, role);
+                    if (accountDao.updateUser(user)) {
+                        url = ADMIN_ACCOUNT_MANAGE_SERVLET;
+                    }
+                }
             }
         } catch (Exception e) {
             System.out.println("SERVLET.ADMIN.ACCOUNT.AddAccountServlet.processRequest()" + e);

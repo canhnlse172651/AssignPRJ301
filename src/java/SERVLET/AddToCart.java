@@ -60,13 +60,10 @@ public class AddToCart extends HttpServlet {
                      Cart_Model cart1 = new Cart_Model(productId, userId, 1);
                      dao.insertCart(cart1);
                  }
-                 
                  url = "ProductDetailServlet?productId="+productId;   // gọi lại tính năng trước đó (gọi lại trang product page)
-                 
              }else {
                  url =  LOGIN_PAGE;
-             }
-           
+             }         
 
             
         } catch (Exception e) {

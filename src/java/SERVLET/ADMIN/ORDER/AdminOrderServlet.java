@@ -8,6 +8,7 @@ import DAO.ADMIN.Category_DAO;
 import DAO.ADMIN.Order_DAO;
 import MODEL.Cate_Model;
 import MODEL.Orders_Model;
+import MODEL.User_Model;
 import java.io.IOException;
 import java.io.PrintWriter;
 import static java.lang.System.out;
@@ -18,6 +19,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -27,6 +29,8 @@ import javax.servlet.http.HttpServletResponse;
 public class AdminOrderServlet extends HttpServlet {
 
     private static String ADMIN_CATEGORY_MANAGE_PAGE = "web/view/admin/order/orderManage.jsp";
+    private final String LOGIN_PAGE = "web/view/Login/login.html";
+    String url = LOGIN_PAGE;
     Order_DAO orderDAO = new Order_DAO();
 
     /**
@@ -44,12 +48,19 @@ public class AdminOrderServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
         try {
-            List<Orders_Model> listOrder = orderDAO.findAll();
-            request.setAttribute("listOrder", listOrder);
+            HttpSession session = request.getSession(false);
+            if (session != null && session.getAttribute("USER") != null) {
+                User_Model userAdmin = (User_Model) session.getAttribute("USER");
+                if (userAdmin.isRole() == true) {
+                    List<Orders_Model> listOrder = orderDAO.findAll();
+                    request.setAttribute("listOrder", listOrder);
+                    url = ADMIN_CATEGORY_MANAGE_PAGE;
+                }
+            }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            RequestDispatcher rd = request.getRequestDispatcher(ADMIN_CATEGORY_MANAGE_PAGE);
+            RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
             out.close();
         }

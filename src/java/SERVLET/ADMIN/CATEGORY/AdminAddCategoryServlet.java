@@ -6,6 +6,7 @@ package SERVLET.ADMIN.CATEGORY;
 
 import DAO.ADMIN.Category_DAO;
 import MODEL.Cate_Model;
+import MODEL.User_Model;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -19,6 +20,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 import org.apache.tomcat.util.codec.binary.Base64;
 
@@ -31,7 +33,8 @@ public class AdminAddCategoryServlet extends HttpServlet {
 
     private static String ADMIN_ADD_CATEGORY_PAGE = "/MainServlet?btn=adminAddCategory";
     private static String ADMIN_CATEGORY_MANAGE_SERVLET = "/AdminCategoryServlet";
-    String url = ADMIN_ADD_CATEGORY_PAGE;
+    private final String LOGIN_PAGE = "/web/view/Login/login.html";
+    String url = LOGIN_PAGE;
     Category_DAO cateDAO = new Category_DAO();
 
     /**
@@ -49,21 +52,28 @@ public class AdminAddCategoryServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
         try {
-            String name = request.getParameter("name");
-            String image = request.getParameter("image");
-            if (name != null && image != null) {
-                Cate_Model category = cateDAO.findOneByName(name);
-                System.out.println("SERVLET.ADMIN.CATEGORY.AdminAddCategoryServlet.processRequest()"+ category.getName());
-                if (category.getName() != null) {
+            HttpSession session = request.getSession(false);
+            if (session != null && session.getAttribute("USER") != null) {
+                User_Model userAdmin = (User_Model) session.getAttribute("USER");
+                if (userAdmin.isRole() == true) {
                     url = ADMIN_ADD_CATEGORY_PAGE;
-                } else {                    
-                    category.setName(name);
-                    category.setImage(image);
-                    category.setStatus(true);
-                    if (cateDAO.insertCategory(category)) {
-                        url = ADMIN_CATEGORY_MANAGE_SERVLET;
-                    } else {
-                        url = ADMIN_ADD_CATEGORY_PAGE;
+                    String name = request.getParameter("name");
+                    String image = request.getParameter("image");
+                    if (name != null && image != null) {
+                        Cate_Model category = cateDAO.findOneByName(name);
+                        System.out.println("SERVLET.ADMIN.CATEGORY.AdminAddCategoryServlet.processRequest()" + category.getName());
+                        if (category.getName() != null) {
+                            url = ADMIN_ADD_CATEGORY_PAGE;
+                        } else {
+                            category.setName(name);
+                            category.setImage(image);
+                            category.setStatus(true);
+                            if (cateDAO.insertCategory(category)) {
+                                url = ADMIN_CATEGORY_MANAGE_SERVLET;
+                            } else {
+                                url = ADMIN_ADD_CATEGORY_PAGE;
+                            }
+                        }
                     }
                 }
             }
